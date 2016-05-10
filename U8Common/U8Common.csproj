@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{97D3025F-293B-4561-B5F4-C99172595A4E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>U8Common</RootNamespace>
+    <AssemblyName>U8Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AntiXSSLibrary">
+      <HintPath>..\packages\AntiXSSLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="ChnCharInfo">
+      <HintPath>..\packages\ChnCharInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlSanitizationLibrary">
+      <HintPath>..\packages\HtmlSanitizationLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Memcached.ClientLibrary">
+      <HintPath>..\packages\Memcached.ClientLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\packages\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Business\UFIDACityDefine.cs" />
+    <Compile Include="Business\UFIDACookieServer.cs" />
+    <Compile Include="Business\UFIDAMobileAppCompanyDefine.cs" />
+    <Compile Include="Business\UFIDAMobileAppOSDefine.cs" />
+    <Compile Include="Business\UFIDAMobileAppPhoneTypeDefine.cs" />
+    <Compile Include="Business\UFIDAMobileAppProductDefine.cs" />
+    <Compile Include="Business\UFIDAMobileAppVersionDefine.cs" />
+    <Compile Include="Business\UFIDAOpenPageType.cs" />
+    <Compile Include="Business\UFIDAPassport.cs" />
+    <Compile Include="Business\UFIDARefererType.cs" />
+    <Compile Include="Business\UFIDASearchDefine.cs" />
+    <Compile Include="Business\UFIDASearchGroupType.cs" />
+    <Compile Include="Business\UFIDAUserType.cs" />
+    <Compile Include="CodeDom\UFIDACompiler.cs" />
+    <Compile Include="Collection\UFIDAKeyValue.cs" />
+    <Compile Include="Collection\UFIDANameValueCollection.cs" />
+    <Compile Include="Configuration\UFIDAConfig.cs" />
+    <Compile Include="Data\UFIDADatabase.cs" />
+    <Compile Include="Data\UFIDADatabaseMySql.cs" />
+    <Compile Include="Data\UFIDADatabaseSqlCe.cs" />
+    <Compile Include="Data\UFIDADatabaseSQLite.cs" />
+    <Compile Include="Data\UFIDADatabaseType.cs" />
+    <Compile Include="Data\UFIDADataSet.cs" />
+    <Compile Include="Data\UFIDADbType.cs" />
+    <Compile Include="Data\UFIDADbTypeMap.cs" />
+    <Compile Include="Data\UFIDAFieldDescription.cs" />
+    <Compile Include="Diagnostics\UFIDAAppContext.cs" />
+    <Compile Include="Diagnostics\UFIDAProcess.cs" />
+    <Compile Include="Diagnostics\UFIDAStopwatch.cs" />
+    <Compile Include="Diagnostics\UFIDATraceType.cs" />
+    <Compile Include="Drawing\UFIDAImageMatcher.cs" />
+    <Compile Include="IO\UFIDADirectory.cs" />
+    <Compile Include="IO\UFIDAFile.cs" />
+    <Compile Include="IO\UFIDAFileIndex.cs" />
+    <Compile Include="IO\UFIDAFileType.cs" />
+    <Compile Include="IO\UFIDAGZip.cs" />
+    <Compile Include="IO\UFIDALog.cs" />
+    <Compile Include="Net\UFIDACache.cs" />
+    <Compile Include="Net\UFIDAIPAddress.cs" />
+    <Compile Include="Net\UFIDAIPRegion.cs" />
+    <Compile Include="Net\UFIDAMail.cs" />
+    <Compile Include="Net\UFIDAMemcachedClient.cs" />
+    <Compile Include="Net\UFIDASocket.cs" />
+    <Compile Include="ObjectPool\UFIDAAutoOverTimeConcurrentDictionaryObjectPool.cs" />
+    <Compile Include="ObjectPool\UFIDAAutoOverTimeConcurrentDictionaryObjectPoolValue.cs" />
+    <Compile Include="ObjectPool\UFIDAAutoOverTimeFileConcurrentDictionaryObjectPool.cs" />
+    <Compile Include="Office\UFIDACsv.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\UFIDADes.cs" />
+    <Compile Include="Security\UFIDAMd5.cs" />
+    <Compile Include="UFIDAAction.cs" />
+    <Compile Include="UFIDAArray.cs" />
+    <Compile Include="UFIDACalendar.cs" />
+    <Compile Include="UFIDACalendarItem.cs" />
+    <Compile Include="UFIDACompare.cs" />
+    <Compile Include="UFIDAContainer.cs" />
+    <Compile Include="UFIDAConvert.cs" />
+    <Compile Include="UFIDADateTime.cs" />
+    <Compile Include="UFIDADivideLine.cs" />
+    <Compile Include="UFIDAException.cs" />
+    <Compile Include="UFIDAGuid.cs" />
+    <Compile Include="UFIDAMath.cs" />
+    <Compile Include="UFIDAMoney.cs" />
+    <Compile Include="UFIDAObject.cs" />
+    <Compile Include="UFIDAPinyin.cs" />
+    <Compile Include="UFIDAResource.Designer.cs" />
+    <Compile Include="UFIDARunState.cs" />
+    <Compile Include="UFIDASms.cs" />
+    <Compile Include="UFIDASso.cs" />
+    <Compile Include="UFIDAStandardMessage.cs" />
+    <Compile Include="UFIDAStj.cs" />
+    <Compile Include="UFIDAString.cs" />
+    <Compile Include="UFIDASyncObject.cs" />
+    <Compile Include="UFIDAThrowableMessage.cs" />
+    <Compile Include="UFIDAToken.cs" />
+    <Compile Include="UFIDAValidation.cs" />
+    <Compile Include="Svn\UFIDASvnManager.cs" />
+    <Compile Include="Text\KeywordMatch\UFIDAIMatchNode.cs" />
+    <Compile Include="Text\KeywordMatch\UFIDAAbstractMatchNode.cs" />
+    <Compile Include="Text\KeywordMatch\UFIDACompressionMatchNode.cs" />
+    <Compile Include="Text\KeywordMatch\UFIDAFailOverNode.cs" />
+    <Compile Include="Text\KeywordMatch\UFIDAKeywordMatchManager.cs" />
+    <Compile Include="Text\KeywordMatch\UFIDAMatchResult.cs" />
+    <Compile Include="Text\UFIDABase64.cs" />
+    <Compile Include="Text\UFIDAEncoding.cs" />
+    <Compile Include="Text\UFIDAHex.cs" />
+    <Compile Include="Text\UFIDANumber32.cs" />
+    <Compile Include="Web\Mvc\Filters\UFIDAActionExecuteTimeAttribute.cs" />
+    <Compile Include="Web\Mvc\Filters\UFIDACacheAttribute.cs" />
+    <Compile Include="Web\Mvc\UFIDACsvFileResult.cs" />
+    <Compile Include="Web\Mvc\UFIDAHandleErrorAttribute.cs" />
+    <Compile Include="Web\Mvc\UFIDAJsonErrorResult.cs" />
+    <Compile Include="Web\Mvc\UFIDAJsonResult.cs" />
+    <Compile Include="Web\Mvc\UFIDAJsonSuccessResult.cs" />
+    <Compile Include="Web\Mvc\UFIDATextErrorResult.cs" />
+    <Compile Include="Web\Mvc\UFIDATextResult.cs" />
+    <Compile Include="Web\Mvc\UFIDATextSuccessResult.cs" />
+    <Compile Include="Web\Mvc\UFIDAXmlErrorResult.cs" />
+    <Compile Include="Web\Mvc\UFIDAXmlResult.cs" />
+    <Compile Include="Web\Mvc\UFIDAXmlSuccessResult.cs" />
+    <Compile Include="Web\UFIDAAntiXss.cs" />
+    <Compile Include="Web\UFIDAHttpActionType.cs" />
+    <Compile Include="Web\UFIDAHttpContext.cs" />
+    <Compile Include="Web\UFIDAJson.cs" />
+    <Compile Include="Web\UFIDAMimeType.cs" />
+    <Compile Include="Web\UFIDARequest.cs" />
+    <Compile Include="Xml\UFIDAXmlDocument.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Framework.csproj" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
