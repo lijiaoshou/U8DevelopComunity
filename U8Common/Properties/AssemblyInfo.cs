@@ -2,12 +2,12 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("UFIDA.Framework")]
+[assembly: AssemblyTitle("U8.Framework")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("UFIDA")]
-[assembly: AssemblyProduct("UFIDA.Framework")]
-[assembly: AssemblyCopyright("Copyright © UFIDA 2013")]
+[assembly: AssemblyCompany("U8")]
+[assembly: AssemblyProduct("U8.Framework")]
+[assembly: AssemblyCopyright("Copyright © U8 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]

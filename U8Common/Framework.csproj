@@ -7,8 +7,8 @@
     <ProjectGuid>{78D3F97A-2AD8-4182-A970-76865C077060}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UFIDA.Framework</RootNamespace>
-    <AssemblyName>UFIDA.Framework</AssemblyName>
+    <RootNamespace>U8.Framework</RootNamespace>
+    <AssemblyName>U8.Framework</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -29,7 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>bin\Debug\UFIDA.Framework.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\U8.Framework.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -39,7 +39,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>bin\Release\UFIDA.Framework.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\U8.Framework.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AntiXSSLibrary">
@@ -102,8 +102,8 @@
     <Compile Include="Business\SlOpenPageType.cs" />
     <Compile Include="Business\SlPassport.cs" />
     <Compile Include="Business\SlRefererType.cs" />
-    <Compile Include="Business\UFIDASearchDefine.cs" />
-    <Compile Include="Business\UFIDASearchGroupType.cs" />
+    <Compile Include="Business\U8SearchDefine.cs" />
+    <Compile Include="Business\U8SearchGroupType.cs" />
     <Compile Include="Business\SlUserType.cs" />
     <Compile Include="CodeDom\SlCompiler.cs" />
     <Compile Include="Collection\SlKeyValue.cs" />
