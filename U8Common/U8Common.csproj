@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{97D3025F-293B-4561-B5F4-C99172595A4E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>U8Common</RootNamespace>
+    <AssemblyName>U8Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AntiXSSLibrary">
+      <HintPath>..\packages\AntiXSSLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="ChnCharInfo">
+      <HintPath>..\packages\ChnCharInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlSanitizationLibrary">
+      <HintPath>..\packages\HtmlSanitizationLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Memcached.ClientLibrary">
+      <HintPath>..\packages\Memcached.ClientLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\packages\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Business\U8CityDefine.cs" />
+    <Compile Include="Business\U8CookieServer.cs" />
+    <Compile Include="Business\U8MobileAppCompanyDefine.cs" />
+    <Compile Include="Business\U8MobileAppOSDefine.cs" />
+    <Compile Include="Business\U8MobileAppPhoneTypeDefine.cs" />
+    <Compile Include="Business\U8MobileAppProductDefine.cs" />
+    <Compile Include="Business\U8MobileAppVersionDefine.cs" />
+    <Compile Include="Business\U8OpenPageType.cs" />
+    <Compile Include="Business\U8Passport.cs" />
+    <Compile Include="Business\U8RefererType.cs" />
+    <Compile Include="Business\U8SearchDefine.cs" />
+    <Compile Include="Business\U8SearchGroupType.cs" />
+    <Compile Include="Business\U8UserType.cs" />
+    <Compile Include="CodeDom\U8Compiler.cs" />
+    <Compile Include="Collection\U8KeyValue.cs" />
+    <Compile Include="Collection\U8NameValueCollection.cs" />
+    <Compile Include="Configuration\U8Config.cs" />
+    <Compile Include="Data\U8Database.cs" />
+    <Compile Include="Data\U8DatabaseMySql.cs" />
+    <Compile Include="Data\U8DatabaseSqlCe.cs" />
+    <Compile Include="Data\U8DatabaseSQLite.cs" />
+    <Compile Include="Data\U8DatabaseType.cs" />
+    <Compile Include="Data\U8DataSet.cs" />
+    <Compile Include="Data\U8DbType.cs" />
+    <Compile Include="Data\U8DbTypeMap.cs" />
+    <Compile Include="Data\U8FieldDescription.cs" />
+    <Compile Include="Diagnostics\U8AppContext.cs" />
+    <Compile Include="Diagnostics\U8Process.cs" />
+    <Compile Include="Diagnostics\U8Stopwatch.cs" />
+    <Compile Include="Diagnostics\U8TraceType.cs" />
+    <Compile Include="Drawing\U8ImageMatcher.cs" />
+    <Compile Include="IO\U8Directory.cs" />
+    <Compile Include="IO\U8File.cs" />
+    <Compile Include="IO\U8FileIndex.cs" />
+    <Compile Include="IO\U8FileType.cs" />
+    <Compile Include="IO\U8GZip.cs" />
+    <Compile Include="IO\U8Log.cs" />
+    <Compile Include="Net\U8Cache.cs" />
+    <Compile Include="Net\U8IPAddress.cs" />
+    <Compile Include="Net\U8IPRegion.cs" />
+    <Compile Include="Net\U8Mail.cs" />
+    <Compile Include="Net\U8MemcachedClient.cs" />
+    <Compile Include="Net\U8Socket.cs" />
+    <Compile Include="ObjectPool\U8AutoOverTimeConcurrentDictionaryObjectPool.cs" />
+    <Compile Include="ObjectPool\U8AutoOverTimeConcurrentDictionaryObjectPoolValue.cs" />
+    <Compile Include="ObjectPool\U8AutoOverTimeFileConcurrentDictionaryObjectPool.cs" />
+    <Compile Include="Office\U8Csv.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\U8Des.cs" />
+    <Compile Include="Security\U8Md5.cs" />
+    <Compile Include="Svn\U8SvnManager.cs" />
+    <Compile Include="Text\KeywordMatch\U8AbstractMatchNode.cs" />
+    <Compile Include="Text\KeywordMatch\U8CompressionMatchNode.cs" />
+    <Compile Include="Text\KeywordMatch\U8FailOverNode.cs" />
+    <Compile Include="Text\KeywordMatch\U8IMatchNode.cs" />
+    <Compile Include="Text\KeywordMatch\U8KeywordMatchManager.cs" />
+    <Compile Include="Text\KeywordMatch\U8MatchResult.cs" />
+    <Compile Include="Text\U8Base64.cs" />
+    <Compile Include="Text\U8Encoding.cs" />
+    <Compile Include="Text\U8Hex.cs" />
+    <Compile Include="Text\U8Number32.cs" />
+    <Compile Include="U8Action.cs" />
+    <Compile Include="U8Array.cs" />
+    <Compile Include="U8Calendar.cs" />
+    <Compile Include="U8CalendarItem.cs" />
+    <Compile Include="U8Compare.cs" />
+    <Compile Include="U8Container.cs" />
+    <Compile Include="U8Convert.cs" />
+    <Compile Include="U8DateTime.cs" />
+    <Compile Include="U8DivideLine.cs" />
+    <Compile Include="U8Exception.cs" />
+    <Compile Include="U8Guid.cs" />
+    <Compile Include="U8Math.cs" />
+    <Compile Include="U8Money.cs" />
+    <Compile Include="U8Object.cs" />
+    <Compile Include="U8Pinyin.cs" />
+    <Compile Include="U8Resource.Designer.cs" />
+    <Compile Include="U8RunState.cs" />
+    <Compile Include="U8Sms.cs" />
+    <Compile Include="U8Sso.cs" />
+    <Compile Include="U8StandardMessage.cs" />
+    <Compile Include="U8Stj.cs" />
+    <Compile Include="U8String.cs" />
+    <Compile Include="U8SyncObject.cs" />
+    <Compile Include="U8ThrowableMessage.cs" />
+    <Compile Include="U8Token.cs" />
+    <Compile Include="U8Validation.cs" />
+    <Compile Include="Web\Mvc\Filters\U8ActionExecuteTimeAttribute.cs" />
+    <Compile Include="Web\Mvc\Filters\U8CacheAttribute.cs" />
+    <Compile Include="Web\Mvc\U8CsvFileResult.cs" />
+    <Compile Include="Web\Mvc\U8HandleErrorAttribute.cs" />
+    <Compile Include="Web\Mvc\U8JsonErrorResult.cs" />
+    <Compile Include="Web\Mvc\U8JsonResult.cs" />
+    <Compile Include="Web\Mvc\U8JsonSuccessResult.cs" />
+    <Compile Include="Web\Mvc\U8TextErrorResult.cs" />
+    <Compile Include="Web\Mvc\U8TextResult.cs" />
+    <Compile Include="Web\Mvc\U8TextSuccessResult.cs" />
+    <Compile Include="Web\Mvc\U8XmlErrorResult.cs" />
+    <Compile Include="Web\Mvc\U8XmlResult.cs" />
+    <Compile Include="Web\Mvc\U8XmlSuccessResult.cs" />
+    <Compile Include="Web\U8AntiXss.cs" />
+    <Compile Include="Web\U8HttpActionType.cs" />
+    <Compile Include="Web\U8HttpContext.cs" />
+    <Compile Include="Web\U8Json.cs" />
+    <Compile Include="Web\U8MimeType.cs" />
+    <Compile Include="Web\U8Request.cs" />
+    <Compile Include="Xml\U8XmlDocument.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Framework.csproj" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

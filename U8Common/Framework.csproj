@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{78D3F97A-2AD8-4182-A970-76865C077060}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>U8.Framework</RootNamespace>
+    <AssemblyName>U8.Framework</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Debug\U8.Framework.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Release\U8.Framework.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AntiXSSLibrary">
+      <HintPath>..\Library\AntiXSSLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="ChnCharInfo">
+      <HintPath>..\Library\ChnCharInfo.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="HtmlSanitizationLibrary">
+      <HintPath>..\Library\HtmlSanitizationLibrary.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Memcached.ClientLibrary">
+      <HintPath>..\Library\Memcached.ClientLibrary.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.SourceSafe.Interop">
+      <HintPath>..\Library\Microsoft.VisualStudio.SourceSafe.Interop.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\Library\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\Library\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Library\CSharp\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe.Entity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Library\CSharp\System.Data.SqlServerCe.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\Library\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Apple\SlApn.cs" />
+    <Compile Include="Business\SlCityDefine.cs" />
+    <Compile Include="Business\SlCookieServer.cs" />
+    <Compile Include="Business\SlMobileAppCompanyDefine.cs" />
+    <Compile Include="Business\SlMobileAppOSDefine.cs" />
+    <Compile Include="Business\SlMobileAppPhoneTypeDefine.cs" />
+    <Compile Include="Business\SlMobileAppProductDefine.cs" />
+    <Compile Include="Business\SlMobileAppVersionDefine.cs" />
+    <Compile Include="Business\SlOpenPageType.cs" />
+    <Compile Include="Business\SlPassport.cs" />
+    <Compile Include="Business\SlRefererType.cs" />
+    <Compile Include="Business\U8SearchDefine.cs" />
+    <Compile Include="Business\U8SearchGroupType.cs" />
+    <Compile Include="Business\SlUserType.cs" />
+    <Compile Include="CodeDom\SlCompiler.cs" />
+    <Compile Include="Collection\SlKeyValue.cs" />
+    <Compile Include="Collection\SlNameValueCollection.cs" />
+    <Compile Include="Configuration\SlConfig.cs" />
+    <Compile Include="Data\SlDatabase.cs" />
+    <Compile Include="Data\SlDatabaseMySql.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\SlDatabaseSqlCe.cs" />
+    <Compile Include="Data\SlDatabaseSQLite.cs" />
+    <Compile Include="Data\SlDatabaseType.cs" />
+    <Compile Include="Data\SlDataSet.cs" />
+    <Compile Include="Data\SlDbType.cs" />
+    <Compile Include="Data\SlDbTypeMap.cs" />
+    <Compile Include="Data\SlFieldDescription.cs" />
+    <Compile Include="Diagnostics\SlAppContext.cs" />
+    <Compile Include="Diagnostics\SlProcess.cs" />
+    <Compile Include="Diagnostics\SlStopwatch.cs" />
+    <Compile Include="Diagnostics\SlTraceType.cs" />
+    <Compile Include="Drawing\SlImageMatcher.cs" />
+    <Compile Include="IO\SlDirectory.cs" />
+    <Compile Include="IO\SlFile.cs" />
+    <Compile Include="IO\SlFileIndex.cs" />
+    <Compile Include="IO\SlFileType.cs" />
+    <Compile Include="IO\SlGZip.cs" />
+    <Compile Include="IO\SlLog.cs" />
+    <Compile Include="Net\SlCache.cs" />
+    <Compile Include="Net\SlIPAddress.cs" />
+    <Compile Include="Net\SlIPRegion.cs" />
+    <Compile Include="Net\SlMail.cs" />
+    <Compile Include="Net\SlMemcachedClient.cs" />
+    <Compile Include="Net\SlSocket.cs" />
+    <Compile Include="ObjectPool\SlAutoOverTimeConcurrentDictionaryObjectPool.cs" />
+    <Compile Include="ObjectPool\SlAutoOverTimeConcurrentDictionaryObjectPoolValue.cs" />
+    <Compile Include="ObjectPool\SlAutoOverTimeFileConcurrentDictionaryObjectPool.cs" />
+    <Compile Include="Office\SlCsv.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\SlDes.cs" />
+    <Compile Include="Security\SlMd5.cs" />
+    <Compile Include="SlArray.cs" />
+    <Compile Include="SlCompare.cs" />
+    <Compile Include="SlContainer.cs" />
+    <Compile Include="SlDivideLine.cs" />
+    <Compile Include="SlAction.cs" />
+    <Compile Include="SlCalendar.cs" />
+    <Compile Include="SlCalendarItem.cs" />
+    <Compile Include="SlConvert.cs" />
+    <Compile Include="SlDateTime.cs" />
+    <Compile Include="SlException.cs" />
+    <Compile Include="SlGuid.cs" />
+    <Compile Include="SlMath.cs" />
+    <Compile Include="SlMoney.cs" />
+    <Compile Include="SlObject.cs" />
+    <Compile Include="SlPinyin.cs" />
+    <Compile Include="SlResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SlResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SlRunState.cs" />
+    <Compile Include="SlStj.cs" />
+    <Compile Include="SlSms.cs" />
+    <Compile Include="SlSso.cs" />
+    <Compile Include="SlStandardMessage.cs" />
+    <Compile Include="SlString.cs" />
+    <Compile Include="SlSyncObject.cs" />
+    <Compile Include="SlThrowableMessage.cs" />
+    <Compile Include="SlToken.cs" />
+    <Compile Include="SlValidation.cs" />
+    <Compile Include="Svn\SlSvnManager.cs" />
+    <Compile Include="Text\KeywordMatch\ISlMatchNode.cs" />
+    <Compile Include="Text\KeywordMatch\SlAbstractMatchNode.cs" />
+    <Compile Include="Text\KeywordMatch\SlCompressionMatchNode.cs" />
+    <Compile Include="Text\KeywordMatch\SlFailOverNode.cs" />
+    <Compile Include="Text\KeywordMatch\SlKeywordMatchManager.cs" />
+    <Compile Include="Text\KeywordMatch\SlMatchResult.cs" />
+    <Compile Include="Text\SlBase64.cs" />
+    <Compile Include="Text\SlEncoding.cs" />
+    <Compile Include="Text\SlHex.cs" />
+    <Compile Include="Text\SlNumber32.cs" />
+    <Compile Include="Web\Mvc\Filters\SlActionExecuteTimeAttribute.cs" />
+    <Compile Include="Web\Mvc\Filters\SlCacheAttribute.cs" />
+    <Compile Include="Web\Mvc\SlCsvFileResult.cs" />
+    <Compile Include="Web\Mvc\SlHandleErrorAttribute.cs" />
+    <Compile Include="Web\Mvc\SlJsonErrorResult.cs" />
+    <Compile Include="Web\Mvc\SlJsonResult.cs" />
+    <Compile Include="Web\Mvc\SlJsonSuccessResult.cs" />
+    <Compile Include="Web\Mvc\SlTextErrorResult.cs" />
+    <Compile Include="Web\Mvc\SlTextResult.cs" />
+    <Compile Include="Web\Mvc\SlTextSuccessResult.cs" />
+    <Compile Include="Web\Mvc\SlXmlErrorResult.cs" />
+    <Compile Include="Web\Mvc\SlXmlResult.cs" />
+    <Compile Include="Web\Mvc\SlXmlSuccessResult.cs" />
+    <Compile Include="Web\SlAntiXss.cs" />
+    <Compile Include="Web\SlHttpActionType.cs" />
+    <Compile Include="Web\SlHttpContext.cs" />
+    <Compile Include="Web\SlJson.cs" />
+    <Compile Include="Web\SlMimeType.cs" />
+    <Compile Include="Web\SlRequest.cs" />
+    <Compile Include="Xml\SlXmlDocument.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SlResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SlResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IP.gz" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rd /s/q "$(SolutionDir)Publish\$(ProjectName)\"
+xcopy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)Publish\$(ProjectName)\" /i /s /e /y
+xcopy "$(TargetDir)$(TargetName).XML" "$(SolutionDir)Publish\$(ProjectName)\" /i /s /e /y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
