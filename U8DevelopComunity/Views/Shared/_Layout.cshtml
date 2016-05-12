@@ -7,6 +7,18 @@
     <title>@ViewBag.Title - 我的 ASP.NET 应用程序</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <style>
+        .mynav {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -17,13 +29,40 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("应用程序名称", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("U8开发者社区", "U8Question", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("主页", "Index", "Home")</li>
-                    <li>@Html.ActionLink("关于", "About", "Home")</li>
-                    <li>@Html.ActionLink("联系方式", "Contact", "Home")</li>
+                <ul class="nav navbar-nav mynav">
+                    <li>
+                        <a href="/Home/U8ProfessionalDeveloper"><img src="@Url.Content("~/image/zhuanjia.gif")" alt="开发专家" />
+                          <span>开发专家</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/U8Question"><img src="@Url.Content("~/image/atv.png")" alt="知识问答" />
+                           <span>知识问答</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/U8Learn"><img src="@Url.Content("~/image/blog.png")" alt="知识学习" />
+                           <span>知识学习</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/U8Blogs"><img src="@Url.Content("~/image/icon-Blog.png")" alt="知识博客" />
+                           <span>知识博客</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/U8Group"><img src="@Url.Content("~/image/icon-Group.png")" alt="知识群组" />
+                           <span>知识群组</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/U8StudentArchives"><img src="@Url.Content("~/image/zhuanjia.gif")" alt="学员档案" />
+                        <span>学员档案</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -32,12 +71,8 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 应用程序</p>
+            <center><p>&copy; @DateTime.Now.Year - 用友优普有限公司</p></center>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

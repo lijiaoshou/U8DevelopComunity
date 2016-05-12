@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/U8lab.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(function () {
+        $(".student-each-term a").each(function(){
+            $(this).bind('click', function () {
+                handleClickTerm(this);
+            });
+        });
+    })
+
+    function handleClickTerm(obj)
+    {
+        var targetHref = $(obj).attr("targetHref");
+        $("#termStudent").attr("src",targetHref);
+    }
+</script>
+<div class="mycenter">
+    <img src="@Url.Content("~/image/zhuanjia.gif")" alt="学员档案" />
+    <span>学员</span>
+     <div class="student-each-term">
+         <a class="btn btn-default" href="#" targetHref="/image/xueyuan9.jpg" role="button">九期</a>
+         <a class="btn btn-default" href="#" targetHref="/image/xueyuan8.jpg" role="button">八期</a>
+         <a class="btn btn-default" href="#" targetHref="/image/xueyuan6.jpg" role="button">六期</a>
+         <a class="btn btn-default" href="#" targetHref="/image/xueyuan5.png" role="button">五期</a>
+         <a class="btn btn-default" href="#" targetHref="/image/xueyuan4.jpg" role="button">四期</a>
+         <a class="btn btn-default" href="#" targetHref="/image/xueyuan3.png" role="button">三期</a>
+         <a class="btn btn-default" href="#" targetHref="/image/xueyuan2.jpg" role="button">二期</a>
+         <a class="btn btn-default" href="#" targetHref="/image/xueyuan.jpg" role="button">一期</a>
+     </div>
+    <div class="mycenter">
+        <img id="termStudent" class="img-responsive" src="/image/xueyuan9.jpg" />
+    </div>
+</div>
+
+

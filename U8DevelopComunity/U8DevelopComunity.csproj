@@ -129,10 +129,25 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\U8lab.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="image\atv.png" />
+    <Content Include="image\blog.png" />
+    <Content Include="image\icon-Blog.png" />
+    <Content Include="image\icon-Group.png" />
+    <Content Include="image\xueyuan.jpg" />
+    <Content Include="image\xueyuan2.jpg" />
+    <Content Include="image\xueyuan3.png" />
+    <Content Include="image\xueyuan4.jpg" />
+    <Content Include="image\xueyuan5.png" />
+    <Content Include="image\xueyuan6.jpg" />
+    <Content Include="image\xueyuan8.jpg" />
+    <Content Include="image\xueyuan9.jpg" />
+    <Content Include="image\zhuanjia.gif" />
+    <Content Include="image\zhuanjia.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -158,9 +173,12 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\U8ProfessionalDeveloper.cshtml" />
+    <Content Include="Views\Home\U8Question.cshtml" />
+    <Content Include="Views\Home\U8Learn.cshtml" />
+    <Content Include="Views\Home\U8Blogs.cshtml" />
+    <Content Include="Views\Home\U8Group.cshtml" />
+    <Content Include="Views\Home\U8StudentArchives.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
