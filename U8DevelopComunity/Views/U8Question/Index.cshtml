@@ -1,0 +1,454 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/U8lab.css" rel="stylesheet" />
+<style>
+    .table td {
+        text-align: center;
+    }
+
+    .table th {
+        text-align: center;
+    }
+</style>
+
+<div class="mycenter">
+    <img src="@Url.Content("~/image/atv.png")" alt="知识库" />
+    <span>知识库</span>
+    <div class="question-nav">
+        <a class="btn btn-default" href="#" role="button">我的问题</a>
+        <a class="btn btn-default" href="#" role="button">知识库</a>
+        <a class="btn btn-default" href="#" role="button">需我回答的问题</a>
+        <a class="btn btn-default" href="#" role="button">所有问题</a>
+    </div>
+    <div class="@*question-nav-son*@ mycenter" style="margin-top:20px;">
+        <a class="" href="#" role="button">最新知识</a>
+        <span>&nbsp;|&nbsp;</span>
+        <a class="" href="#" role="button">最热门知识</a>
+
+        <a class="btn btn-default" href="#" id="askQuestion" role="button" style="background-color:lightblue;margin-left:40px;">+ <span>我要提问</span></a>
+    </div>
+
+    @*<div class="container">
+        <div class="row">*@
+    @*<div class="table-responsive">*@
+    <table class="table table-hover table-striped table-responsive">
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>文档编号</th>
+                <th>名称</th>
+                <th>所属类别</th>
+                <th>人气指数</th>
+                <th>专家姓名</th>
+            </tr>
+        </thead>
+        <tbody id="myTable">
+            <tr>
+                <td>1</td>
+                <td>2089</td>
+                <td>
+                    <a href="#">栏目如何使用初步</a>
+                </td>
+                <td>
+                    <span>[公共控件]</span>
+                </td>
+                <td>
+                    <span>人气:8</span>
+                </td>
+                <td>
+                    <span>专家:SuperLee</span>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2090</td>
+                <td>
+                    <a href="#">栏目如何使用初步</a>
+                </td>
+                <td>
+                    <span>[公共控件]</span>
+                </td>
+                <td>
+                    <span>人气:8</span>
+                </td>
+                <td>
+                    <span>专家:SuperLee</span>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>2089</td>
+                <td>
+                    <a href="#">栏目如何使用初步</a>
+                </td>
+                <td>
+                    <span>[公共控件]</span>
+                </td>
+                <td>
+                    <span>人气:8</span>
+                </td>
+                <td>
+                    <span>专家:SuperLee</span>
+                </td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>2089</td>
+                <td>
+                    <a href="#">栏目如何使用初步</a>
+                </td>
+                <td>
+                    <span>[公共控件]</span>
+                </td>
+                <td>
+                    <span>人气:8</span>
+                </td>
+                <td>
+                    <span>专家:SuperLee</span>
+                </td>
+            </tr>
+            <tr class="success">
+                <td>5</td>
+                <td>2089</td>
+                <td>
+                    <a href="#">栏目如何使用初步</a>
+                </td>
+                <td>
+                    <span>[公共控件]</span>
+                </td>
+                <td>
+                    <span>人气:8</span>
+                </td>
+                <td>
+                    <span>专家:SuperLee</span>
+                </td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>2089</td>
+                <td>
+                    <a href="#">栏目如何使用初步</a>
+                </td>
+                <td>
+                    <span>[公共控件]</span>
+                </td>
+                <td>
+                    <span>人气:8</span>
+                </td>
+                <td>
+                    <span>专家:SuperLee</span>
+                </td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr class="success">
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr class="success">
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr class="success">
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr class="success">
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+            <tr>
+                <td>.</td>
+                <td>Table cell</td>
+            </tr>
+
+        </tbody>
+    </table>
+    @*</div>*@
+    <div class="col-md-12 text-center">
+        <ul class="pagination" id="myPager"></ul>
+    </div>
+    @*</div>
+        </div>*@
+
+    <script type="text/javascript">
+        $(function () {
+            $("#askQuestion").click(askQuestion);
+            $('#myTable').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 5 });
+        })
+        $.fn.pageMe = function (opts) {
+            var $this = this,
+                defaults = {
+                    perPage: 7,
+                    showPrevNext: false,
+                    numbersPerPage: 5,
+                    hidePageNumbers: false
+                },
+                settings = $.extend(defaults, opts);
+
+            var listElement = $this;
+            var perPage = settings.perPage;
+            var children = listElement.children();
+            var pager = $('.pagination');
+
+            if (typeof settings.childSelector != "undefined") {
+                children = listElement.find(settings.childSelector);
+            }
+
+            if (typeof settings.pagerSelector != "undefined") {
+                pager = $(settings.pagerSelector);
+            }
+
+            var numItems = children.size();
+            var numPages = Math.ceil(numItems / perPage);
+
+            pager.data("curr", 0);
+
+            if (settings.showPrevNext) {
+                $('<li><a href="#" class="prev_link">«</a></li>').appendTo(pager);
+            }
+
+            var curr = 0;
+            while (numPages > curr && (settings.hidePageNumbers == false)) {
+                $('<li><a href="#" class="page_link">' + (curr + 1) + '</a></li>').appendTo(pager);
+                curr++;
+            }
+
+            if (settings.numbersPerPage > 1) {
+                $('.page_link').hide();
+                $('.page_link').slice(pager.data("curr"), settings.numbersPerPage).show();
+            }
+
+            if (settings.showPrevNext) {
+                $('<li><a href="#" class="next_link">»</a></li>').appendTo(pager);
+            }
+
+            pager.find('.page_link:first').addClass('active');
+            pager.find('.prev_link').hide();
+            if (numPages <= 1) {
+                pager.find('.next_link').hide();
+            }
+            pager.children().eq(1).addClass("active");
+
+            children.hide();
+            children.slice(0, perPage).show();
+
+            pager.find('li .page_link').click(function () {
+                var clickedPage = $(this).html().valueOf() - 1;
+                goTo(clickedPage, perPage);
+                return false;
+            });
+            pager.find('li .prev_link').click(function () {
+                previous();
+                return false;
+            });
+            pager.find('li .next_link').click(function () {
+                next();
+                return false;
+            });
+
+            function previous() {
+                var goToPage = parseInt(pager.data("curr")) - 1;
+                goTo(goToPage);
+            }
+
+            function next() {
+                goToPage = parseInt(pager.data("curr")) + 1;
+                goTo(goToPage);
+            }
+
+            function goTo(page) {
+                var startAt = page * perPage,
+                    endOn = startAt + perPage;
+
+                children.css('display', 'none').slice(startAt, endOn).show();
+
+                if (page >= 1) {
+                    pager.find('.prev_link').show();
+                }
+                else {
+                    pager.find('.prev_link').hide();
+                }
+
+                if (page < (numPages - 1)) {
+                    pager.find('.next_link').show();
+                }
+                else {
+                    pager.find('.next_link').hide();
+                }
+
+                pager.data("curr", page);
+
+                if (settings.numbersPerPage > 1) {
+                    $('.page_link').hide();
+                    $('.page_link').slice(page, settings.numbersPerPage + page).show();
+                }
+
+                pager.children().removeClass("active");
+                pager.children().eq(page + 1).addClass("active");
+
+            }
+        };
+
+        function askQuestion()
+        {
+            location.href = "http://localhost:47298/U8Question/AddNewQuestion";
+        }
+    </script>
+</div>
+

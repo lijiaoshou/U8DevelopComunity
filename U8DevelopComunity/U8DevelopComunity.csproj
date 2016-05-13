@@ -121,6 +121,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\U8BlogsController.cs" />
+    <Compile Include="Controllers\U8GroupController.cs" />
+    <Compile Include="Controllers\U8LearnController.cs" />
+    <Compile Include="Controllers\U8QuestionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -175,10 +179,12 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\U8ProfessionalDeveloper.cshtml" />
     <Content Include="Views\Home\U8Question.cshtml" />
-    <Content Include="Views\Home\U8Learn.cshtml" />
-    <Content Include="Views\Home\U8Blogs.cshtml" />
-    <Content Include="Views\Home\U8Group.cshtml" />
     <Content Include="Views\Home\U8StudentArchives.cshtml" />
+    <Content Include="Views\U8Question\Index.cshtml" />
+    <Content Include="Views\U8Blogs\Index.cshtml" />
+    <Content Include="Views\U8Group\Index.cshtml" />
+    <Content Include="Views\U8Learn\Index.cshtml" />
+    <Content Include="Views\U8Question\AddNewQuestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -191,6 +197,20 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj">
+      <Project>{dca71065-aafe-4639-aa50-8601ee03f34c}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <Project>{c6cb2b94-46d9-4719-92ba-cec175e7f5ec}</Project>
+      <Name>DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entity\Entity.csproj">
+      <Project>{db104730-3f1e-4cd9-a8f9-c690725743f3}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

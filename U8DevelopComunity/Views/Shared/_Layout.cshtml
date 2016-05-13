@@ -4,21 +4,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - 我的 ASP.NET 应用程序</title>
+    <title>@ViewBag.Title - U8开发者社区</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
-    <style>
-        .mynav {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-    </style>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -32,29 +24,29 @@
                 @Html.ActionLink("U8开发者社区", "U8Question", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav mynav">
+                <ul class="nav navbar-nav">
                     <li>
                         <a href="/Home/U8ProfessionalDeveloper"><img src="@Url.Content("~/image/zhuanjia.gif")" alt="开发专家" />
                           <span>开发专家</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/Home/U8Question"><img src="@Url.Content("~/image/atv.png")" alt="知识问答" />
+                        <a href="/U8Question/Index"><img src="@Url.Content("~/image/atv.png")" alt="知识问答" />
                            <span>知识问答</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/Home/U8Learn"><img src="@Url.Content("~/image/blog.png")" alt="知识学习" />
+                        <a href="/U8Learn/Index"><img src="@Url.Content("~/image/blog.png")" alt="知识学习" />
                            <span>知识学习</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/Home/U8Blogs"><img src="@Url.Content("~/image/icon-Blog.png")" alt="知识博客" />
+                        <a href="/U8Blogs/Index"><img src="@Url.Content("~/image/icon-Blog.png")" alt="知识博客" />
                            <span>知识博客</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/Home/U8Group"><img src="@Url.Content("~/image/icon-Group.png")" alt="知识群组" />
+                        <a href="/U8Group/Index"><img src="@Url.Content("~/image/icon-Group.png")" alt="知识群组" />
                            <span>知识群组</span>
                         </a>
                     </li>

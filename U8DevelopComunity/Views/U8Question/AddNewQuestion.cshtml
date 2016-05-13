@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "AddNewQuestion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    table label {
+        /*width: 95px;*/
+        /*float: left;*/
+        font-weight: normal;
+        color: #0463A6;
+        padding-top: 5px;
+    }
+</style>
+<link href="~/Content/U8lab.css" rel="stylesheet" />
+
+<div class="mycenter">
+    <img src="@Url.Content("~/image/atv.png")" alt="问题" />
+    <span>问题</span>
+
+    <table class="table table-hover table-striped table-responsive">
+        <tbody id="myTable">
+            <tr>
+               <td><label for="title">标题</label></td>
+               <td><input type="text" name="title"/></td>
+            </tr>
+            <tr>
+                <td><label for="category">选择分类</label></td>
+                <td>
+                    <select name="category">
+                        <option>选择分类</option>
+                        <option>平台</option>
+                        <option>移动及UAP</option>
+                        <option>供应链</option>
+                        <option>制造开发</option>
+                        <option>财务开发</option>
+                        <option>HR</option>
+                    </select>
+                </td>
+            </tr> 
+            <tr>
+                <td><label for="pro-developer">选择专家</label></td>
+                <td>
+                    <select name="pro-developer">
+                        <option>选择专家</option>
+                        <option>赵印 平台及公共开发部</option>
+                        <option>孙振林 移动及UAP开发部</option>
+                        <option>冯全 移动及UAP开发部</option>
+                        <option>杨庆峰 平台及公共开发部</option>
+                        <option>李艳 供应链开发部</option>
+                        <option>李晓强 供应链开发部</option>
+                    </select>
+                </td>
+            </tr> 
+            <tr>
+                <td><label for="product-category">所属产品</label></td>
+                <td>
+                    <select name="product-category">
+                        <option>12.0</option>
+                        <option>11.1</option>
+                        <option>11.0</option>
+                        <option>10.0</option>
+                    </select>
+
+                    <label for="priority">优先级</label>
+                    <select name="priority">
+                        <option>高</option>
+                        <option>中</option>
+                        <option>低</option>
+                    </select>
+
+                    <label for="expect-time">期望解决时间</label>
+                    <input type="text" />
+                </td>
+            </tr> 
+            <tr>
+                <td><label for="project">项目</label></td>
+                <td><input type="text" name="project"/></td>
+            </tr> 
+            <tr>
+                <td><label for="content">内容</label></td>
+                <td>
+                    <textarea cols="100" rows="20">
+
+                    </textarea>
+                    <br/>
+                    <label style="color:red;">*2000个字符以内</label>
+                    <br/>
+                    <label style="color:red;">*专家解答了您的问题后，如果您满意请设置为最佳答案</label>
+                </td>
+            </tr> 
+            <tr>
+                <td><label for="score">悬赏积分</label></td>
+                <td>
+                    <select name="score">
+                        <option>0分</option>
+                        <option>10分</option>
+                        <option>20分</option>
+                        <option>30分</option>
+                        <option>40分</option>
+                        <option>50分</option>
+                        <option>60分</option>
+                        <option>70分</option>
+                        <option>80分</option>
+                        <option>90分</option>
+                        <option>100分</option>
+                    </select>
+
+                    <label>目前你有<span style="color:red">802</span>个积分</label>
+                </td>
+            </tr> 
+            <tr>
+                <td></td>
+                <td>
+                    <input class="btn btn-primary" type="button" value="提交问题"/> 
+                </td>
+            </tr> 
+        </tbody>
+    </table>
+    <script type="text/javascript">
+        
+       
+    </script>
+</div>
+
+

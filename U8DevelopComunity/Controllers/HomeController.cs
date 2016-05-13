@@ -16,30 +16,6 @@ namespace U8DevelopComunity.Controllers
             return View();
         }
 
-        public ActionResult U8Question()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-        public ActionResult U8Learn()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-        public ActionResult U8Blogs()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-        public ActionResult U8Group()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
         public ActionResult U8StudentArchives()
         {
             ViewBag.Message = "Your contact page.";
