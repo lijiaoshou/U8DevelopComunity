@@ -3,6 +3,90 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="~/Scripts/bootstrap-table-zh-CN.min.js"></script>
+<script src="~/Scripts/bootstrap-table.min.js"></script>
+<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
 
-<h2>Index</h2>
+    <table id="table" data-toggle="table"
+           data-click-to-select="true"
+           data-row-style="rowStyle"
+           data-query-params="queryParams"
+           data-pagination="true"
+           data-search="true"
+           data-height="600"
+           class="table-no-bordered table-responsive">
+        <thead>
 
+            <tr>
+                @*<th data-field="id">ID</th>
+                <th data-field="invited_name">受邀人名称</th>
+                <th data-field="invited_phone">受邀人手机</th>
+                <th data-field="invited_email">受邀人邮箱</th>
+                <th data-field="inviter_name">邀请人名称</th>
+                <th data-field="inviter_org">邀请人部门</th>
+                <th data-field="invite_time">邀请时间</th>
+                <th data-field="status">邀请状态</th>
+                <th data-field="action" data-formatter="actionFormatter" data-events="actionEvents">操作</th>*@
+                <th>ID</th>
+                <th>受邀人名称</th>
+                <th>受邀人手机</th>
+                <th>受邀人邮箱</th>
+                <th>邀请人名称</th>
+                <th>邀请人部门</th>
+                <th>邀请时间</th>
+                <th>邀请状态</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>asdfasd</td>
+                <td>sdfgfdh</td>
+                <td>dfghdfgh</td>
+                <td>dgjdgj</td>
+                <td>dfgjdfg</td>
+                <td>dghjdg</td>
+                <td>fghj</td>
+                <td>fghj</td>
+            </tr>
+            <tr>
+                <td>asdfasd</td>
+                <td>sdfgfdh</td>
+                <td>dfghdfgh</td>
+                <td>dgjdgj</td>
+                <td>dfgjdfg</td>
+                <td>dghjdg</td>
+                <td>fghj</td>
+                <td>fghj</td>
+            </tr>
+            <tr>
+                <td>asdfasd</td>
+                <td>sdfgfdh</td>
+                <td>dfghdfgh</td>
+                <td>dgjdgj</td>
+                <td>dfgjdfg</td>
+                <td>dghjdg</td>
+                <td>fghj</td>
+                <td>fghj</td>
+            </tr>
+            <tr>
+                <td>asdfasd</td>
+                <td>sdfgfdh</td>
+                <td>dfghdfgh</td>
+                <td>dgjdgj</td>
+                <td>dfgjdfg</td>
+                <td>dghjdg</td>
+                <td>fghj</td>
+                <td>fghj</td>
+            </tr>
+            <tr>
+                <td>asdfasd</td>
+                <td>sdfgfdh</td>
+                <td>dfghdfgh</td>
+                <td>dgjdgj</td>
+                <td>dfgjdfg</td>
+                <td>dghjdg</td>
+                <td>fghj</td>
+                <td>fghj</td>
+            </tr>
+        </tbody>
+    </table>
