@@ -46,6 +46,20 @@
     <Compile Include="U8Learn.cs" />
     <Compile Include="U8Question.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <Project>{c6cb2b94-46d9-4719-92ba-cec175e7f5ec}</Project>
+      <Name>DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entity\Entity.csproj">
+      <Project>{db104730-3f1e-4cd9-a8f9-c690725743f3}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\U8Common\U8Common.csproj">
+      <Project>{97d3025f-293b-4561-b5f4-c99172595a4e}</Project>
+      <Name>U8Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

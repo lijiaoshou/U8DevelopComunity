@@ -128,6 +128,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\U8Question.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -194,7 +195,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -209,13 +209,13 @@
       <Project>{dca71065-aafe-4639-aa50-8601ee03f34c}</Project>
       <Name>Business</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
-      <Project>{c6cb2b94-46d9-4719-92ba-cec175e7f5ec}</Project>
-      <Name>DataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entity\Entity.csproj">
       <Project>{db104730-3f1e-4cd9-a8f9-c690725743f3}</Project>
       <Name>Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\U8Common\U8Common.csproj">
+      <Project>{97d3025f-293b-4561-b5f4-c99172595a4e}</Project>
+      <Name>U8Common</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

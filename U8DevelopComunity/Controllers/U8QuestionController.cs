@@ -22,7 +22,8 @@ namespace U8DevelopComunity.Controllers
         /// <returns></returns>
         public ActionResult AddNewQuestion(U8Question question)
         {
-            return View();
+
+            return null;
         }
     }
 }
