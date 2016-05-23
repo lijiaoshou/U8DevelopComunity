@@ -20,10 +20,14 @@ namespace U8DevelopComunity.Controllers
         /// </summary>
         /// <param name="question">问题实体</param>
         /// <returns></returns>
-        public ActionResult AddNewQuestion(U8Question question)
-        {
+        //public ActionResult AddNewQuestion(U8Question question)
+        //{
+        //    return null;
+        //}
 
-            return null;
+        public ActionResult AddNewQuestion()
+        {
+            return View();
         }
     }
 }

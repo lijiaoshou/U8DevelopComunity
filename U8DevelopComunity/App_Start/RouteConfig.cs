@@ -16,7 +16,7 @@ namespace U8DevelopComunity
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "U8Question", action = "Idex", id = UrlParameter.Optional }
+                defaults: new { controller = "U8Question", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
