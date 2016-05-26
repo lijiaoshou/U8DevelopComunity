@@ -10,9 +10,11 @@ namespace Business
 {
     public class U8User
     {
-        public Entity.U8User GetUserInfo(string userName, string password)
+        public Entity.U8User GetUserInfo(string databaseConnectionString,string userName, string password)
         {
-            return DataAccess.U8User.GetUserInfo(userName,password);
+            //对密码进行md5加密
+            password = U8.Framework.Security.U8Md5.HashPassword(password);
+            return DataAccess.U8User.GetUserInfo(databaseConnectionString, userName,password);
         }
 
         public bool RegistUser(string databaseConnectionString,Entity.U8User userInfo)
@@ -28,18 +30,28 @@ namespace Business
         /// </summary>
         /// <param name="Msg">邮件信息</param>
         /// <returns></returns>
-        public bool SendEmailToAdmin(string userEmail)
+        public bool SendEmail(string databaseConnectionString,string userEmail)
         {
             string resultMessage = string.Empty;
             bool isSend = false;
             List<string> mailList = new List<string>();
-            mailList.Add("lichaor@yonyou.com");
+            mailList.Add(userEmail);
 
+            //获取随机生成的六位数数字密码并加密
+            string newRefundPwd = GetNumAndLetter();
+            string newRefundPwdMD5 = U8.Framework.Security.U8Md5.HashPassword(newRefundPwd);
+
+            //将重置的密码更新到数据库
+            bool updateResult = DataAccess.U8User.UpdatePassword(databaseConnectionString, userEmail, newRefundPwdMD5);
+            if (!updateResult)
+            {
+                return false;
+            }
 
             // 检测邮件是否发送成功
             try
             {
-                SendEmail("U8开发者社区申请密码重置", "有客户需要重置密码:" + "<br/>"+"需要重置密码的用户账户："+userEmail, mailList);
+                SendEmail("U8开发者社区申请密码重置", "您的U8开发者社区密码已经重置为："+ newRefundPwd + "<br>请重新登录", mailList);
                 isSend = true;
             }
             catch (Exception ex)
@@ -47,6 +59,19 @@ namespace Business
             }
 
             return isSend;
+        }
+
+        //随机生成六位密码（数字+字符）
+        public static string GetNumAndLetter()
+        {
+            Random rd = new Random();
+            string str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            string result = "";
+            for (int i = 0; i < 6; i++)
+            {
+                result += str[rd.Next(str.Length)];
+            }
+            return result;
         }
 
         /// <summary>
@@ -92,6 +117,11 @@ namespace Business
                 isPass = false;
             }
             return isPass;
+        }
+
+        public Entity.U8User GetByUserID(string databaseConnectionString,string UserEmail)
+        {
+            return DataAccess.U8User.GetByUserID(databaseConnectionString, UserEmail);
         }
     }
 }

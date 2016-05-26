@@ -12,17 +12,29 @@ namespace U8DevelopComunity.Controllers
         // GET: U8System
         public ActionResult Index()
         {
-            return View();
+            return CommonViewHandle();
         }
 
         public ActionResult Register()
         {
-            return View();
+            return CommonViewHandle();
         }
 
         public ActionResult ForgotPassword()
         {
-            return View();
+            return CommonViewHandle();
+        }
+
+        public ActionResult CommonViewHandle()
+        {
+            if (Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "U8Question");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
@@ -41,15 +53,39 @@ namespace U8DevelopComunity.Controllers
             }
             string userName = Request["LoginCode"];
             string userPwd = Request["LoginPwd"];
+            bool autoLogin = string.IsNullOrEmpty(Request["AutoLogin"])?false:true;
 
             Business.U8User user = new Business.U8User();
-            Entity.U8User userInfo = user.GetUserInfo(userName,userPwd);
+            Entity.U8User userInfo = user.GetUserInfo(Common.Config.ConnectionString,userName,userPwd);
             if (userInfo != null)
             {
                 //Nginx
-                //Session["userInfo"] = userInfo;
+
                 //改成初始化identity的
-                IniIdentity(userInfo);
+                //IniIdentity(userInfo);
+
+                //写入缓存
+                string cacheName = "Identity_" + userInfo.UserEmail;
+                if (autoLogin)
+                {
+                    Identity.AutoLogin = true;
+                    Common.Cache.Instance.Add(cacheName, userInfo, 3600 * 24 * 7);
+                }
+                else
+                {
+                    Identity.AutoLogin = false;
+                    Common.Cache.Instance.Add(cacheName, userInfo, 3600);
+                }
+
+                //写cookie,登录
+                Entity.U8User cookieUser = new Entity.U8User() { RealName = userInfo.RealName.ToString(), UserEmail = userInfo.UserEmail };
+                Identity.Login(cookieUser, autoLogin);
+               
+
+                //记录登陆日志
+                //LoginLog(sysUser);
+                //更新用户登录时间
+                //EC_User_UserInfoService.UpdateByUserID(Config.ConnectionString_channelsales_Writer, sysUser, "Login");
 
                 return Content("ok:登录成功");
             }
@@ -57,6 +93,20 @@ namespace U8DevelopComunity.Controllers
             {
                 return Content("no:登录失败!!");
             }
+        }
+
+        public ActionResult Logout()
+        {
+            //清空Identity.User缓存
+            Common.Cache.Instance.Reset();
+            foreach (string key in System.Web.HttpContext.Current.Request.Cookies.AllKeys)
+            {
+                System.Web.HttpContext.Current.Response.Cookies.Clear();
+                //System.Web.HttpContext.Current.Response.Cookies[key].Domain = Common.Config.CookieDomain;
+                //System.Web.HttpContext.Current.Response.Cookies[key].Expires = DateTime.Now.AddDays(-1);
+            }
+
+            return RedirectToAction("Index", "U8System");
         }
         
         [HttpPost]
@@ -66,13 +116,13 @@ namespace U8DevelopComunity.Controllers
             string validateCode = Session["code_regist"] == null ? string.Empty : Session["code_regist"].ToString();
             if (string.IsNullOrEmpty(validateCode))
             {
-                return Content("no:验证码错误!!");
+                return Content("no;验证码错误!!");
             }
             Session["code_regist"] = null;
             string txtCode = Request["vCode_Regist"];
             if (!validateCode.Equals(txtCode, StringComparison.InvariantCultureIgnoreCase))
             {
-                return Content("no:验证码错误!!");
+                return Content("no;验证码错误!!");
             }
 
             Entity.U8User userInfo = new Entity.U8User();
@@ -82,7 +132,6 @@ namespace U8DevelopComunity.Controllers
             userInfo.Password = Request["userPassword"];
             userInfo.Phone = Request["userPhone"];
             userInfo.Province = Request["userProvince"];
-            userInfo.Role = Request["userRole"];
             userInfo.UserEmail = Request["userEmail"];
             userInfo.IsYonyouEmployee =IsInternalUser(userInfo.UserEmail);
             string confirmPassword = Request["userConfirmPassword"];
@@ -105,19 +154,17 @@ namespace U8DevelopComunity.Controllers
             bool registResult= user.RegistUser(Common.Config.ConnectionString,userInfo);
             if (registResult)
             {
-                return Content("ok:注册成功");
+                return Content("ok;注册成功");
             }
             else
             {
-                return Content("no:注册失败!!");
+                return Content("no;注册失败!!");
             }
         }
 
         [HttpPost]
         public ActionResult ForgotPassword(string userEmail)
         {
-            //vCode_ForgotPassword
-
             string validateCode = Session["code_forgotpassword"] == null ? string.Empty : Session["code_forgotpassword"].ToString();
             if (string.IsNullOrEmpty(validateCode))
             {
@@ -130,17 +177,24 @@ namespace U8DevelopComunity.Controllers
                 return Content("no:验证码错误!!");
             }
 
-            //string UserEmail = Request["userEmail"];
             if (string.IsNullOrEmpty(userEmail))
             {
                 return Content("no:邮箱不可为空!!");
             }
 
             Business.U8User user = new Business.U8User();
-            bool Result = user.SendEmailToAdmin(userEmail);
+            bool Result = user.SendEmail(Common.Config.ConnectionString, userEmail);
             if (Result)
             {
-                return Content("ok:已通知管理员修改密码，稍后密码会发送到您填写的邮箱中！");
+                //重置密码后，清空缓存，cookie立即过期，在前端控制直接跳转到登录界面重新登录
+                string cacheName = "Identity_" + userEmail;
+                Common.Cache.Instance.Remove(cacheName);
+
+                System.Web.HttpContext.Current.Response.Cookies.Clear();
+                //System.Web.HttpContext.Current.Response.Cookies[Common.Config.LoginName].Expires = DateTime.Now.AddDays(-1);
+                //System.Web.HttpContext.Current.Response.Cookies[Common.Config.UserID].Expires = DateTime.Now.AddDays(-1);
+
+                return Content("ok:重置密码已发送到您的邮箱，请注意查收！");
             }
             else
             {
@@ -198,15 +252,22 @@ namespace U8DevelopComunity.Controllers
         /// <param name="user">用户实体</param>
         public void IniIdentity(Entity.U8User user)
         {
-            Identity.City = user.City;
-            Identity.Company = user.Company;
-            Identity.Gender = user.Gender;
-            Identity.IsYonyouEmployee = user.IsYonyouEmployee;
-            Identity.Password = user.Password;
-            Identity.Phone = user.Phone;
-            Identity.Province = user.Province;
-            Identity.Role = user.Role;
-            Identity.UserEmail = user.UserEmail;
+            Identity userInfo = new Identity();
+            userInfo.City = user.City;
+            userInfo.Company = user.Company;
+            userInfo.Gender = user.Gender;
+            userInfo.IsYonyouEmployee = user.IsYonyouEmployee;
+            userInfo.Phone = user.Phone;
+            userInfo.Province = user.Province;
+            userInfo.Role = user.Role;
+            userInfo.UserEmail = user.UserEmail;
+            userInfo.CreateTime = user.CreateTime;
+            userInfo.UpdateTime = user.UpdateTime;
+            userInfo.LastLoginTime = user.LastLoginTime;
+            userInfo.RealName = user.RealName;
+            userInfo.IsDelete = user.IsDelete;
+
+            Identity.User = userInfo;
         }
 
         /// <summary>
@@ -238,7 +299,7 @@ namespace U8DevelopComunity.Controllers
         public bool infoNotNullOrEmpty(Entity.U8User user)
         {
             if (string.IsNullOrEmpty(user.City) || string.IsNullOrEmpty(user.Company) || string.IsNullOrEmpty(user.Gender) || string.IsNullOrEmpty(user.Password)
-                || string.IsNullOrEmpty(user.Phone) || string.IsNullOrEmpty(user.Province) || string.IsNullOrEmpty(user.Role) || string.IsNullOrEmpty(user.UserEmail)
+                || string.IsNullOrEmpty(user.Phone) || string.IsNullOrEmpty(user.Province) || string.IsNullOrEmpty(user.UserEmail)
                 || user.Province=="选择省"||user.City=="选择市"||user.Gender=="选择性别")
             {
                 return false;

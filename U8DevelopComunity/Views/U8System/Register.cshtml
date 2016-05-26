@@ -57,6 +57,7 @@
     <script src="~/Scripts/jquery.city.select.min.js"></script>
     <script src="~/Scripts/prettify.js"></script>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
     <style>
         div select {
@@ -77,7 +78,8 @@
             $('#userProvince').prepend('<option value="" selected="selected">选择省</option>');
             $('#userCity').prepend('<option value="" selected="selected">选择城市</option>');
 
-            $('input').attr('autocomplete','off');
+            $('input').attr('autocomplete', 'off');
+
         });
 
         function changeCheckCode() {
@@ -86,34 +88,12 @@
 
         //异步注册回调函数
         function afterRegist(data) {
-            var serverData = data.split(':');
+            var serverData = data.split(';');
             if (serverData[0] == "ok") {
+                alert("注册成功！")
                 window.top.location.href = "/U8System/Index";
-                //先提示用户注册成功，几秒后使用注册信息登录到系统主界面
-
-                //如果注册成功，异步登录（使用用户注册的帐户名和密码），进入主界面
-                //$.ajax({
-                //    type: 'post',
-                //    url: "Login/UserLogin",
-                //    data: { "LoginCode": serverData[1], "LoginPwd": serverData[2], "vCode_regist": Session["code_login"] },
-                //    //登录回调函数
-                //    success: function (data_regist) {
-                //        var serverData_regist = data_regist.split(':');
-                //        if (serverData_regist[0] == "ok") {
-                //            window.location.href = "/Home/Index";
-                //        }
-                //        else {
-                //            $("#errorMsg").text(serverData[1]);
-                //        }
-                //    },
-                //    //发生错误回调函数
-                //    error: function (data_regist) {
-                //        $("#errorMsg").text(serverData[1]);
-                //    }
-                //})
-                //window.location.href = "/Home/Index";
             } else if (serverData[0] == "no") {
-                alert(serverData[2]);
+                alert(serverData[1]);
                 changeCheckCode();
             } else {
                 alert("系统繁忙!!");
@@ -136,14 +116,14 @@
                     <input class="form-control" type="text" placeholder="输入姓名" name="userName" required>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="password" placeholder="输入密码" name="userPassword" required>
+                    <input class="form-control" type="password" placeholder="输入密码" name="userPassword" id="pass1" required>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="password" placeholder="确认密码" name="userConfirmPassword" required>
+                    <input class="form-control" type="password" placeholder="确认密码" name="userConfirmPassword" id="pass2" required>
                 </div>
                 <div class="form-group">
                     <select class="form-control" name="userGender" required>
-                        <option value="">选择性别</option>
+                        <option value="" selected>选择性别</option>
                         <option>男</option>
                         <option>女</option>
                     </select>
@@ -162,11 +142,10 @@
                 <div class="form-group">
                     <input class="form-control" placeholder="输入验证码" type="text" name="vCode_Regist" required style="width:60%;float:left;">
                     <img id="img" src="/U8System/ShowRegistValidateCode/?id=1" style="width:20%;left:-25px;position:relative;" onclick="changeCheckCode();" />
-                    <input type="submit" value="&#xf054;" style="width:10%;">
+                    <input type="submit" value="&#xf054;" style="width:10%;" id="submitButton">
                 </div>
-
                 <div class="form-options">
-                    <label class="checkbox"><input type="checkbox"><span>我已阅读并无条件接受 <a href="">《U8+开发交流平台使用协议》</a></span></label>
+                    <label class="checkbox"><input type="checkbox" name="contract" style="display:block;opacity:0.01;" required><span>我已阅读并无条件接受 <a href="">《U8+开发交流平台使用协议》</a></span></label>
                 </div>
             }
             <p class="signup">

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using U8DevelopComunity.Common;
 
 namespace U8DevelopComunity.Controllers
 {
@@ -12,7 +13,14 @@ namespace U8DevelopComunity.Controllers
         // GET: U8Question
         public ActionResult Index()
         {
-            return View();
+            if (Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "U8System");    
+            }
         }
 
         /// <summary>

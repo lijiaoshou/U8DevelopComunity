@@ -8,7 +8,11 @@ namespace Entity
 {
     public class U8User
     {
+        public string UserId { get; set; }
+
         public string UserEmail { get; set; }
+
+        public string RealName { get; set; }
 
         public string Password { get; set; }
 
@@ -16,7 +20,7 @@ namespace Entity
 
         public string Phone { get; set; }
 
-        public string Company{get;set;}
+        public string Company { get; set; }
 
         public string Province { get; set; }
 
@@ -25,5 +29,13 @@ namespace Entity
         public string Role { get; set; }
 
         public bool IsYonyouEmployee { get; set; }
+
+        public DateTime CreateTime { get; set; }
+
+        public DateTime UpdateTime { get; set; }
+
+        public DateTime LastLoginTime { get; set; }
+
+        public bool IsDelete { get; set; }
     }
 }
