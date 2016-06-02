@@ -1,0 +1,100 @@
+﻿@{
+    Layout = null;
+}
+<div class="slpager" style="margin-top:20px;">
+    <a id="btnStartPage@(ViewBag.btnStartPage_Suffix)" title="首页"><b>|&lt;</b></a>&nbsp;<a id="btnUpPage@(ViewBag.btnUpPage_Suffix)" title="上一页"><b>&lt;</b></a>
+    <input id="txtCurrentPage@(ViewBag.txtCurrentPage_Suffix)" title="当前页" type="text" value="1" style="width: 60px; text-align: center;" />/
+    <input readonly="readonly" id="txtMaxPage@(ViewBag.txtMaxPage_Suffix)" title="总页数" type="text" value="1" style="width: 60px; background-color: #EEEEEE; text-align: center;" />
+    <a id="btnDownPage@(ViewBag.btnDownPage_Suffix)" title="下一页"><b>&gt;</b></a>&nbsp;<a id="btnEndPage@(ViewBag.btnEndPage_Suffix)" title="尾页"><b>&gt;|</b></a>
+    <select id="txtPageSize@(ViewBag.txtPageSize_Suffix)" style="height: 25px;" title="每页行数">
+        <option value="10">10行</option>
+        <option value="15" selected="selected">15行</option>
+        <option value="20">20行</option>
+        <option value="30">30行</option>
+        <option value="40">40行</option>
+        <option value="50">50行</option>
+        <option value="100">100行</option>
+        <option value="500">500行</option>
+    </select>
+    共<font color="red" id="TotalCount@(ViewBag.TotalCount_Suffix)">0</font>条记录
+</div>
+<script type="text/javascript">
+    function ResetSearch(RowsCount) {
+        var MaxPage = Math.ceil(RowsCount / $("#txtPageSize@(ViewBag.txtPageSize_Suffix)").val());
+        if (MaxPage == 0) {
+            MaxPage = 1;
+        }
+        $("#txtMaxPage@(ViewBag.txtMaxPage_Suffix)").val(MaxPage);
+        $("#TotalCount@(ViewBag.TotalCount_Suffix)").text(RowsCount);
+        var currentPage = parseInt($("#txtCurrentPage@(ViewBag.txtCurrentPage_Suffix)").val());
+        if (currentPage > MaxPage) {
+            $("#txtCurrentPage@(ViewBag.txtCurrentPage_Suffix)").val(1);
+            search@(ViewBag.search)();
+        }
+    }
+
+    $(function () {
+        //首页按钮
+        $("#btnStartPage@(ViewBag.btnStartPage_Suffix)").click(function (event) {
+            var currentPage = 1;
+            $("#txtCurrentPage@(ViewBag.txtCurrentPage_Suffix)").val(currentPage);
+            search@(ViewBag.search)();
+        });
+        //尾页按钮
+        $("#btnEndPage@(ViewBag.btnEndPage_Suffix)").click(function (event) {
+            var currentPage = parseInt($("#txtMaxPage@(ViewBag.txtMaxPage_Suffix)").val());
+            $("#txtCurrentPage@(ViewBag.txtCurrentPage_Suffix)").val(currentPage);
+            search@(ViewBag.search)();
+        });
+        //下一页按钮
+        $("#btnUpPage@(ViewBag.btnDownPage_Suffix)").click(function (event) {
+            var currentPage = parseInt($("#txtCurrentPage@(ViewBag.txtCurrentPage_Suffix)").val());
+            currentPage = currentPage - 1;
+            if (currentPage < 1) {
+                currentPage = 1;
+                alert("已经到达首页！");
+            }
+            $("#txtCurrentPage@(ViewBag.txtCurrentPage_Suffix)").val(currentPage);
+            search@(ViewBag.search)();
+        });
+
+        //上一页按钮
+        $("#btnDownPage@(ViewBag.btnUpPage_Suffix)").click(function (event) {
+            var currentPage = parseInt($("#txtCurrentPage@(ViewBag.txtCurrentPage_Suffix)").val());
+            currentPage = currentPage + 1;
+            var maxPage = parseInt($("#txtMaxPage@(ViewBag.txtMaxPage_Suffix)").val());
+            if (currentPage > maxPage) {
+                currentPage = maxPage;
+                alert("已经到达尾页！");
+            }
+            $("#txtCurrentPage@(ViewBag.txtCurrentPage_Suffix)").val(currentPage);
+            search@(ViewBag.search)();
+        });
+        //输入页面
+        $("#txtCurrentPage").keydown(function (event) {
+            if (event.keyCode == 13) {
+                var currentPage = parseInt($("#txtCurrentPage@(ViewBag.txtCurrentPage_Suffix)").val());
+                var maxPage = parseInt($("#txtMaxPage@(ViewBag.txtMaxPage_Suffix)").val());
+                if (currentPage > maxPage) {
+                    currentPage = maxPage;
+                    $("#txtCurrentPage@(ViewBag.txtCurrentPage_Suffix)").val(currentPage);
+                    alert("已经到达尾页！");
+                }
+                search@(ViewBag.search)();
+                event.preventDefault();
+            }
+        })
+        //更新页尺寸
+        $("#txtPageSize@(ViewBag.txtPageSize_Suffix)").change(function () {
+            $('#txtCurrentPage@(ViewBag.txtCurrentPage_Suffix)').val('1');
+            search@(ViewBag.search)();
+        });
+        //查询按钮
+        $("#btnSearch@(ViewBag.btnSearch_Suffix)").click(function (event) {
+            $("#txtCurrentPage@(ViewBag.txtCurrentPage_Suffix)").val("1");
+            $("#TotalCount@(ViewBag.TotalCount_Suffix)").text("0");
+            $("#txtMaxPage@(ViewBag.txtMaxPage_Suffix)").val("1");
+            search@(ViewBag.search)();
+        });
+    });
+</script>

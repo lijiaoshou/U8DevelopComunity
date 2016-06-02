@@ -37,5 +37,11 @@ namespace Entity
         public DateTime LastLoginTime { get; set; }
 
         public bool IsDelete { get; set; }
+
+        public int ExistingScore { get; set; }
+
+        public string Department { get; set; }
+
+        public int NoticeCount { get; set; }
     }
 }

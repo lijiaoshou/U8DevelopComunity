@@ -8,6 +8,8 @@ namespace Entity
 {
     public class U8Question
     {
+        public int XuHao { get; set; }
+
         public int ID { get; set; }
 
         public string ProcessStatus { get; set; }
@@ -37,5 +39,11 @@ namespace Entity
         public bool InKnowledgeLib { get; set;}
 
         public string SonCategory { get; set; }
+
+        public string Submiter { get; set; }
+
+        public DateTime UpdateTime { get; set; }
+
+        public string Modifiler { get; set; }
     }
 }

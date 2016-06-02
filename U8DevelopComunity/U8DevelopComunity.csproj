@@ -127,12 +127,14 @@
     <Compile Include="Common\Config.cs" />
     <Compile Include="Common\Identity.cs" />
     <Compile Include="Common\Security.cs" />
+    <Compile Include="Common\U8StandardMessage.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\U8BlogsController.cs" />
     <Compile Include="Controllers\U8GroupController.cs" />
     <Compile Include="Controllers\U8LearnController.cs" />
     <Compile Include="Controllers\U8QuestionController.cs" />
     <Compile Include="Controllers\U8SystemController.cs" />
+    <Compile Include="Filters\CustomExceptionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -148,10 +150,12 @@
     <Compile Include="Scripts\ueEditor\net\App_Code\UploadHandler.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-table.css" />
     <Content Include="Content\bootstrap-table.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="image\biaomei.gif" />
     <Content Include="image\checkmark.png" />
     <Content Include="Content\thirdpart\bootstrap-switch.css" />
     <Content Include="Content\thirdpart\bootstrap.min.css" />
@@ -183,6 +187,7 @@
     <Content Include="image\icon-Group.png" />
     <Content Include="Content\thirdpart\login-blurry-bg.jpg" />
     <Content Include="image\logo-login%402x.png" />
+    <Content Include="image\notice.gif" />
     <Content Include="image\xueyuan.jpg" />
     <Content Include="image\xueyuan2.jpg" />
     <Content Include="image\xueyuan3.png" />
@@ -193,6 +198,8 @@
     <Content Include="image\xueyuan9.jpg" />
     <Content Include="image\zhuanjia.gif" />
     <Content Include="image\zhuanjia.png" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.zh-CN.js" />
     <Content Include="Scripts\bootstrap-table-zh-CN.js" />
     <Content Include="Scripts\bootstrap-table-zh-CN.min.js" />
     <Content Include="Scripts\bootstrap-table.js" />
@@ -559,6 +566,11 @@
     <Content Include="Views\U8System\Index.cshtml" />
     <Content Include="Views\U8System\Register.cshtml" />
     <Content Include="Views\U8System\ForgotPassword.cshtml" />
+    <Content Include="Views\Common\RenderPaging.cshtml" />
+    <Content Include="Views\U8Question\QuestionDetails.cshtml" />
+    <Content Include="Views\U8System\Notification.cshtml" />
+    <Content Include="Views\U8System\PersonalPage.cshtml" />
+    <Content Include="Views\U8System\SystemAnnounce.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

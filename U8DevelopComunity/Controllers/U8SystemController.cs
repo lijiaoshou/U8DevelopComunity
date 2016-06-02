@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using U8.Framework.Web;
+using U8.Framework.Web.Mvc;
 using U8DevelopComunity.Common;
 
 namespace U8DevelopComunity.Controllers
@@ -308,6 +310,60 @@ namespace U8DevelopComunity.Controllers
             {
                 return true;
             }
+        }
+
+        public ActionResult GetNoticeCount()
+        {
+            var actionResult = default(ContentResult);
+            Identity identity = Identity.User;
+            string userid = identity.UserId;
+            Business.U8User u8user = new Business.U8User();
+            
+            int noticeCount= u8user.GetNoticeCount(Common.Config.ConnectionString, userid);
+
+            actionResult = new U8JsonResult()
+            {
+                Content = U8Json.ToJson(new
+                {
+                    Message = "Success",
+                    Content = noticeCount
+                })
+            };
+
+            return actionResult;
+        }
+
+        /// <summary>
+        /// 通知页
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Notification()
+        {
+            //清空数据库中该账户的通知数量
+            Identity identity = Identity.User;
+            Business.U8User u8user = new Business.U8User();
+            bool clearResut = u8user.ClearNoticeCount(Common.Config.ConnectionString,identity.UserId);
+
+            //查出关于该通知消息的实体
+            List<Entity.U8NoticeLog> listNoticeLog = u8user.GetNoticeLog(Common.Config.ConnectionString, identity.UserId);
+
+            //跳转到通知页
+            return View(listNoticeLog);
+        }
+
+        /// <summary>
+        /// 个人主页
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult PersonalPage()
+        {
+            ViewBag.userid = Request.QueryString["userid"];
+            return View();
+        }
+
+        public ActionResult SystemAnnounce()
+        {
+            return View();
         }
     }
 }

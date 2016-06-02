@@ -43,6 +43,12 @@ namespace U8DevelopComunity.Common
 
         public bool IsDelete { get; set; }
 
+        public int ExistingScore { get; set; }
+
+        public string Department { get; set; }
+
+        public int NoticeCount { get; set; }
+
         public static void Login(Entity.U8User u8User,bool autoLogin)
         {
             //先获取请求Url
@@ -148,6 +154,10 @@ namespace U8DevelopComunity.Common
                         user.Role = u8user.Role;
                         user.UpdateTime = u8user.UpdateTime;
                         user.UserEmail = u8user.UserEmail;
+                        user.UserId = u8user.UserId;
+                        user.ExistingScore = u8user.ExistingScore;
+                        user.Department = u8user.Department;
+                        user.NoticeCount = u8user.NoticeCount;
 
                         return user;
                     }
@@ -176,6 +186,9 @@ namespace U8DevelopComunity.Common
                         user.UpdateTime = userInfo.UpdateTime;
                         user.UserEmail = userInfo.UserEmail;
                         user.UserId = userInfo.UserId;
+                        user.ExistingScore = userInfo.ExistingScore;
+                        user.Department = userInfo.Department;
+                        user.NoticeCount = userInfo.NoticeCount;
                     }
 
                     if (Identity.AutoLogin)

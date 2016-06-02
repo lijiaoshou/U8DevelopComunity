@@ -2,6 +2,35 @@
 @{
     ViewBag.Title = "AddNewQuestion";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Entity.U8User> listExpert = ViewBag.Expert as List<Entity.U8User>;
+    string experts = "<option value='0'>选择专家</option>";
+    string products = "";
+    string categories = "<option value='0'>选择分类</option>";
+    if (listExpert != null)
+    {
+        foreach(Entity.U8User u8user in listExpert)
+        {
+            experts += "<option value='" + u8user.UserId + "'" + ">" + u8user.RealName + "  " + u8user.Department + "</option>";
+        }
+    }
+
+    List<Entity.U8ProductEnum> listProduct = ViewBag.U8ProductEnum as List<Entity.U8ProductEnum>;
+    if (listProduct != null)
+    {
+        foreach (Entity.U8ProductEnum product in listProduct)
+        {
+            products += "<option value='" + product.id + "'" + ">" + product.Name + "</option>";
+        }
+    }
+
+    List<Entity.U8Category> listCategory = ViewBag.U8Category as List<Entity.U8Category>;
+    if (listCategory != null)
+    {
+        foreach (Entity.U8Category category in listCategory)
+        {
+            categories += "<option value='" + category.id + "'" + ">" + category.CategoryName + "</option>";
+        }
+    }
 }
 
 <style>
@@ -22,69 +51,52 @@
 <script src="~/Scripts/ueEditor/lang/zh-cn/zh-cn.js"></script>
 <link href="~/Content/U8lab.css" rel="stylesheet" />
 <link href="~/Scripts/ueEditor/themes/default/css/ueditor.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.zh-CN.js"></script>
 
 <div class="mycenter">
-    <img src="@Url.Content("~/image/atv.png")" alt="问题" style="margin-left:20%;"/>
+    <img src="@Url.Content("~/image/atv.png")" alt="问题" style="margin-left:20%;" />
     <span>问题</span>
 
     <table class="mycenter table table-hover table-striped table-responsive" style="width:60%;margin-top:1px;">
         <tbody id="myTable">
             <tr>
                 <td><label for="title">标题</label></td>
-                <td><input type="text" name="title" /></td>
+                <td><input type="text" name="title" id="title" /></td>
             </tr>
             <tr>
                 <td><label for="category">选择分类</label></td>
                 <td>
-                    <select name="category">
-                        <option>选择分类</option>
-                        <option>平台</option>
-                        <option>移动及UAP</option>
-                        <option>供应链</option>
-                        <option>制造开发</option>
-                        <option>财务开发</option>
-                        <option>HR</option>
-                    </select>
+                    <select name="category" id="category"></select>
+                    <select name="soncategory" id="soncategory" style="display:none;"></select>
                 </td>
             </tr>
             <tr>
                 <td><label for="pro-developer">选择专家</label></td>
                 <td>
-                    <select name="pro-developer">
-                        <option>选择专家</option>
-                        <option>赵印 平台及公共开发部</option>
-                        <option>孙振林 移动及UAP开发部</option>
-                        <option>冯全 移动及UAP开发部</option>
-                        <option>杨庆峰 平台及公共开发部</option>
-                        <option>李艳 供应链开发部</option>
-                        <option>李晓强 供应链开发部</option>
-                    </select>
+                    <select name="pro-developer" id="pro-developer"></select>
                 </td>
             </tr>
             <tr>
                 <td><label for="product-category">所属产品</label></td>
                 <td>
-                    <select name="product-category">
-                        <option>12.0</option>
-                        <option>11.1</option>
-                        <option>11.0</option>
-                        <option>10.0</option>
-                    </select>
-
+                    <select name="product-category" id="product-category"></select>
                     <label for="priority">优先级</label>
-                    <select name="priority">
+                    <select name="priority" id="priority">
                         <option>高</option>
                         <option>中</option>
                         <option>低</option>
                     </select>
 
                     <label for="expect-time">期望解决时间</label>
-                    <input type="text" />
+                    <input type="text" value="" id="datetimepicker" data-date-format="yyyy-mm-dd hh:ii">
+                    @*<input type="text" id="expect-time" />*@
                 </td>
             </tr>
             <tr>
                 <td><label for="project">项目</label></td>
-                <td><input type="text" name="project" /></td>
+                <td><input type="text" name="project" id="project" /></td>
             </tr>
             <tr>
                 <td style="width:12%;"><label for="content">内容</label></td>
@@ -100,7 +112,7 @@
             <tr>
                 <td><label for="score">悬赏积分</label></td>
                 <td>
-                    <select name="score">
+                    <select name="score" id="score">
                         <option>0分</option>
                         <option>10分</option>
                         <option>20分</option>
@@ -120,7 +132,8 @@
             <tr>
                 <td></td>
                 <td>
-                    <input class="btn btn-primary" type="button" value="提交问题" />
+                    <input class="btn btn-primary" type="button" id="submitQuestion" value="提交问题" />&nbsp;&nbsp;
+                    <input class="btn btn-primary" type="button" id="btnCancle" value="取消" />
                 </td>
             </tr>
         </tbody>
@@ -133,6 +146,57 @@
 
 <!-- 实例化编辑器 -->
 <script type="text/javascript">
+
+    $(function () {
+        $('#datetimepicker').datetimepicker({
+            minView: "month", //选择日期后，不会再跳转去选择时分秒 
+            format: "yyyy-mm-dd", //选择日期后，文本框显示的日期格式 
+            language: 'zh-CN', //汉化 
+            autoclose: true //选择日期后自动关闭 
+        });
+
+        $("#pro-developer").append("@Html.Raw(experts)");
+        $("#product-category").append("@Html.Raw(products)");
+        $("#category").append("@Html.Raw(categories)");
+        $("#category").change(IniSonCategory);
+    });
+
+    function IniSonCategory() {
+        if ($('#category').val() == "0" || $('#category').val() == "10") {
+            $('#soncategory').css('display', 'none');
+            return;
+        }
+        else {
+            $('#soncategory').css('display', 'inline-block');
+        }
+
+        var category = $('#category').val();
+        var data = "";
+        data = data + "categoryid=" + encodeURI(category);
+
+        //获取子类别
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/U8Question/GetSonCategory",
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            dataType: "json",
+            data: data,
+            success: function (result) {
+                if (result != null) {//正常返回且成功
+                    $('#soncategory').empty();
+                    $('#soncategory').append(result.Content);
+                }
+                else {
+                    if (result != null) {//处理cookie超时
+                        if (result.Message === 'TimeOut') { alert('登录超时，请重新登录！'); }
+                        else { alert(result.Message); search(); }
+                    }
+                }
+            }
+        });
+    }
 
     //实例化编辑器
     var ue = UE.getEditor('editor', {
@@ -147,4 +211,76 @@
 
     });
 
+    $("#submitQuestion").click(submitQuestion);
+
+    function submitQuestion() {
+        if (!confirm("您确定要提交吗？")) {
+            return;
+        }
+
+        var title = $('#title').val();
+        var category = $('#category').val();
+        var soncategory = $('#soncategory').val();
+        var prodeveloper = $('#pro-developer').val();
+        var productcategory = $('#product-category').val();
+        var priority = $("#priority").val();
+        var expecttime = $('#datetimepicker').val();
+        var project = $('#project').val();
+        var content =  getContent();
+        var score = $('#score').val().replace('分','');
+        var data = "";
+
+        data = data + "Title=" + encodeURI(title);
+        data = data + "&Category=" + encodeURI(category);
+        data = data + "&SonCategory=" + encodeURI(soncategory);
+        data = data + "&Expert=" + encodeURI(prodeveloper);
+        data = data + "&ProductBelong=" + encodeURI(productcategory);
+        data = data + "&Provility=" + encodeURI(priority);
+        data = data + "&ExpectFixTime=" + encodeURI(expecttime);
+        data = data + "&Project=" + encodeURI(project);
+        data = data + "&QuestionContent=" + encodeURI(content);
+        //data = data + "&QuestionContent=" + encodeURI("<p>sdfgdsfgsfgfdsg</p><pre class='brush:c#;toolbar:false'>using&nbsp;System;asdfadf</pre><p><img src='/Scripts/ueEditor/net/upload/image/20160530/6360022993747074751917528.gif' title='001mWx81gy6GMysp0jR87&amp;690.gif' alt='001mWx81gy6GMysp0jR87&amp;690.gif'/></p>")
+        data = data + "&OfferReward=" + encodeURI(score);
+
+        //新建批次
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/U8Question/AddNewQuestion",
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            dataType: "json",
+            data: data,
+            success: function (result) {
+
+                if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {//正常返回且成功
+                    alert("添加成功");
+                    //添加成功后刷新批次列表页面
+                    location.href = "/U8Question/Index";
+                }
+                else {
+                    if (result != null) {//处理cookie超时
+                        if (result.Message === 'TimeOut') { alert('登录超时，请重新登录！'); }
+                        else { alert(result.Message); search(); }
+                    }
+                }
+            }
+        });
+    }
+
+    $("#btnCancle").click(function () {
+        if (!confirm("您确定要取消么？")) {
+            return;
+        }
+        location.href = "/U8Question/Index";
+    });
+
+    function getContent() {
+        var arr = [];
+        //arr.push("使用editor.getContent()方法可以获得编辑器的内容");
+        //arr.push("内容为：");
+        // arr.push();
+        //alert(arr.join("\n"));
+        return UE.getEditor('editor').getContent()
+    }
 </script>

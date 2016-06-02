@@ -1,0 +1,31 @@
+﻿
+@model Entity.U8Question
+@{
+    ViewBag.Title = "QuestionDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2>QuestionDetails</h2>
+@*<h1>"@ViewBag.Id"</h1>*@
+<ul>
+    <li>@Model.ID</li>
+    <li>@Model.ProcessStatus</li>
+    <li>@Model.Title</li>
+    <li>@Model.Category</li>
+    <li>@Model.Expert</li>
+    <li>@Model.ProductBelong</li>
+    <li>@Model.Provility</li>
+    <li>@Model.ExpectFixTime</li>
+    <li>@Model.SubmitTime</li>
+    <li>@Model.Project</li>
+    <li>@Html.Raw(Model.QuestionContent)</li>
+    <li>@Model.OfferReward</li>
+    <li>@Model.Popularity</li>
+    <li>@Model.InKnowledgeLib</li>
+    <li>@Model.SonCategory</li>
+    <li>@Model.Submiter</li>
+    <li>@Model.UpdateTime</li>
+    <li>@Model.Modifiler</li>
+</ul>
+

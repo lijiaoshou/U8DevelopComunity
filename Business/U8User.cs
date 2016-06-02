@@ -123,5 +123,27 @@ namespace Business
         {
             return DataAccess.U8User.GetByUserID(databaseConnectionString, UserEmail);
         }
+
+
+        /// <summary>
+        /// 获取当前登录账户有多少条通知信息
+        /// </summary>
+        /// <param name="databaseConectionString"></param>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public int GetNoticeCount(string databaseConectionString, string userid)
+        {
+            return DataAccess.U8User.GetNoticeCount(databaseConectionString,userid);
+        }
+
+        public bool ClearNoticeCount(string databaseConnectionString, string userid)
+        {
+            return DataAccess.U8User.ClearNoticeCount(databaseConnectionString,userid);
+        }
+
+        public List<Entity.U8NoticeLog>  GetNoticeLog(string databaseConnectionString, string userid)
+        {
+            return DataAccess.U8User.GetNoticeLog(databaseConnectionString, userid);
+        }
     }
 }

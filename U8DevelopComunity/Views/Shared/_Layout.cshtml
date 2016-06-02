@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - U8开发者社区</title>
@@ -11,6 +11,20 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @{
+        U8DevelopComunity.Common.Identity identity = U8DevelopComunity.Common.Identity.User;
+     }
+    <style>
+        .navg-son li a{
+            padding-top:5px;
+            padding-right:5px;
+            padding-bottom:5px;
+            padding-left:5px;
+        }
+        .navg-son {
+            margin-top:10px;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -21,43 +35,66 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("U8开发者社区", "U8Question", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("U8开发者社区", "Index", "U8System", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" style="margin-right:25px;">
                     <li>
-                        <a href="/Home/U8ProfessionalDeveloper"><img src="@Url.Content("~/image/zhuanjia.gif")" alt="开发专家" />
-                          <span>开发专家</span>
+                        <a href="/Home/U8ProfessionalDeveloper">
+                            <img src="@Url.Content("~/image/zhuanjia.gif")" alt="开发专家" />
+                            <span>开发专家</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/U8Question/Index"><img src="@Url.Content("~/image/atv.png")" alt="知识问答" />
-                           <span>知识问答</span>
+                        <a href="/U8Question/Index">
+                            <img src="@Url.Content("~/image/atv.png")" alt="知识问答" />
+                            <span>知识问答</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/U8Learn/Index"><img src="@Url.Content("~/image/blog.png")" alt="知识学习" />
-                           <span>知识学习</span>
+                        <a href="/U8Learn/Index">
+                            <img src="@Url.Content("~/image/blog.png")" alt="知识学习" />
+                            <span>知识学习</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/U8Blogs/Index"><img src="@Url.Content("~/image/icon-Blog.png")" alt="知识博客" />
-                           <span>知识博客</span>
+                        <a href="/U8Blogs/Index">
+                            <img src="@Url.Content("~/image/icon-Blog.png")" alt="知识博客" />
+                            <span>知识博客</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/U8Group/Index"><img src="@Url.Content("~/image/icon-Group.png")" alt="知识群组" />
-                           <span>知识群组</span>
+                        <a href="/U8Group/Index">
+                            <img src="@Url.Content("~/image/icon-Group.png")" alt="知识群组" />
+                            <span>知识群组</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/Home/U8StudentArchives"><img src="@Url.Content("~/image/zhuanjia.gif")" alt="学员档案" />
-                        <span>学员档案</span>
+                        <a href="/Home/U8StudentArchives">
+                            <img src="@Url.Content("~/image/zhuanjia.gif")" alt="学员档案" />
+                            <span>学员档案</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://www.biaomeibi.com/Home/Search/index.html?search_type=1&task_title=">
+                            <img src="@Url.Content("~/image/biaomei.gif")" alt="表魅网" />
+                            <span>表魅网</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navg-son">
+                    <li>
+                        <a href="/U8System/Notification">
+                            <span id="noticeCount">通知(0)</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/U8System/PersonalPage?userid=@identity.UserId">
+                            <span id="welcomeInfo">欢迎您--</span>
                         </a>
                     </li>
                     <li>
                         <a href="/U8System/Logout">
-                            @*<img src="@Url.Content("~/image/zhuanjia.gif")" alt="学员档案" />*@
                             <span>退出登录</span>
                         </a>
                     </li>
@@ -72,5 +109,62 @@
             <center><p>&copy; @DateTime.Now.Year - 用友优普有限公司</p></center>
         </footer>
     </div>
+    <script>
+
+        var intervalFlag;
+        $(function () {
+            GetNotificationCount();
+        });
+
+        $('#noticeCount').click(function () {
+            clearInterval(intervalFlag);
+            $('#noticeCount').text("通知(0)");
+        });
+
+        function GetNotificationCount() {
+            var username = "@identity.RealName";
+            $('#welcomeInfo').text('欢迎您--' + username);
+
+            var data = "";
+
+            //获取子类别
+            $.ajax({
+                async: true,
+                type: "POST",
+                url: "/U8System/GetNoticeCount",
+                cache: false,
+                timeout: 60 * 60 * 1000,
+                dataType: "json",
+                data: data,
+                success: function (result) {
+                    if (result != null) {//正常返回且成功
+                        $('#noticeCount').text("通知(" + result.Content + ")");
+
+                        //有新通知时闪动提示
+                        if ($('#noticeCount').text() != "通知(0)")
+                        {
+                            intervalFlag = setInterval("flashRemind()", 500)
+                        }
+
+                    }
+                    else {
+                        if (result != null) {//处理cookie超时
+                            if (result.Message === 'TimeOut') { alert('登录超时，请重新登录！'); }
+                            else { alert(result.Message); search(); }
+                        }
+                    }
+                }
+            });
+        }
+
+        function flashRemind() {
+            if ($('#noticeCount').css('color') == 'rgb(153, 153, 153)') {
+                $('#noticeCount').css('color', 'red');
+            }
+            else {
+                $('#noticeCount').css('color', 'rgb(153, 153, 153)');
+            }
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Entity.U8NoticeLog>
+@{
+    ViewBag.Title = "Notification";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<Entity.U8NoticeLog> listNoticeLog = Model as List<Entity.U8NoticeLog>;
+    string noticeLi = "";
+}
+<img src="@Url.Content("~/image/notice.gif")" />通知
+
+<ul>
+    @{
+        foreach (Entity.U8NoticeLog noticeLog in listNoticeLog)
+        {
+            if (noticeLog.NoticeCategory == "知识问答")
+            {
+                noticeLi ="<li>"+ noticeLog.Receiver + " " + "回答了你的问题： " + noticeLog.NoticeInfo+"</li>";
+            }
+            else if (noticeLog.NoticeCategory == "系统通知")
+            {
+                noticeLi ="<li>"+ "系统通知： " + noticeLog.NoticeInfo+"</li>";
+            }
+        }
+    }
+   @Html.Raw(noticeLi)
+</ul>
