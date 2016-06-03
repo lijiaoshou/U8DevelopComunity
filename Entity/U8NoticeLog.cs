@@ -21,5 +21,7 @@ namespace Entity
         public string NoticeCategory { get; set; }
 
         public string InfoId { get; set; }
+
+        public bool IsAskQuestion { get; set; }
     }
 }

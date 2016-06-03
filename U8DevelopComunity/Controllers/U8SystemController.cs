@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using U8.Framework;
 using U8.Framework.Web;
 using U8.Framework.Web.Mvc;
 using U8DevelopComunity.Common;
@@ -361,9 +362,197 @@ namespace U8DevelopComunity.Controllers
             return View();
         }
 
-        public ActionResult SystemAnnounce()
+        public ActionResult SystemNotice(string id)
+        {
+            Entity.U8SystemNotice u8systemNotice = new Entity.U8SystemNotice();
+            Business.U8System u8system = new Business.U8System();
+            u8systemNotice= u8system.GetSystemNoticeById(Common.Config.ConnectionString, id);
+
+            return View(u8systemNotice);
+        }
+
+        public ActionResult AddSystemNotice()
         {
             return View();
+        }
+
+        [ValidateInput(false)]
+        [HttpPost]
+        public ActionResult AddSystemNotice(Entity.U8SystemNotice systemNotice)
+        {
+            string IsEdit = Request.Form["IsEdit"];
+
+            string result = "";
+            string errorMsg = "";
+
+            systemNotice.CreateTime = DateTime.Now;
+            Identity identity = Identity.User;
+            systemNotice.Submiter = identity.UserId;
+
+            bool verifyPassed = VerifyUserInput(systemNotice, out errorMsg);
+            if (!verifyPassed)
+            {
+                return new U8JsonResult()
+                {
+                    Content = U8Json.ToJson(new { Message = errorMsg })
+                };
+            }
+
+            Business.U8System u8system= new Business.U8System();
+            bool submitResult = u8system.SubmitSystemNotice(Common.Config.ConnectionString, systemNotice, IsEdit);
+
+            if (submitResult)
+            {
+                result = Common.U8StandardMessage.Success;
+            }
+            else
+            {
+                result = Common.U8StandardMessage.Error;
+            }
+            return new U8JsonResult()
+            {
+                Content = U8Json.ToJson(new
+                {
+                    Message = result
+                })
+            };
+        }
+
+        public bool VerifyUserInput(Entity.U8SystemNotice systemNotice, out string errorMsg)
+        {
+            if (string.IsNullOrEmpty(systemNotice.Title))
+            {
+                errorMsg = "请填写标题！";
+                return false;
+            }
+            if (string.IsNullOrEmpty(systemNotice.SystemNoticeContent))
+            {
+                errorMsg = "请填写内容！";
+                return false;
+            }
+
+            errorMsg = "";
+            return true;
+        }
+
+        [HttpGet]
+        public ActionResult SystemNoticeList()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetSystemNoticeList()
+        {
+            var actionResult = default(ContentResult);
+            int allCount = 0;
+            int currentPage = U8Convert.TryToInt32(Request.Form["currentPage"]);
+            int pageSize = U8Convert.TryToInt32(Request.Form["pageSize"]);
+
+            Business.U8System u8system = new Business.U8System();
+            List<Entity.U8SystemNotice> listSystemNotice = u8system.GetSystemNoticeList(Common.Config.ConnectionString,currentPage,pageSize,out allCount);
+
+            if (listSystemNotice != null)
+            {
+                var rows = listSystemNotice.Select(e =>
+                {
+                    return new
+                    {
+                        XuHao = e.XuHao,
+                        Id = e.id,
+                        Title = "<a href='/U8System/SystemNotice?id=" + e.id + "'>" + e.Title + "</a>",
+                        Submiter =  e.Submiter ,
+                        CreateTime = e.CreateTime.ToString("yyyy-MM-dd hh:mm:ss"),
+                        Status=e.Status
+                    };
+                }).ToList();
+                actionResult = new U8JsonResult()
+                {
+                    Content = U8Json.ToJson(new
+                    {
+                        Message = "Success",
+                        Rows = rows,
+                        Total = allCount
+                    })
+                };
+            }
+            return actionResult;
+        }
+
+        [HttpPost]
+        public ActionResult PublishNoticeFromDraft(string id)
+        {
+            string result = "";
+            if (string.IsNullOrEmpty(id))
+            {
+                return new U8JsonResult()
+                {
+                    Content = U8Json.ToJson(new { Message = "通知id不可为空！" })
+                };
+            }
+
+            Identity identity = Identity.User;
+            Business.U8System u8system = new Business.U8System();
+            bool submitResult = u8system.PublishNoticeFromDraft(Common.Config.ConnectionString, id,identity.UserId);
+
+            if (submitResult)
+            {
+                result = Common.U8StandardMessage.Success;
+            }
+            else
+            {
+                result = Common.U8StandardMessage.Error;
+            }
+            return new U8JsonResult()
+            {
+                Content = U8Json.ToJson(new
+                {
+                    Message = result
+                })
+            };
+        }
+
+        [HttpPost]
+        public ActionResult DeleteNoticeFromDraft(string id)
+        {
+            string result = "";
+            if (string.IsNullOrEmpty(id))
+            {
+                return new U8JsonResult()
+                {
+                    Content = U8Json.ToJson(new { Message = "通知id不可为空！" })
+                };
+            }
+
+            Identity identity = Identity.User;
+            Business.U8System u8system = new Business.U8System();
+            bool deleteResult = u8system.DeleteNoticeFromDraft(Common.Config.ConnectionString, id);
+
+            if (deleteResult)
+            {
+                result = Common.U8StandardMessage.Success;
+            }
+            else
+            {
+                result = Common.U8StandardMessage.Error;
+            }
+            return new U8JsonResult()
+            {
+                Content = U8Json.ToJson(new
+                {
+                    Message = result
+                })
+            };
+        }
+
+        public ActionResult SystemNoticeEdit(string id)
+        {
+            ViewBag.Id = id;
+            Business.U8System u8system = new Business.U8System();
+            Entity.U8SystemNotice systemNotice = new Entity.U8SystemNotice();
+            systemNotice = u8system.GetSystemNoticeById(Common.Config.ConnectionString,id);
+
+            return View(systemNotice);
         }
     }
 }

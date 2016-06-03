@@ -132,12 +132,12 @@ namespace DataAccess
         public static List<Entity.U8NoticeLog> GetNoticeLog(string databaseConnectionString, string userid)
         {
             string sql = string.Format(@"SELECT notice.id,notice.Sender as Senderid,usersender.realname as Sendername, notice.Receiver as Receiverid,
-                                        userreceiver.realname as Receivername,notice.NoticeInfo,notice.CreateTime,noticecate.NoticeName as NoticeCategory,notice.InfoId
+                                        userreceiver.realname as Receivername,notice.NoticeInfo,notice.CreateTime,noticecate.NoticeName as NoticeCategory,notice.InfoId,notice.IsAskQuestion
                                         FROM NoticeLog as notice
                                         INNER JOIN NoticeCategoryTable as noticecate ON noticecate.id=notice.NoticeCategory 
-                                        INNER JOIN UserTable as usersender on notice.sender=usersender.id
-                                        INNER JOIN UserTable as userreceiver on notice.Receiver=userreceiver.id
-                                        where notice.Sender='{0}' or notice.Receiver='{0}'", userid);
+                                        LEFT JOIN UserTable as usersender on notice.sender=usersender.id
+                                        LEFT JOIN UserTable as userreceiver on notice.Receiver=userreceiver.id
+                                        where notice.Sender='{0}' or notice.Receiver='{0}' or notice.Receiver='0' order by notice.CreateTime desc", userid);
             DataTable dt = new DataTable();
             List<Entity.U8NoticeLog> listNoticeLog = new List<Entity.U8NoticeLog>();
             U8Database.Fill(databaseConnectionString, sql, dt, null);
@@ -153,6 +153,7 @@ namespace DataAccess
                     noticeLog.CreateTime = U8Convert.TryToDateTime(dt.Rows[i]["CreateTime"]);
                     noticeLog.NoticeCategory = U8Convert.TryToString(dt.Rows[i]["NoticeCategory"]);
                     noticeLog.InfoId = U8Convert.TryToString(dt.Rows[i]["InfoId"]);
+                    noticeLog.IsAskQuestion = U8Convert.TryToInt32(dt.Rows[i]["IsAskQuestion"]) == 0?true:false;
 
                     listNoticeLog.Add(noticeLog);
                 }
@@ -165,7 +166,7 @@ namespace DataAccess
         {
             if (category == "系统通知")
             {
-                return "<a href='/U8System/SystemAnnounce?id="+id+"'>"+ notice+"</a>";
+                return "<a href='/U8System/SystemNotice?id="+id+"'>"+ notice+"</a>";
             }
             else if (category == "知识问答")
             {

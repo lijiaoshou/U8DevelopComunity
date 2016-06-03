@@ -1,0 +1,150 @@
+﻿@model Entity.U8SystemNotice
+@{
+    ViewBag.Title = "SystemNoticeEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>编辑系统通知页面</h2>
+
+<style>
+    table label {
+        /*width: 95px;*/
+        /*float: left;*/
+        font-weight: normal;
+        color: #0463A6;
+        padding-top: 5px;
+    }
+</style>
+
+<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+<script src="~/Scripts/ueEditor/ueditor.config.js"></script>
+<script src="~/Scripts/ueEditor/ueditor.all.js"></script>
+
+<script src="~/Scripts/ueEditor/lang/zh-cn/zh-cn.js"></script>
+<link href="~/Content/U8lab.css" rel="stylesheet" />
+<link href="~/Scripts/ueEditor/themes/default/css/ueditor.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.zh-CN.js"></script>
+
+<div class="mycenter">
+    <img src="@Url.Content("~/image/atv.png")" alt="问题" style="margin-left:20%;" />
+    <span>发布系统通知</span>
+
+    <table class="mycenter table table-hover table-striped table-responsive" style="width:60%;margin-top:1px;">
+        <tbody id="myTable">
+            <tr>
+                <td><label for="title">标题</label></td>
+                <td><input type="text" name="title" id="title" /></td>
+            </tr>
+            <tr>
+                <td style="width:12%;"><label for="content">内容</label></td>
+                <td style="height:320px;">
+                    <script id="editor" type="text/plain">
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input class="btn btn-primary" type="button" id="submitNotice" onclick="submitNotice(1)" value="发布" />&nbsp;&nbsp;
+                    <input class="btn btn-primary" type="button" id="saveNotice" onclick="submitNotice(0)" value="保存草稿" />&nbsp;&nbsp;
+                    <input class="btn btn-primary" type="button" id="btnCancle" value="取消" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+
+
+    </script>
+</div>
+
+<!-- 实例化编辑器 -->
+<script type="text/javascript">
+
+    $(function () {
+        $('#title').val("@Model.Title");
+        setContent('@Html.Raw(Model.SystemNoticeContent)',true);
+    });
+
+    //实例化编辑器
+    var ue = UE.getEditor('editor', {
+
+        autoHeightEnabled: false,
+
+        autoFloatEnabled: true,
+
+        //initialFrameWidth: 690,
+
+        initialFrameHeight: 400
+
+    });
+
+    function submitNotice(statusFlag) {
+        if (!confirm("您确定要提交吗？")) {
+            return;
+        }
+
+        var title = $('#title').val();
+        var systemNoticeContent = getContent();
+        var status = statusFlag;
+        var isEdit = "1";
+        var id = "@Model.id";
+
+        var data = "";
+
+        data = data + "Title=" + encodeURI(title);
+        data = data + "&SystemNoticeContent=" + encodeURI(systemNoticeContent);
+        data = data + "&Status=" + encodeURI(status);
+        data = data + "&IsEdit=" + encodeURI(isEdit);
+        data = data + "&Id=" + encodeURI(id);
+
+
+        //新建批次
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/U8System/AddSystemNotice",
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            dataType: "json",
+            data: data,
+            success: function (result) {
+
+                if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {//正常返回且成功
+                    alert("编辑成功");
+                    //添加成功后刷新批次列表页面
+                    location.href = "/U8System/SystemNoticeList";
+                }
+                else {
+                    if (result != null) {//处理cookie超时
+                        if (result.Message === 'TimeOut') { alert('登录超时，请重新登录！'); }
+                        else { alert(result.Message); search(); }
+                    }
+                }
+            }
+        });
+    }
+
+    $("#btnCancle").click(function () {
+        if (!confirm("您确定要取消么？")) {
+            return;
+        }
+        location.href = "/U8System/GetSystemNoticeList";
+    });
+
+    function getContent() {
+        var arr = [];
+        return UE.getEditor('editor').getContent()
+    }
+
+    function setContent(str, isAppendTo) {
+        //判断ueditor 编辑器是否创建成功
+        UE.getEditor('editor').addListener("ready", function () {
+            // editor准备好之后才可以使用
+            UE.getEditor('editor').setContent(str, isAppendTo);
+        });
+    }
+</script>

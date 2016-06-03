@@ -570,7 +570,10 @@
     <Content Include="Views\U8Question\QuestionDetails.cshtml" />
     <Content Include="Views\U8System\Notification.cshtml" />
     <Content Include="Views\U8System\PersonalPage.cshtml" />
-    <Content Include="Views\U8System\SystemAnnounce.cshtml" />
+    <Content Include="Views\U8System\SystemNotice.cshtml" />
+    <Content Include="Views\U8System\AddSystemNotice.cshtml" />
+    <Content Include="Views\U8System\SystemNoticeList.cshtml" />
+    <Content Include="Views\U8System\SystemNoticeEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

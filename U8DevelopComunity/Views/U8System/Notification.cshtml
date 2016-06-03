@@ -14,13 +14,20 @@
         {
             if (noticeLog.NoticeCategory == "知识问答")
             {
-                noticeLi ="<li>"+ noticeLog.Receiver + " " + "回答了你的问题： " + noticeLog.NoticeInfo+"</li>";
+                if (noticeLog.IsAskQuestion)
+                {
+                    noticeLi += "<li>" + noticeLog.Sender + " " + "向您提问了问题： " + noticeLog.NoticeInfo+"  "+noticeLog.CreateTime + "</li>";
+                }
+                else
+                {
+                    noticeLi += "<li>" + noticeLog.Receiver + " " + "回答了你的问题： " + noticeLog.NoticeInfo+"  " + noticeLog.CreateTime +"</li>";
+                }
             }
             else if (noticeLog.NoticeCategory == "系统通知")
             {
-                noticeLi ="<li>"+ "系统通知： " + noticeLog.NoticeInfo+"</li>";
+                noticeLi += "<li>"+noticeLog.Sender + " 发布系统通知： " + noticeLog.NoticeInfo +"  "+ noticeLog.CreateTime + "</li>" ;
             }
         }
     }
-   @Html.Raw(noticeLi)
+    @Html.Raw(noticeLi)
 </ul>

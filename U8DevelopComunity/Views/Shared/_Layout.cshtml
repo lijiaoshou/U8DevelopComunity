@@ -17,9 +17,9 @@
     <style>
         .navg-son li a{
             padding-top:5px;
-            padding-right:5px;
+            padding-right:3px;
             padding-bottom:5px;
-            padding-left:5px;
+            padding-left:3px;
         }
         .navg-son {
             margin-top:10px;
@@ -88,10 +88,27 @@
                             <span id="noticeCount">通知(0)</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="/U8System/PersonalPage?userid=@identity.UserId">
-                            <span id="welcomeInfo">欢迎您--</span>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span id="welcomeInfo">欢迎您--</span> <b class="caret"></b>
                         </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/U8System/PersonalPage">
+                                    <span>个人主页</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/U8System/AddSystemNotice">
+                                    <span>发布系统通知</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/U8System/SystemNoticeList">
+                                    <span>系统通知列表</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="/U8System/Logout">

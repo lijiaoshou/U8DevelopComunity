@@ -1,0 +1,132 @@
+﻿@model Entity.U8SystemNotice
+@{
+    ViewBag.Title = "SystemNotice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SystemNotice</h2>
+<ul>
+    <li>@Model.CreateTime</li>
+    <li>@Model.id</li>
+    <li>@Model.Modifiler</li>
+    <li>@Model.Status</li>
+    <li>@Model.Submiter</li>
+    <li>@Html.Raw(Model.SystemNoticeContent)</li>
+    <li>@Model.Title</li>
+    <li>@Model.UpdateTime</li>
+</ul>
+<div>
+    @{
+        if (Model.Status == "草稿")
+        {
+            <input type="button" id="editBtn" value="编辑" />
+            <input type="button" id="publishBtn" value="发布" />
+            <input type="button" id="delBtn" value="删除"/>
+            <input type="button" id="cancleBtn" value="取消" />
+        }
+        else
+        {
+            <input type="button" id="backBtn" value="返回" />
+        }
+    }
+
+</div>
+<script>
+    $(function () {
+        $('#editBtn').click(editFunction);
+        $('#publishBtn').click(publishFunction);
+        $('#cancleBtn').click(cancleFunction);
+        $('#backBtn').click(backFunction);
+        $('#delBtn').click(delFunction);
+    });
+
+    function delFunction() {
+        if (!confirm("您确定要删除吗？")) {
+            return;
+        }
+
+        var id = "@Model.id";
+
+        var data = "";
+
+        data = data + "id=" + encodeURI(id);
+
+        //新建批次
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/U8System/DeleteNoticeFromDraft",
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            dataType: "json",
+            data: data,
+            success: function (result) {
+
+                if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {//正常返回且成功
+                    alert("删除成功");
+                    //添加成功后刷新批次列表页面
+                    location.href = "/U8System/SystemNoticeList";
+                }
+                else {
+                    if (result != null) {//处理cookie超时
+                        if (result.Message === 'TimeOut') { alert('登录超时，请重新登录！'); }
+                        else { alert(result.Message); search(); }
+                    }
+                }
+            }
+        });
+    }
+
+    function backFunction() {
+        location.href = "/U8System/SystemNoticeList";
+    }
+
+    function editFunction() {
+        location.href = "/U8System/SystemNoticeEdit?id="+"@Model.id";
+    }
+
+    function publishFunction() {
+        if (!confirm("您确定要发布吗？")) {
+            return;
+        }
+
+        var id = "@Model.id";
+
+        var data = "";
+
+        data = data + "id=" + encodeURI(id);
+
+        //新建批次
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/U8System/PublishNoticeFromDraft",
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            dataType: "json",
+            data: data,
+            success: function (result) {
+
+                if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {//正常返回且成功
+                    alert("发布成功");
+                    //添加成功后刷新批次列表页面
+                    location.href = "/U8System/SystemNoticeList";
+                }
+                else {
+                    if (result != null) {//处理cookie超时
+                        if (result.Message === 'TimeOut') { alert('登录超时，请重新登录！'); }
+                        else { alert(result.Message); search(); }
+                    }
+                }
+            }
+        });
+    }
+
+    function cancleFunction() {
+        if (!confirm("您确定要取消么？")) {
+            return;
+        }
+        location.href = "/U8System/SystemNoticeList";
+    }
+</script>
+

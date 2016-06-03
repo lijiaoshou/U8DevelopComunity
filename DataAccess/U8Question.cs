@@ -60,10 +60,10 @@ namespace DataAccess
                                                 DECLARE @indent BIGINT;
                                                 select @indent=@@identity;
                                                 INSERT INTO NoticeLog
-                                                (Sender,Receiver,NoticeInfo,CreateTime,NoticeCategory,InfoId)
+                                                (Sender,Receiver,NoticeInfo,CreateTime,NoticeCategory,InfoId,IsAskQuestion)
                                                 VALUES
-                                                ('{0}','{1}','{2}','{3}','{4}',@indent);
-                                                ", question.Submiter,question.Expert,question.Title,DateTime.Now,"2");
+                                                ('{0}','{1}','{2}','{3}','{4}',@indent,'{5}');
+                                                ", question.Submiter,question.Expert,question.Title,DateTime.Now,"2","0");
 
             string sqlCollect = string.Format(Common.Tran, sqlQuestion+sqlCount+sqlNoticeLog);
             int i = U8.Framework.Data.U8Database.ExecuteNonQuery(databaseConnectionString, sqlCollect, null);
