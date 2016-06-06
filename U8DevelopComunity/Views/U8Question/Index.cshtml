@@ -30,93 +30,6 @@
         <span>&nbsp;|&nbsp;</span>
         <a class="" href="/U8Question/Index?questionCategory=2&knowledgeCategory=2" role="button">最热门知识</a>
     </div>
-    @*<div class="container" style="padding-left:1px;padding-right:1px;">
-        <table class="table table-hover table-striped table-responsive"
-               data-toggle="table"
-               data-click-to-select="true"
-               data-row-style="rowStyle"
-               data-query-params="queryParams"
-               data-pagination="true"
-               data-search="true"
-               data-search-align="right">
-            <thead>
-                <tr>
-                    <th>序号</th>
-                    <th>文档编号</th>
-                    <th>名称</th>
-                    <th>所属类别</th>
-                    <th>人气指数</th>
-                    <th>专家姓名</th>
-                </tr>
-            </thead>
-            <tbody id="myTable">
-                <tr>
-                    <td>1</td>
-                    <td>2089</td>
-                    <td>
-                        <a href="#">栏目如何使用初步</a>
-                    </td>
-                    <td>
-                        <span>[公共控件]</span>
-                    </td>
-                    <td>
-                        <span>人气:8</span>
-                    </td>
-                    <td>
-                        <span>专家:SuperLee</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2090</td>
-                    <td>
-                        <a href="#">栏目如何使用初步</a>
-                    </td>
-                    <td>
-                        <span>[公共控件]</span>
-                    </td>
-                    <td>
-                        <span>人气:8</span>
-                    </td>
-                    <td>
-                        <span>专家:SuperLee</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>2089</td>
-                    <td>
-                        <a href="#">栏目如何使用初步</a>
-                    </td>
-                    <td>
-                        <span>[公共控件]</span>
-                    </td>
-                    <td>
-                        <span>人气:8</span>
-                    </td>
-                    <td>
-                        <span>专家:SuperLee</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>2089</td>
-                    <td>
-                        <a href="#">栏目如何使用初步</a>
-                    </td>
-                    <td>
-                        <span>[公共控件]</span>
-                    </td>
-                    <td>
-                        <span>人气:8</span>
-                    </td>
-                    <td>
-                        <span>专家:SuperLee</span>
-                    </td>
-                </tr>
-            </tbody>
-            </table>
-    </div>*@
 
     <table class="sldatatablefix Result_table" id="table-javascript" data-height=""></table>
     <div style="display:none">
@@ -150,7 +63,7 @@
         data = data + "currentPage=" + encodeURI(currentPage);
         data = data + "&pageSize=" + encodeURI(pageSize);
         data = data + "&questionCategory=" + encodeURI(questionCategory);
-        data = data + "& ViewBag.knowledgeCategory=" + encodeURI(knowledgeCategory);
+        data = data + "&knowledgeCategory=" + encodeURI(knowledgeCategory);
 
         //查询
         $.ajax({

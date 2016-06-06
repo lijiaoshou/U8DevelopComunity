@@ -71,6 +71,7 @@
     <Compile Include="U8Learn.cs" />
     <Compile Include="U8Question.cs" />
     <Compile Include="U8SystemNotice.cs" />
+    <Compile Include="U8TechDocCategory.cs" />
     <Compile Include="U8User.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

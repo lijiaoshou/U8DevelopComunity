@@ -2,6 +2,16 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string categories = "<option value='0'>---请选择-</option>";
+
+    List<Entity.U8TechDocCategory> listCategory = ViewBag.U8TechDocCategory as List<Entity.U8TechDocCategory>;
+    if (listCategory != null)
+    {
+        foreach (Entity.U8TechDocCategory category in listCategory)
+        {
+            categories += "<option value='" + category.Id + "'" + ">" + category.CategoryName + "</option>";
+        }
+    }
 }
 
 <link href="~/Content/U8lab.css" rel="stylesheet" />
@@ -13,8 +23,9 @@
     .table th {
         text-align: center;
     }
+
     .question-nav {
-    margin-top:20px;
+        margin-top: 20px;
     }
 </style>
 
@@ -26,20 +37,9 @@
     <span>知识搜索</span>
     <div class="question-nav">
         <div style="display:inline-block;">
-            <a class="btn btn-default" href="#" role="button">所有知识</a>
-            <a class="btn btn-default" href="#" role="button">上传知识</a>
+            <a class="btn btn-default" href="#" role="button" id="allDocs">所有知识</a>
+            <a class="btn btn-default" href="#" role="button" id="uploadDocs">上传知识</a>
         </div>
-        
-        @*<div class="row head pull-right" style="width:300px;">
-            <div class="col-lg-12">
-                <div class="input-group">
-                    <input type="text" class="form-control pull-right" placeholder="搜你想要的">
-                    <span class="input-group-btn">
-                        <button class="btn btn-info" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                    </span>
-                </div>
-            </div>
-        </div>*@
     </div>
 
     <div style="margin-top:20px;margin-bottom:50px;width:auto;">
@@ -48,16 +48,7 @@
                 <label style="color: #0463A6;">技术文档分类</label>
             </li>
             <li class="pull-left">
-                <select>
-                    <option>请选择</option>
-                    <option>UAP</option>
-                    <option>快开工具</option>
-                    <option>UI控件及插件</option>
-                    <option>集成开发</option>
-                    <option>API</option>
-                    <option>开发技术</option>
-                    <option>开发规范</option>
-                </select>
+                <select id="category"></select>
             </li>
         </ul>
         <ul class="list-inline pull-right">
@@ -73,1001 +64,122 @@
         </ul>
     </div>
 
-    <div class="container" style="padding-left:1px;padding-right:1px;">
-      <table class="table table-hover table-striped table-responsive"
-             data-toggle="table"
-             data-click-to-select="true"
-             data-row-style="rowStyle"
-             data-query-params="queryParams"
-             data-pagination="true"
-             data-search="true"
-             data-search-align="right">
-          <thead>
-              <tr>
-                  <th>所属类别</th>
-                  <th>名称</th>
-                  <th>作者</th>
-                  <th>下载</th>
-                  <th>阅读</th>
-              </tr>
-          </thead>
-          <tbody id="myTable">
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[测试搜索]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[测试搜索]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">Supper</a>
-                  </td>
-                  <td>
-                      <span>作者:张子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      <span>[公共控件]</span>
-                  </td>
-                  <td>
-                      <a href="#">栏目如何使用初步</a>
-                  </td>
-                  <td>
-                      <span>作者:郑子阳  2013-08-27</span>
-                  </td>
-                  <td>
-                      <span>下载:136次</span>
-                  </td>
-                  <td>
-                      <span>阅读:1684次</span>
-                  </td>
-              </tr>
-          </tbody>
-      </table>
-   </div>
-   
-    @*<div class="col-md-12 text-center">
-        <ul class="pagination" id="myPager"></ul>
-    </div>*@
-
-    <script type="text/javascript">
-        $(function () {
-            $('#myTable').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 5 });
-        })
-        $.fn.pageMe = function (opts) {
-            var $this = this,
-                defaults = {
-                    perPage: 7,
-                    showPrevNext: false,
-                    numbersPerPage: 5,
-                    hidePageNumbers: false
-                },
-                settings = $.extend(defaults, opts);
-
-            var listElement = $this;
-            var perPage = settings.perPage;
-            var children = listElement.children();
-            var pager = $('.pagination');
-
-            if (typeof settings.childSelector != "undefined") {
-                children = listElement.find(settings.childSelector);
-            }
-
-            if (typeof settings.pagerSelector != "undefined") {
-                pager = $(settings.pagerSelector);
-            }
-
-            var numItems = children.size();
-            var numPages = Math.ceil(numItems / perPage);
-
-            pager.data("curr", 0);
-
-            if (settings.showPrevNext) {
-                $('<li><a href="#" class="prev_link">«</a></li>').appendTo(pager);
-            }
-
-            var curr = 0;
-            while (numPages > curr && (settings.hidePageNumbers == false)) {
-                $('<li><a href="#" class="page_link">' + (curr + 1) + '</a></li>').appendTo(pager);
-                curr++;
-            }
-
-            if (settings.numbersPerPage > 1) {
-                $('.page_link').hide();
-                $('.page_link').slice(pager.data("curr"), settings.numbersPerPage).show();
-            }
-
-            if (settings.showPrevNext) {
-                $('<li><a href="#" class="next_link">»</a></li>').appendTo(pager);
-            }
-
-            pager.find('.page_link:first').addClass('active');
-            pager.find('.prev_link').hide();
-            if (numPages <= 1) {
-                pager.find('.next_link').hide();
-            }
-            pager.children().eq(1).addClass("active");
-
-            children.hide();
-            children.slice(0, perPage).show();
-
-            pager.find('li .page_link').click(function () {
-                var clickedPage = $(this).html().valueOf() - 1;
-                goTo(clickedPage, perPage);
-                return false;
-            });
-            pager.find('li .prev_link').click(function () {
-                previous();
-                return false;
-            });
-            pager.find('li .next_link').click(function () {
-                next();
-                return false;
-            });
-
-            function previous() {
-                var goToPage = parseInt(pager.data("curr")) - 1;
-                goTo(goToPage);
-            }
-
-            function next() {
-                goToPage = parseInt(pager.data("curr")) + 1;
-                goTo(goToPage);
-            }
-
-            function goTo(page) {
-                var startAt = page * perPage,
-                    endOn = startAt + perPage;
-
-                children.css('display', 'none').slice(startAt, endOn).show();
-
-                if (page >= 1) {
-                    pager.find('.prev_link').show();
-                }
-                else {
-                    pager.find('.prev_link').hide();
-                }
-
-                if (page < (numPages - 1)) {
-                    pager.find('.next_link').show();
-                }
-                else {
-                    pager.find('.next_link').hide();
-                }
-
-                pager.data("curr", page);
-
-                if (settings.numbersPerPage > 1) {
-                    $('.page_link').hide();
-                    $('.page_link').slice(page, settings.numbersPerPage + page).show();
-                }
-
-                pager.children().removeClass("active");
-                pager.children().eq(page + 1).addClass("active");
-
-            }
-        };
-    </script>
+    <table class="sldatatablefix Result_table" id="table-javascript" data-height=""></table>
+    <div style="display:none">
+        <table class="sldatatable">
+            <!--最终加载的数据都存在这个table里-->
+            <tr class="sldatatableheader" style="height: 0px;"></tr>
+        </table>
+    </div>
+    @Html.Partial("~/Views/Common/RenderPaging.cshtml")
 </div>
+<script type="text/javascript">
+    $(function () {
+        $('#uploadDocs').click(uploadDocs);
+        $('#allDocs').click(allDocs);
+        $("#category").append("@Html.Raw(categories)");
+        search();
+    })
 
+    function uploadDocs() {
+        location.href = "/U8Learn/UploadDocs";
+    }
+
+    function allDocs() {
+
+    }
+
+    function search() {
+        var data = "";
+
+        //增加分页
+        var currentPage = $("#txtCurrentPage").val();
+        var pageSize = $("#txtPageSize").val();
+        var category = $("#category").val();
+
+        data = data + "currentPage=" + encodeURI(currentPage);
+        data = data + "&pageSize=" + encodeURI(pageSize);
+        data = data + "&category=" + encodeURI(category);
+
+        //查询
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/U8Learn/SearchLearnList",
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            dataType: "json",
+            data: data,
+            success: function (result) {
+                $(".sldatatablefix tbody").empty();//清除上次查询的数据
+
+                $(".sldatatable .sldatatablerow").remove();
+                if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {
+
+                    $("#txtMaxPage").val(Math.ceil(result.Total / $('#txtPageSize').val()));
+                    $("#TotalCount").html(result.Total);
+                    var currentPage = parseInt($("#CurrentPage").val());
+                    if (currentPage > result.MaxPage) {
+                        $("#txtCurrentPage").val(1);
+                        search();
+                    }
+
+                    //正常返回且查询成功
+                    $(function () {
+                        $('#table-javascript').bootstrapTable('destroy').bootstrapTable({
+                            data: result.Rows,
+                            //height: $('.slshowPart').innerHeight() - 34,
+                            striped: true,
+                            search: true,
+                            showColumns: true,
+                            minimumCountColumns: 4,
+                            columns: [{
+                                field: 'XuHao',
+                                title: '序号',
+                                align: 'center',
+                            }, {
+                                field: 'Id',
+                                title: '文档编号',
+                                align: 'center',
+                            }, {
+                                field: 'TechDocCategory',
+                                title: '所属类别',
+                                align: 'center',
+                            }, {
+                                field: 'DocName',
+                                title: '名称',
+                                align: 'center',
+                            }, {
+                                field: 'Author',
+                                title: '作者',
+                                align: 'center',
+                            }, {
+                                field: 'DownloadCount',
+                                title: '下载次数',
+                                align: 'center',
+                            }, {
+                                field: 'ReadCount',
+                                title: '阅读次数',
+                                align: 'center',
+                            }, {
+                                field: 'CreateTime',
+                                title: '上传时间',
+                                align: 'center',
+                            }]
+                        });
+                    });
+                }
+                else {
+                    $('#table-javascript').bootstrapTable('destroy').bootstrapTable({
+                        columns: [{
+                            field: 'NoData',
+                            title: '查无数据',
+                            align: 'center',
+                        }]
+                    });
+                }
+            }
+        });
+    }
+</script>
 

@@ -575,6 +575,7 @@
     <Content Include="Views\U8System\AddSystemNotice.cshtml" />
     <Content Include="Views\U8System\SystemNoticeList.cshtml" />
     <Content Include="Views\U8System\SystemNoticeEdit.cshtml" />
+    <Content Include="Views\U8Learn\UploadDocs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

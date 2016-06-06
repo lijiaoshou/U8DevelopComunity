@@ -34,7 +34,7 @@ namespace DataAccess
                                           Submiter ,
                                           UpdateTime
                                         )
-                                VALUES  ( 
+                                VALUES  (
                                           '{0}',
                                           '{1}',
                                           '{2}',
@@ -89,11 +89,11 @@ namespace DataAccess
                                                 AnswerTime ,
                                                 IsBestAnswer
                                             )
-                                    VALUES  (   '{0}' , 
+                                    VALUES  (   '{0}' ,
                                                 '{1}' ,
-                                                '{2}' , 
-                                                '{3}' , 
-                                                '{4}'  
+                                                '{2}' ,
+                                                '{3}' ,
+                                                '{4}'
                                             );",answer.QuestionId,answer.AnswerContent,answer.AnswerPeople,answer.AnswerTime,'0');
 
             string sqlNotice = string.Format(@"
@@ -110,15 +110,15 @@ namespace DataAccess
                                             )
                                     VALUES  (   '{0}' ,
                                                 @indent ,
-                                                '{1}' , 
+                                                '{1}' ,
                                                 '{2}' ,
-                                                '{3}' , 
-                                                '{4}' , 
-                                                '{5}'  
+                                                '{3}' ,
+                                                '{4}' ,
+                                                '{5}'
                                             )
                                              ;", answer.AnswerPeople,question.QuestionContent,answer.AnswerTime,"2",question.ID,"1");
             string sqlUserNotice = string.Format(@"
-                                                UPDATE dbo.UserTable SET NoticeCount=NoticeCount+1 WHERE 
+                                                UPDATE dbo.UserTable SET NoticeCount=NoticeCount+1 WHERE
                                                 id=(SELECT Submiter FROM dbo.QuestionTable WHERE id='{0}'); ",question.ID);
             string sqlCollect = string.Format(Common.Tran,sqlAnswer+sqlNotice+sqlUserNotice);
             return U8Database.ExecuteNonQuery(databaseConnectionString, sqlCollect, null) > 0;
@@ -170,8 +170,8 @@ namespace DataAccess
                                                 WHERE answer.id='{0}'
                                                     );
                                               ",u8answer.Id);
-            string sqlUserNotice = string.Format(@"UPDATE dbo.UserTable SET NoticeCount=NoticeCount+1 WHERE 
-                                                id=(SELECT Submiter FROM dbo.QuestionTable WHERE id=(SELECT QueistionId FROM dbo.AnswerTable WHERE 
+            string sqlUserNotice = string.Format(@"UPDATE dbo.UserTable SET NoticeCount=NoticeCount+1 WHERE
+                                                id=(SELECT Submiter FROM dbo.QuestionTable WHERE id=(SELECT QueistionId FROM dbo.AnswerTable WHERE
                                                 id='{0}')) ;
                                                 ",u8answer.Id);
 
@@ -293,7 +293,7 @@ namespace DataAccess
 	                            SELECT question.id,
 	                            process.Content as ProcessStatus,question.Title,category.CategoryName,usertableExp.RealName as Expert,product.name,question.Provility,
 	                            question.ExpectFixTime,question.SubmitTime,question.Project,question.QuestionContent,question.OfferReward,question.Popularity,
-	                            question.InKnowledgeLib,soncategory.SonCategoryName as SonCategory,usertableSub.RealName AS Submiter,question.UpdateTime,usertableMod.RealName AS Modifiler FROM dbo.QuestionTable as question 
+	                            question.InKnowledgeLib,soncategory.SonCategoryName as SonCategory,usertableSub.RealName AS Submiter,question.UpdateTime,usertableMod.RealName AS Modifiler FROM dbo.QuestionTable as question
 	                            LEFT JOIN dbo.CategoryTable category ON question.Category=category.id
 	                            LEFT JOIN dbo.SonCategoryTable soncategory ON question.SonCategory=soncategory.id
 	                            LEFT JOIN dbo.UserTable usertableSub ON question.Submiter=usertableSub.id
@@ -303,7 +303,7 @@ namespace DataAccess
 	                            LEFT JOIN dbo.ProcessStatusTable process ON question.ProcessStatus=process.id
                                 where 1=1 {0}
                             )AS t)
-                            SELECT * FROM Virtual_T 
+                            SELECT * FROM Virtual_T
                             WHERE @PageSize * (@CurrentPage - 1) < RowNumber AND RowNumber <= @PageSize * @CurrentPage ORDER BY RowNumber
                           ";
 
@@ -371,7 +371,7 @@ namespace DataAccess
             string sql = string.Format(@"SELECT question.id,
                                         process.Content as ProcessStatus,question.Title,category.CategoryName,usertableExp.RealName as Expert,product.name AS ProductBelong,question.Provility,
                                         question.ExpectFixTime,question.SubmitTime,question.Project,question.QuestionContent,question.OfferReward,question.Popularity,
-                                        question.InKnowledgeLib,soncategory.SonCategoryName as SonCategory,usertableSub.RealName AS Submiter,question.UpdateTime,usertableMod.RealName AS Modifiler FROM dbo.QuestionTable as question 
+                                        question.InKnowledgeLib,soncategory.SonCategoryName as SonCategory,usertableSub.RealName AS Submiter,question.UpdateTime,usertableMod.RealName AS Modifiler FROM dbo.QuestionTable as question
                                         LEFT JOIN dbo.CategoryTable category ON question.Category=category.id
                                         LEFT JOIN dbo.SonCategoryTable soncategory ON question.SonCategory=soncategory.id
                                         LEFT JOIN dbo.UserTable usertableSub ON question.Submiter=usertableSub.id
@@ -447,7 +447,7 @@ namespace DataAccess
                     for (int i = 1; i < dt.Rows.Count; i++)
                     {
                         answerRegion = @"<fieldset>
-                                        <legend style='color:red;'>答案" + (i + 1) + @"</legend>
+                                        <legend>答案" + (i + 1) + @"</legend>
                                         <input type='text' class='answer' disabled value='" + U8Convert.TryToString(dt.Rows[i]["AnswerContent"]) + @"'/>
                                         <br/>
                                         <label> 回答者:</label><label>" + U8Convert.TryToString(dt.Rows[i]["AnswerPeople"]) + @"</label>
@@ -503,17 +503,8 @@ namespace DataAccess
         //关闭问题
         public static bool CloseQuestion(string databaseConnectionString, string QuestionId)
         {
-            string sql = string.Format(@"UPDATE dbo.QuestionTable SET InKnowledgeLib='2' WHERE id='{0}'",QuestionId);
-            DataTable dt = new DataTable();
-            U8Database.Fill(databaseConnectionString, sql, dt, null);
-            if (dt != null && dt.Rows.Count > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            string sql = string.Format(@"UPDATE dbo.QuestionTable SET ProcessStatus='2' WHERE id='{0}'", QuestionId);
+            return U8Database.ExecuteNonQuery(databaseConnectionString, sql, null) > 0;
         }
 
         //设置某个回答为最佳答案
@@ -522,16 +513,7 @@ namespace DataAccess
             string sql = string.Format(@"UPDATE dbo.AnswerTable SET IsBestAnswer='1' WHERE id='{0}';
                                          UPDATE dbo.QuestionTable SET ProcessStatus='1' WHERE id=
                                         (SELECT QueistionId FROM dbo.AnswerTable WHERE id='{0}');", AnswerId);
-            DataTable dt = new DataTable();
-            U8Database.Fill(databaseConnectionString, sql, dt, null);
-            if (dt != null && dt.Rows.Count > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return U8Database.ExecuteNonQuery(databaseConnectionString, sql, null)>0;
         }
 
     }

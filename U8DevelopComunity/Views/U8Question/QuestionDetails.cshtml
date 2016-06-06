@@ -4,7 +4,7 @@
     ViewBag.Title = "QuestionDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    //专家+已解决（才可以设为知识库内容）
+    //专家+不是未解决（才可以设为知识库内容）
     bool setKnowledgeAble = false;
     U8DevelopComunity.Common.Identity identity = U8DevelopComunity.Common.Identity.User;
     if (identity.Role == "专家" && Model.ProcessStatus != "未解决")
@@ -48,7 +48,7 @@
 
 <!--回答问题区域-->
 <div style="margin-top:50px;">
-    @if (Model.ProcessStatus == "未解决")
+    @if (Model.ProcessStatus != "已关闭")
     {
         <label for="answerContent">回复内容：</label>
         <input type="text" id="answerContent" value="" />
@@ -64,11 +64,11 @@
 
 <!--操作区域-->
 <div style="margin-top:20px;">
-    @if (setKnowledgeAble)
+    @if (setKnowledgeAble&& !Model.InKnowledgeLib)
     {
         <input type="button" id="tobeKnowledge" value="设为知识库内容" />
     }
-    @if (isQuestionAuthor)
+    @if (isQuestionAuthor&&Model.ProcessStatus!="已关闭")
     {
         <input type="button" id="closeQuestion" value="关闭问题" />
     }
@@ -262,7 +262,8 @@
             success: function (result) {
 
                 if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {//正常返回且成功
-                    IniAnswer();
+                    //IniAnswer();
+                    location.href = "/U8Question/QuestionDetails?id=@Model.ID";
                 }
                 else {
                     if (result != null) {//处理cookie超时
