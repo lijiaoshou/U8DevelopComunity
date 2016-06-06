@@ -4,10 +4,23 @@
     ViewBag.Title = "QuestionDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
+    //专家+已解决（才可以设为知识库内容）
+    bool setKnowledgeAble = false;
+    U8DevelopComunity.Common.Identity identity = U8DevelopComunity.Common.Identity.User;
+    if (identity.Role == "专家" && Model.ProcessStatus != "未解决")
+    {
+        setKnowledgeAble = true;
+    }
+
+    //问题提出者（显示关闭问题+设为满意答案按钮）
+    Business.U8Question u8question = new Business.U8Question();
+    bool isQuestionAuthor = u8question.isQuestionAuthor(U8DevelopComunity.Common.Config.ConnectionString, Model.ID.ToString(), identity.UserId);
+
 }
 
 <h2>QuestionDetails</h2>
 @*<h1>"@ViewBag.Id"</h1>*@
+<!--问题详细信息展示-->
 <ul>
     <li>@Model.ID</li>
     <li>@Model.ProcessStatus</li>
@@ -28,4 +41,321 @@
     <li>@Model.UpdateTime</li>
     <li>@Model.Modifiler</li>
 </ul>
+<!--回答列表-->
+<div id="answerRegion">
+
+</div>
+
+<!--回答问题区域-->
+<div style="margin-top:50px;">
+    @if (Model.ProcessStatus == "未解决")
+    {
+        <label for="answerContent">回复内容：</label>
+        <input type="text" id="answerContent" value="" />
+        <br />
+        <input type="button" value="回答问题" id="commitAnswer" />
+    }
+    else
+    {
+        <label style="color:red">问题已经关闭，不能回复！</label>
+    }
+
+</div>
+
+<!--操作区域-->
+<div style="margin-top:20px;">
+    @if (setKnowledgeAble)
+    {
+        <input type="button" id="tobeKnowledge" value="设为知识库内容" />
+    }
+    @if (isQuestionAuthor)
+    {
+        <input type="button" id="closeQuestion" value="关闭问题" />
+    }
+</div>
+<script>
+    $(function () {
+        $('#commitAnswer').click(submitAnswer);
+        $('#closeQuestion').click(closeQuestion);
+        $('#tobeKnowledge').click(pushIntoKnowledge);
+        IniAnswer();
+    });
+
+    function closeQuestion() {
+        if (!confirm("您确定要关闭该问题吗？")) {
+            return;
+        }
+
+        var questionid = '@Model.ID';
+
+        var data = "";
+
+        data = data + "QuestionId=" + encodeURI(questionid);
+
+        //新建批次
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/U8Question/CloseQuestion",
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            dataType: "json",
+            data: data,
+            success: function (result) {
+
+                if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {//正常返回且成功
+                    location.href = "/U8Question/Index";
+                }
+                else {
+                    if (result != null) {//处理cookie超时
+                        if (result.Message === 'TimeOut') { alert('登录超时，请重新登录！'); }
+                        else { alert(result.Message); IniAnswer(); }
+                    }
+                }
+            }
+        });
+    }
+
+    function pushIntoKnowledge() {
+        if (!confirm("您确定要将该问题设为知识库内容吗？")) {
+            return;
+        }
+
+        var questionid = '@Model.ID';
+
+        var data = "";
+
+        data = data + "QuestionId=" + encodeURI(questionid);
+
+        //新建批次
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/U8Question/PushIntoKnowledge",
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            dataType: "json",
+            data: data,
+            success: function (result) {
+
+                if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {//正常返回且成功
+                    location.href = "/U8Question/Index";
+                }
+                else {
+                    if (result != null) {//处理cookie超时
+                        if (result.Message === 'TimeOut') { alert('登录超时，请重新登录！'); }
+                        else { alert(result.Message); IniAnswer(); }
+                    }
+                }
+            }
+        });
+    }
+
+    function editAnswer() {
+        var answerid = $(this).attr('answerid');
+        $(this).css('display', 'none');
+        $(this).parent().find('a').eq(0).css('display', 'none');
+        $(this).next().css('display', 'inline-block')
+        $(this).next().next().css('display', 'inline-block')
+        $(".commitEdit").click(commitEdit);
+        $(".cancleEdit").click(cancleEdit);
+        $(this).parent().find('input').eq(0).removeAttr('disabled');
+    }
+
+    function commitEdit() {
+        if (!confirm("您确定要修改吗？")) {
+            return;
+        }
+
+        var answerid = $(this).attr('answerid');
+        var content = $(this).parent().find('input').eq(0).val();
+
+        var data = "";
+
+        data = data + "AnswerId=" + encodeURI(answerid);
+        data = data + "&AnswerContent=" + encodeURI(content);
+
+        //新建批次
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/U8Question/EditAnswer",
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            dataType: "json",
+            data: data,
+            success: function (result) {
+
+                if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {//正常返回且成功
+                    IniAnswer();
+                }
+                else {
+                    if (result != null) {//处理cookie超时
+                        if (result.Message === 'TimeOut') { alert('登录超时，请重新登录！'); }
+                        else { alert(result.Message); IniAnswer(); }
+                    }
+                }
+            }
+        });
+    }
+
+    function cancleEdit() {
+        $(this).parent().find('input').eq(0).attr('disabled', 'disabled');
+        $(this).css('display', 'none');
+        $(this).prev().css('display', 'none');
+        $(this).parent().find('input').eq(1).css('display', 'inline-block');
+        $(this).parent().find('a').eq(0).css('display', 'inline-block');
+    }
+
+    function IniAnswer() {
+        var questionId = '@Model.ID';
+
+        var data = "";
+
+        data = data + "QuestionId=" + encodeURI(questionId);
+
+        //新建批次
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/U8Question/IniAnswer",
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            dataType: "json",
+            data: data,
+            success: function (result) {
+
+                if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {//正常返回且成功
+                    $('#answerRegion').html(result.Content);
+                    $('.deleteAnswer').click(deleteAnswer);
+                    $('.editAnswer').click(editAnswer);
+                    $('.tobeBestAnswer').click(bestAnswer);
+                }
+                else {
+                    if (result != null) {//处理cookie超时
+                        if (result.Message === 'TimeOut') { alert('登录超时，请重新登录！'); }
+                        else { alert(result.Message); IniAnswer(); }
+                    }
+                }
+            }
+        });
+    }
+
+    function bestAnswer() {
+        if (!confirm("您确定要设置该回答为最佳答案吗？")) {
+            return;
+        }
+        var answerid = $(this).attr('answerid');
+        var data = "";
+
+        data = data + "id=" + encodeURI(answerid);
+
+        //新建批次
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/U8Question/TobeBestAnswer",
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            dataType: "json",
+            data: data,
+            success: function (result) {
+
+                if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {//正常返回且成功
+                    IniAnswer();
+                }
+                else {
+                    if (result != null) {//处理cookie超时
+                        if (result.Message === 'TimeOut') { alert('登录超时，请重新登录！'); }
+                        else { alert(result.Message); IniAnswer(); }
+                    }
+                }
+            }
+        });
+    }
+
+    function deleteAnswer() {
+        if (!confirm("您确定要删除该回答吗？")) {
+            return;
+        }
+
+        var id = $(this).attr('answerid');
+
+        var data = "";
+
+        data = data + "id=" + encodeURI(id);
+
+        //新建批次
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/U8Question/DeleteAnswer",
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            dataType: "json",
+            data: data,
+            success: function (result) {
+
+                if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {//正常返回且成功
+                    //alert("删除成功");
+                    @*//添加成功后刷新批次列表页面
+                    location.href = "/U8Question/QuestionDetails?id=@Model.ID";*@
+                    IniAnswer();
+                }
+                else {
+                    if (result != null) {//处理cookie超时
+                        if (result.Message === 'TimeOut') { alert('登录超时，请重新登录！'); }
+                        else { alert(result.Message); IniAnswer(); }
+                    }
+                }
+            }
+        });
+    }
+
+    function submitAnswer() {
+        if (!confirm("您确定要回答问题吗？")) {
+            return;
+        }
+
+        var content = $('#answerContent').val();
+        var questionId = '@Model.ID';
+        var receiver = '@Model.Submiter';
+        var noticeInfo = '@Model.Title';
+        var infoId = '@Model.ID';
+
+        var data = "";
+
+        data = data + "AnswerContent=" + encodeURI(content);
+        data = data + "&QuestionId=" + encodeURI(questionId);
+        data = data + "&Receiver=" + encodeURI(receiver);
+        data = data + "&NoticeInfo=" + encodeURI(noticeInfo);
+        data = data + "&InfoId=" + encodeURI(infoId);
+
+
+        //新建批次
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/U8Question/AddNewAnswer",
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            dataType: "json",
+            data: data,
+            success: function (result) {
+
+                if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {//正常返回且成功
+                    //alert("回答成功");
+                    $('#answerContent').val("");
+                    IniAnswer();
+                }
+                else {
+                    if (result != null) {//处理cookie超时
+                        if (result.Message === 'TimeOut') { alert('登录超时，请重新登录！'); }
+                        else { alert(result.Message); IniAnswer(); }
+                    }
+                }
+            }
+        });
+    }
+</script>
 

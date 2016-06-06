@@ -71,15 +71,57 @@ namespace DataAccess
         }
 
         //将问题设为知识库内容
-        public static bool PutQuestionIntoKnowledgeLib(string id)
+        public static bool PushIntoKnowledge(string databaseConnectionString,string QuestionId)
         {
-            return true;
+            string sql = string.Format(@"UPDATE dbo.QuestionTable SET InKnowledgeLib='1' WHERE id='{0}'",QuestionId);
+
+            return U8Database.ExecuteNonQuery(databaseConnectionString,sql,null)>0;
         }
 
         //回答问题
-        public static bool AnswerQuestion(int id, string content)
+        public static bool SubmitAnswer(string databaseConnectionString, Entity.U8Answer answer,Entity.U8Question question)
         {
-            return true;
+            //插入回复表+通知表+用户表
+            string sqlAnswer = string.Format(@"INSERT INTO dbo.AnswerTable
+                                            ( QueistionId ,
+                                                AnswerContent ,
+                                                AnswerPeople ,
+                                                AnswerTime ,
+                                                IsBestAnswer
+                                            )
+                                    VALUES  (   '{0}' , 
+                                                '{1}' ,
+                                                '{2}' , 
+                                                '{3}' , 
+                                                '{4}'  
+                                            );",answer.QuestionId,answer.AnswerContent,answer.AnswerPeople,answer.AnswerTime,'0');
+
+            string sqlNotice = string.Format(@"
+                                            DECLARE @indent BIGINT;
+                                            SET @indent=(SELECT Submiter FROM dbo.QuestionTable WHERE id='{4}');
+                                              INSERT INTO dbo.NoticeLog
+                                            ( Sender ,
+                                                Receiver ,
+                                                NoticeInfo ,
+                                                CreateTime ,
+                                                NoticeCategory ,
+                                                InfoId ,
+                                                IsAskQuestion
+                                            )
+                                    VALUES  (   '{0}' ,
+                                                @indent ,
+                                                '{1}' , 
+                                                '{2}' ,
+                                                '{3}' , 
+                                                '{4}' , 
+                                                '{5}'  
+                                            )
+                                             ;", answer.AnswerPeople,question.QuestionContent,answer.AnswerTime,"2",question.ID,"1");
+            string sqlUserNotice = string.Format(@"
+                                                UPDATE dbo.UserTable SET NoticeCount=NoticeCount+1 WHERE 
+                                                id=(SELECT Submiter FROM dbo.QuestionTable WHERE id='{0}'); ",question.ID);
+            string sqlCollect = string.Format(Common.Tran,sqlAnswer+sqlNotice+sqlUserNotice);
+            return U8Database.ExecuteNonQuery(databaseConnectionString, sqlCollect, null) > 0;
         }
 
         //将答案设置为满意答案
@@ -101,15 +143,40 @@ namespace DataAccess
         }
 
         //删除某条回复
-        public static bool DeleteAnAnswer(int questionID, int answerID)
+        public static bool DeleteAnswer(string databaseConnectionString, string answerID)
         {
-            return true;
+            string sql = string.Format(@"delete from AnswerTable where id='{0}'",answerID);
+            return U8Database.ExecuteNonQuery(databaseConnectionString, sql, null) > 0;
         }
 
         //修改回复
-        public static bool AlterAnAnswer(int questionID, int answerID)
+        public static bool EditAnswer(string databaseConnectionString, Entity.U8Answer u8answer)
         {
-            return true;
+            //修改内容+增加提醒消息+给用户表增加提醒消息
+            string sqlEdit = string.Format(@"UPDATE dbo.AnswerTable SET AnswerContent='{0}' WHERE id='{1}';",u8answer.AnswerContent,u8answer.Id);
+
+            string sqlNotice = string.Format(@"
+                                                INSERT INTO dbo.NoticeLog
+                                                ( Sender ,
+                                                    Receiver ,
+                                                    NoticeInfo ,
+                                                    CreateTime ,
+                                                    NoticeCategory ,
+                                                    InfoId ,
+                                                    IsAskQuestion
+                                                )
+                                                ( SELECT '" + u8answer.AnswerPeople + @"',question.Submiter,question.Title,'" + u8answer.AnswerTime + @"','2',question.id,'1' FROM dbo.AnswerTable answer INNER JOIN dbo.QuestionTable question ON
+                                                answer.QueistionId = question.id
+                                                WHERE answer.id='{0}'
+                                                    );
+                                              ",u8answer.Id);
+            string sqlUserNotice = string.Format(@"UPDATE dbo.UserTable SET NoticeCount=NoticeCount+1 WHERE 
+                                                id=(SELECT Submiter FROM dbo.QuestionTable WHERE id=(SELECT QueistionId FROM dbo.AnswerTable WHERE 
+                                                id='{0}')) ;
+                                                ",u8answer.Id);
+
+            string sqlCollect = string.Format(Common.Tran,sqlEdit+sqlNotice+sqlUserNotice);
+            return U8Database.ExecuteNonQuery(databaseConnectionString, sqlCollect, null)>0;
         }
 
         //查找出U8产品的版本列表
@@ -347,5 +414,125 @@ namespace DataAccess
             string sql = string.Format(@"UPDATE dbo.QuestionTable SET Popularity=Popularity+1 WHERE id='{0}';",id);
             return U8Database.ExecuteNonQuery(databaseConnectionString, sql, null)>0;
         }
+
+        //查出某个问题的所有回答
+        public static string GetAnswers(string databaseConnectionString, string id)
+        {
+            string answerRegion = @"";
+
+            string sql = string.Format(@"
+                                        SELECT answer.Id,answer.QueistionId,answer.AnswerContent,usertable.RealName as AnswerPeople,answer.AnswerTime,answer.IsBestAnswer FROM dbo.AnswerTable answer
+                                        LEFT JOIN dbo.UserTable usertable ON usertable.id=answer.AnswerPeople WHERE QueistionId='{0}'
+                                        AND IsBestAnswer='1'
+                                        UNION
+                                        SELECT answer.Id,answer.QueistionId,answer.AnswerContent,usertable.RealName as AnswerPeople,answer.AnswerTime,answer.IsBestAnswer FROM dbo.AnswerTable  answer
+                                        LEFT JOIN dbo.UserTable usertable ON usertable.id=answer.AnswerPeople WHERE QueistionId='{0}'
+                                        AND IsBestAnswer!='1' ORDER BY AnswerTime DESC
+                                        ", id);
+            DataTable dt = new DataTable();
+            StringBuilder strBuilder = new StringBuilder();
+            U8Database.Fill(databaseConnectionString, sql, dt, null);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                if (U8Convert.TryToString(dt.Rows[0]["IsBestAnswer"]) == "1")
+                {
+                    answerRegion = @"<fieldset>
+                                        <legend style='color:red;'>最佳答案</legend>
+                                        <input type='text' class='answer' disabled value='" + U8Convert.TryToString(dt.Rows[0]["AnswerContent"]) + @"'/>
+                                        <br/>
+                                        <label> 回答者:</label><label>" + U8Convert.TryToString(dt.Rows[0]["AnswerPeople"]) + @"</label>
+                                        <label> 回答时间:</label><label>" + U8Convert.TryToDateTime(dt.Rows[0]["AnswerTime"]) + @"</label>
+                                    </fieldset> ";
+                    strBuilder.Append(answerRegion);
+                    for (int i = 1; i < dt.Rows.Count; i++)
+                    {
+                        answerRegion = @"<fieldset>
+                                        <legend style='color:red;'>答案" + (i + 1) + @"</legend>
+                                        <input type='text' class='answer' disabled value='" + U8Convert.TryToString(dt.Rows[i]["AnswerContent"]) + @"'/>
+                                        <br/>
+                                        <label> 回答者:</label><label>" + U8Convert.TryToString(dt.Rows[i]["AnswerPeople"]) + @"</label>
+                                        <label> 回答时间:</label><label>" + U8Convert.TryToDateTime(dt.Rows[i]["AnswerTime"]) + @"</label>
+                                    </fieldset> ";
+                        strBuilder.Append(answerRegion);
+                        // < br />
+                        //< input type = 'button' class='editAnswer' value = '修改答案' answerId='" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"'/>
+                        //<input type = 'button' class='commitEdit' style='display:none;' value='确认' answerid='" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"' /><input type = 'button' style='display:none;' class='cancleEdit' value='取消' answerid='" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"' />
+                        //< a href = '#'  class='deleteAnswer' id ='deleteAnswer_" + i+ @"' answerId=" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"> 删除答案</a>
+    }
+
+                }
+                else
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        answerRegion = @"<fieldset>
+                                        <legend>答案" + (i + 1) + @"</legend>
+                                        <input type='text' class='answer' disabled value='" + U8Convert.TryToString(dt.Rows[i]["AnswerContent"]) + @"'/>
+                                        <br/>
+                                        <label> 回答者:</label><label>" + U8Convert.TryToString(dt.Rows[i]["AnswerPeople"]) + @"</label>
+                                        <label> 回答时间:</label><label>" + U8Convert.TryToDateTime(dt.Rows[i]["AnswerTime"]) + @"</label>
+                                        <br/>
+                                        <input type='button' class='editAnswer' value='修改答案' answerId='" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"'/>
+                                        <input type='button' class='commitEdit' style='display:none;' value='确认' answerid='" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"' /><input type='button' style='display:none;' class='cancleEdit' value='取消' answerid='" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"' />
+                                        <a href = '#' class='deleteAnswer' id ='deleteAnswer_" + i+ @"'answerId=" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"> 删除答案 </a>
+                                        <input type='button' value='设为最佳答案' class='tobeBestAnswer' answerid='" + U8Convert.TryToString(dt.Rows[0]["Id"]) + @"' />
+                                    </fieldset> ";
+                        strBuilder.Append(answerRegion);
+                    }
+                }
+            }
+            return strBuilder.ToString();
+        }
+
+        //判断当前登录用户是否是问题提交用户
+        public static bool isQuestionAuthor(string databaseConnectionString, string id,string userid)
+        {
+            string sql = string.Format(@"SELECT * FROM dbo.QuestionTable WHERE id='{0}' AND Submiter='{1}'",id,userid);
+            DataTable dt = new DataTable();
+            U8Database.Fill(databaseConnectionString, sql, dt, null);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //关闭问题
+        public static bool CloseQuestion(string databaseConnectionString, string QuestionId)
+        {
+            string sql = string.Format(@"UPDATE dbo.QuestionTable SET InKnowledgeLib='2' WHERE id='{0}'",QuestionId);
+            DataTable dt = new DataTable();
+            U8Database.Fill(databaseConnectionString, sql, dt, null);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //设置某个回答为最佳答案
+        public static bool TobeBestAnswer(string databaseConnectionString, string AnswerId)
+        {
+            string sql = string.Format(@"UPDATE dbo.AnswerTable SET IsBestAnswer='1' WHERE id='{0}';
+                                         UPDATE dbo.QuestionTable SET ProcessStatus='1' WHERE id=
+                                        (SELECT QueistionId FROM dbo.AnswerTable WHERE id='{0}');", AnswerId);
+            DataTable dt = new DataTable();
+            U8Database.Fill(databaseConnectionString, sql, dt, null);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }

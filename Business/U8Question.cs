@@ -16,15 +16,15 @@ namespace Business
         }
 
         //将问题设为知识库内容
-        public bool PutQuestionIntoKnowledgeLib(string id)
+        public bool PushIntoKnowledge(string databaseConnectionString, string QuestionId)
         {
-            return Da.U8Question.PutQuestionIntoKnowledgeLib(id);
+            return Da.U8Question.PushIntoKnowledge(databaseConnectionString,QuestionId);
         }
 
         //回答问题
-        public bool AnswerQuestion(int id, string content)
+        public bool SubmitAnswer(string databaseConnectionString,Entity.U8Answer answer,Entity.U8Question question)
         {
-            return Da.U8Question.AnswerQuestion(id,content);
+            return Da.U8Question.SubmitAnswer(databaseConnectionString, answer,question);
         }
 
         //将答案设置为满意答案
@@ -34,9 +34,9 @@ namespace Business
         }
 
         //修改问题
-        public bool AlterQuestion(Entity.U8Question question)
+        public bool EditAnswer(string databaseConnectionString,Entity.U8Answer u8answer)
         {
-            return Da.U8Question.AlterQuestion(question);
+            return Da.U8Question.EditAnswer(databaseConnectionString,u8answer);
         }
 
         //删除问题
@@ -46,16 +46,16 @@ namespace Business
         }
 
         //删除某条回复
-        public bool DeleteAnAnswer(int questionID, int answerID)
+        public bool DeleteAnswer(string databaseConnectionString,string answerID)
         {
-            return Da.U8Question.DeleteAnAnswer(questionID,answerID);
+            return Da.U8Question.DeleteAnswer(databaseConnectionString, answerID);
         }
 
-        //修改回复
-        public bool AlterAnAnswer(int questionID, int answerID)
-        {
-            return Da.U8Question.AlterAnAnswer(questionID, answerID);
-        }
+        ////修改回复
+        //public bool AlterAnAnswer(int questionID, int answerID)
+        //{
+        //    return Da.U8Question.AlterAnAnswer(questionID, answerID);
+        //}
 
         //查找出U8产品的版本列表
         public List<Entity.U8ProductEnum> GetU8ProductEnum(string databaseConnectionString)
@@ -97,6 +97,26 @@ namespace Business
         public bool IncreasePopularity(string databaseConnectionString, string id)
         {
             return Da.U8Question.IncreasePopularity(databaseConnectionString,id);
+        }
+
+        public string GetAnswers(string databaseConnectionString, string id)
+        {
+            return Da.U8Question.GetAnswers(databaseConnectionString,id);
+        }
+
+        public bool isQuestionAuthor(string databaseConnectionString, string id,string userid)
+        {
+            return Da.U8Question.isQuestionAuthor(databaseConnectionString,id,userid);
+        }
+
+        public bool CloseQuestion(string databaseConnectionString, string QuestionId)
+        {
+            return Da.U8Question.CloseQuestion(databaseConnectionString, QuestionId);
+        }
+
+        public bool TobeBestAnswer(string databaseConnectionString, string AnswerId)
+        {
+            return Da.U8Question.TobeBestAnswer(databaseConnectionString,AnswerId);
         }
     }
 }

@@ -129,6 +129,53 @@ namespace U8DevelopComunity.Controllers
 
         }
 
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult AddNewAnswer(Models.U8Answer u8answer)
+        {
+            string result = ""; 
+            Identity user = Identity.User;
+
+            Entity.U8Answer answer = new U8Answer();
+            answer.AnswerPeople = user.UserId;
+            answer.AnswerTime = DateTime.Now;
+            answer.AnswerContent = u8answer.AnswerContent;
+            answer.QuestionId = u8answer.QuestionId;
+
+            Entity.U8Question question = new U8Question();
+            question.Submiter = u8answer.Receiver;
+            question.QuestionContent = u8answer.NoticeInfo;
+            question.ID =U8Convert.TryToInt32(u8answer.InfoId);
+        
+
+            if (string.IsNullOrEmpty(answer.AnswerContent))
+            {
+                return new U8JsonResult()
+                {
+                    Content = U8Json.ToJson(new { Message = "回答内容不可为空" })
+                };
+            }
+
+            Business.U8Question u8question = new Business.U8Question();
+            bool submitResult = u8question.SubmitAnswer(Common.Config.ConnectionString, answer,question);
+
+            if (submitResult)
+            {
+                result = Common.U8StandardMessage.Success;
+            }
+            else
+            {
+                result = Common.U8StandardMessage.Success;
+            }
+            return new U8JsonResult()
+            {
+                Content = U8Json.ToJson(new
+                {
+                    Message = result
+                })
+            };
+        }
+
         public bool VerifyUserInput(Entity.U8Question question,out string errorMsg)
         {
             if (string.IsNullOrEmpty(question.Title))
@@ -228,6 +275,160 @@ namespace U8DevelopComunity.Controllers
             bool incResult = u8question.IncreasePopularity(Common.Config.ConnectionString,id);
 
             return View(question);
+        }
+
+        public ActionResult DeleteAnswer(string id)
+        {
+            string result = "";
+            Business.U8Question u8question = new Business.U8Question();
+            bool deleteResult = u8question.DeleteAnswer(Common.Config.ConnectionString, id);
+
+            if (deleteResult)
+            {
+                result = Common.U8StandardMessage.Success;
+            }
+            else
+            {
+                result = Common.U8StandardMessage.Success;
+            }
+            return new U8JsonResult()
+            {
+                Content = U8Json.ToJson(new
+                {
+                    Message = result
+                })
+            };
+        }
+
+        public ActionResult IniAnswer(string QuestionId)
+        {
+            var actionResult = default(ContentResult);
+            Business.U8Question business = new Business.U8Question();
+            string content = business.GetAnswers(Common.Config.ConnectionString,QuestionId);
+
+            actionResult = new U8JsonResult()
+            {
+                Content = U8Json.ToJson(new
+                {
+                    Message = "Success",
+                    Content = content
+                })
+            };
+            return actionResult;
+        }
+
+        public ActionResult EditAnswer(string AnswerId, string AnswerContent)
+        {
+            string result = "";
+            Identity user = Identity.User;
+
+            Entity.U8Answer answer = new U8Answer();
+            answer.AnswerPeople = user.UserId;
+            answer.AnswerTime = DateTime.Now;
+            answer.AnswerContent = AnswerContent;
+            answer.Id = AnswerId;
+            //answer.QuestionId = u8answer.QuestionId;
+
+
+            if (string.IsNullOrEmpty(AnswerContent))
+            {
+                return new U8JsonResult()
+                {
+                    Content = U8Json.ToJson(new { Message = "回答内容不可为空" })
+                };
+            }
+
+            Business.U8Question u8question = new Business.U8Question();
+            bool submitResult = u8question.EditAnswer(Common.Config.ConnectionString, answer);
+
+            if (submitResult)
+            {
+                result = Common.U8StandardMessage.Success;
+            }
+            else
+            {
+                result = Common.U8StandardMessage.Success;
+            }
+            return new U8JsonResult()
+            {
+                Content = U8Json.ToJson(new
+                {
+                    Message = result
+                })
+            };
+        }
+
+        public ActionResult PushIntoKnowledge(string QuestionId)
+        {
+            string result = "";
+            Identity user = Identity.User;
+
+            Business.U8Question u8question = new Business.U8Question();
+            bool submitResult = u8question.PushIntoKnowledge(Common.Config.ConnectionString, QuestionId);
+
+            if (submitResult)
+            {
+                result = Common.U8StandardMessage.Success;
+            }
+            else
+            {
+                result = Common.U8StandardMessage.Success;
+            }
+            return new U8JsonResult()
+            {
+                Content = U8Json.ToJson(new
+                {
+                    Message = result
+                })
+            };
+        }
+
+        public ActionResult CloseQuestion(string QuestionId)
+        {
+            string result = "";
+
+            Business.U8Question u8question = new Business.U8Question();
+            bool submitResult = u8question.CloseQuestion(Common.Config.ConnectionString, QuestionId);
+
+            if (submitResult)
+            {
+                result = Common.U8StandardMessage.Success;
+            }
+            else
+            {
+                result = Common.U8StandardMessage.Success;
+            }
+            return new U8JsonResult()
+            {
+                Content = U8Json.ToJson(new
+                {
+                    Message = result
+                })
+            };
+        }
+
+        public ActionResult TobeBestAnswer(string id)
+        {
+            string result = "";
+
+            Business.U8Question u8question = new Business.U8Question();
+            bool submitResult = u8question.TobeBestAnswer(Common.Config.ConnectionString, id);
+
+            if (submitResult)
+            {
+                result = Common.U8StandardMessage.Success;
+            }
+            else
+            {
+                result = Common.U8StandardMessage.Success;
+            }
+            return new U8JsonResult()
+            {
+                Content = U8Json.ToJson(new
+                {
+                    Message = result
+                })
+            };
         }
     }
 }
