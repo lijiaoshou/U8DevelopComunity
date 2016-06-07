@@ -49,6 +49,8 @@ namespace U8DevelopComunity.Common
 
         public int NoticeCount { get; set; }
 
+        public string HeadPicture { get; set; }
+
         public static void Login(Entity.U8User u8User,bool autoLogin)
         {
             //先获取请求Url
@@ -158,6 +160,7 @@ namespace U8DevelopComunity.Common
                         user.ExistingScore = u8user.ExistingScore;
                         user.Department = u8user.Department;
                         user.NoticeCount = u8user.NoticeCount;
+                        user.HeadPicture = u8user.HeadPicture;
 
                         return user;
                     }
@@ -189,6 +192,7 @@ namespace U8DevelopComunity.Common
                         user.ExistingScore = userInfo.ExistingScore;
                         user.Department = userInfo.Department;
                         user.NoticeCount = userInfo.NoticeCount;
+                        user.HeadPicture = userInfo.HeadPicture;
                     }
 
                     if (Identity.AutoLogin)

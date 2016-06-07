@@ -1,0 +1,1 @@
+"PROVIDER=SQLOLEDB;data source=LICHAOR;user id=SA;password="sa123456";initial catalog=UFDATA_999_2014;Connect Timeout=30;Persist Security Info=True ;Current Language=Simplified Chinese;"

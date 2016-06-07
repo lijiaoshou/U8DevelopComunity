@@ -10,6 +10,8 @@ namespace U8DevelopComunity.Common
     {
         public readonly static string LoginName = U8Config.GetValue<string>("LoginName");
 
+        public readonly static string LoginUrl = U8Config.GetValue<string>("LoginUrl");
+
         public readonly static string UserID = U8Config.GetValue<string>("UserID");
 
         private readonly static string connectionString =U8Config.GetValue<string>("ConnectionString");//后期可加入加密解密功能

@@ -177,5 +177,25 @@ namespace DataAccess
                                        ",id);
             return U8Database.ExecuteNonQuery(databaseConnectionString, sql, null)>0;
         }
+
+        public static bool HasAdminLimit(string databaseConnectionString, string userid)
+        {
+            string sql = string.Format(@"
+                                        SELECT usertable.id FROM dbo.UserTable usertable 
+                                        INNER JOIN dbo.UserToRoleTable roletable 
+                                        ON usertable.Role=roletable.id 
+                                        WHERE roletable.id=2 AND usertable.id='{0}'
+                                       ",userid);
+            DataTable dt = new DataTable();
+            U8Database.Fill(databaseConnectionString, sql, dt, null);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

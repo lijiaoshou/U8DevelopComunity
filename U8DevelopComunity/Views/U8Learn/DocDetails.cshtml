@@ -1,0 +1,131 @@
+﻿@model Entity.U8Learn
+@{
+    ViewBag.Title = "DocDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<Entity.U8DocVisitHistory> listHistory= ViewBag.DocVisitHistory as List<Entity.U8DocVisitHistory>;
+    //获取所有评论
+    List<Entity.U8DocComment> listComment = ViewBag.DocCommentTable as List<Entity.U8DocComment>;
+}
+<style>
+    fieldset {
+        display: block;
+        -webkit-margin-start: 2px;
+        -webkit-padding-start: 0.75em;
+        border: 2px groove threedface;
+        width: auto;
+    }
+
+    legend {
+        display: block;
+        -webkit-padding-start: 2px;
+        border: none;
+        width: auto;
+        color: #999999;
+        font-size: 14px;
+        font-weight: normal;
+    }
+
+    fieldset label {
+        color: #999999;
+        font-size: 14px;
+        font-weight: normal;
+    }
+</style>
+
+<!--标题-->
+<p style="margin-top:30px;"><label>标题：</label>@Model.TechDocCategory@Model.DocName</p>
+<!--摘要-->
+<p><label>摘要：</label>@Model.Summary</p>
+<!--文档正文-->
+<fieldset>
+    <legend align="center">文档正文</legend>
+    <p>@Html.Raw(Model.DocPath)</p>
+</fieldset>
+<!--来学习过的人员-->
+@foreach (Entity.U8DocVisitHistory history in listHistory)
+{
+    <div style="float:left;">
+        <img src="@Html.Raw(history.HeadPicture)" style="display:block;"/>
+    </div>
+}
+<!--评论区域-->
+<div style="clear:both;"></div>
+<fieldset>
+    <legend>填写评论</legend>
+    <div>
+        <input type="text" id="commentText"/>
+        <input type="button" id="commitComment" value="确定"/>
+    </div>
+</fieldset>
+
+<script>
+    $(function () {
+        $("a").click(incDownloadCount);
+        $("#commitComment").click(commitComment);
+    });
+
+    function commitComment() {
+        var id = "@Model.Id";
+        var comment = $("#commentText").val();
+        var data = "";
+
+        data = data + "Id=" + encodeURI(id);
+        data = data + "&Comment=" + encodeURI(comment);
+
+        //新建批次
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/U8Learn/SubmitComment",
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            dataType: "json",
+            data: data,
+            success: function (result) {
+
+                if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {//正常返回且成功
+
+                }
+                else {
+                    if (result != null) {//处理cookie超时
+                        if (result.Message === 'TimeOut') { alert('登录超时，请重新登录！'); }
+                        else { alert(result.Message); search(); }
+                    }
+                }
+            }
+        });
+    }
+
+    function incDownloadCount() {
+        var id = "@Model.Id";
+        var data = "";
+
+        data = data + "Id=" + encodeURI(id);
+
+        //新建批次
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/U8Learn/IncDownloadCount",
+            cache: false,
+            timeout: 60 * 60 * 1000,
+            dataType: "json",
+            data: data,
+            success: function (result) {
+
+                if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {//正常返回且成功
+
+                }
+                else {
+                    if (result != null) {//处理cookie超时
+                        if (result.Message === 'TimeOut') { alert('登录超时，请重新登录！'); }
+                        else { alert(result.Message); search(); }
+                    }
+                }
+            }
+        });
+    }
+
+</script>
+

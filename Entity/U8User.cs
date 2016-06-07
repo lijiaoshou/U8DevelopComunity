@@ -43,5 +43,7 @@ namespace Entity
         public string Department { get; set; }
 
         public int NoticeCount { get; set; }
+
+        public string HeadPicture { get; set; }
     }
 }

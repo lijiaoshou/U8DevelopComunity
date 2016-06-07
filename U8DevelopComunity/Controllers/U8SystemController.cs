@@ -7,6 +7,7 @@ using U8.Framework;
 using U8.Framework.Web;
 using U8.Framework.Web.Mvc;
 using U8DevelopComunity.Common;
+using U8DevelopComunity.Filters;
 
 namespace U8DevelopComunity.Controllers
 {
@@ -352,6 +353,7 @@ namespace U8DevelopComunity.Controllers
             return View(listNoticeLog);
         }
 
+        [IdentityAuthorize]
         /// <summary>
         /// 个人主页
         /// </summary>
@@ -362,6 +364,7 @@ namespace U8DevelopComunity.Controllers
             return View();
         }
 
+        [IdentityAuthorize]
         public ActionResult SystemNotice(string id)
         {
             Entity.U8SystemNotice u8systemNotice = new Entity.U8SystemNotice();
@@ -371,11 +374,15 @@ namespace U8DevelopComunity.Controllers
             return View(u8systemNotice);
         }
 
+        [AdminActionFilter]
+        [IdentityAuthorize]
         public ActionResult AddSystemNotice()
         {
             return View();
         }
 
+        [IdentityAuthorize]
+        [AdminActionFilter]
         [ValidateInput(false)]
         [HttpPost]
         public ActionResult AddSystemNotice(Entity.U8SystemNotice systemNotice)
@@ -435,12 +442,16 @@ namespace U8DevelopComunity.Controllers
             return true;
         }
 
+        [IdentityAuthorize]
+        [AdminActionFilter]
         [HttpGet]
         public ActionResult SystemNoticeList()
         {
             return View();
         }
 
+        [IdentityAuthorize]
+        [AdminActionFilter]
         [HttpPost]
         public ActionResult GetSystemNoticeList()
         {
@@ -479,6 +490,8 @@ namespace U8DevelopComunity.Controllers
             return actionResult;
         }
 
+        [IdentityAuthorize]
+        [AdminActionFilter]
         [HttpPost]
         public ActionResult PublishNoticeFromDraft(string id)
         {
@@ -512,6 +525,8 @@ namespace U8DevelopComunity.Controllers
             };
         }
 
+        [IdentityAuthorize]
+        [AdminActionFilter]
         [HttpPost]
         public ActionResult DeleteNoticeFromDraft(string id)
         {
@@ -545,6 +560,8 @@ namespace U8DevelopComunity.Controllers
             };
         }
 
+        [IdentityAuthorize]
+        [AdminActionFilter]
         public ActionResult SystemNoticeEdit(string id)
         {
             ViewBag.Id = id;

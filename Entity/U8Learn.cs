@@ -22,8 +22,10 @@ namespace Entity
 
         public string ReadCount { get; set; }
 
-        public DateTime? CreateTime { get; set; }
+        public DateTime CreateTime { get; set; }
 
         public string DocPath { get; set; }
+
+        public string Summary { get; set; }
     }
 }

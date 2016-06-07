@@ -76,7 +76,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="http://www.biaomeibi.com/Home/Search/index.html?search_type=1&task_title=">
+                        <a href="http://www.biaomeibi.com/Home/Search/index.html?search_type=1&task_title=" target="view_window">
                             <img src="@Url.Content("~/image/biaomei.gif")" alt="表魅网" />
                             <span>表魅网</span>
                         </a>
@@ -89,26 +89,35 @@
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <span id="welcomeInfo">欢迎您--</span> <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="/U8System/PersonalPage">
-                                    <span>个人主页</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/U8System/AddSystemNotice">
-                                    <span>发布系统通知</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/U8System/SystemNoticeList">
-                                    <span>系统通知列表</span>
-                                </a>
-                            </li>
-                        </ul>
+                        @if (U8DevelopComunity.Common.PermissionHelper.HasAdminLimit(identity.UserId))
+                        {
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span id="welcomeInfo">欢迎您--</span> <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/U8System/PersonalPage">
+                                        <span>个人主页</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/U8System/AddSystemNotice">
+                                        <span>发布系统通知</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/U8System/SystemNoticeList">
+                                        <span>系统通知列表</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <a href="/U8System/PersonalPage">
+                                <span id="welcomeInfo">欢迎您--</span>
+                            </a>
+                        }
                     </li>
                     <li>
                         <a href="/U8System/Logout">

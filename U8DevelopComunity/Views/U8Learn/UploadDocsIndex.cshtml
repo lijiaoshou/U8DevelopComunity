@@ -15,7 +15,6 @@
     }
 }
 
-<h2>UploadDocs</h2>
 <style>
     table label {
         /*width: 95px;*/
@@ -47,6 +46,10 @@
             <tr>
                 <td><label for="title">标题</label></td>
                 <td><input type="text" name="title" id="title" /></td>
+            </tr>
+            <tr>
+                <td><label for="summary">摘要</label></td>
+                <td><input type="text" name="summary" id="summary"/></td>
             </tr>
             <tr>
                 <td><label for="category">请选择分类</label></td>
@@ -81,8 +84,7 @@
         $('#btnCancle').click(cancle);
         $('#saveDocs').click(saveDocs);
         $("#category").append("@Html.Raw(categories)");
-        @*$('#title').val("@Model.Title");*@
-        @*setContent('@Html.Raw(Model.SystemNoticeContent)',true);*@
+
     });
 
     function saveDocs() {
@@ -93,19 +95,21 @@
         var title = $('#title').val();
         var docPath = getContent();
         var category = $('#category').val();
+        var summary = $('#summary').val();
 
         var data = "";
 
-        data = data + "Title=" + encodeURI(title);
+        data = data + "DocName=" + encodeURI(title);
         data = data + "&DocPath=" + encodeURI(docPath);
-        data = data + "&Category=" + encodeURI(category);
+        data = data + "&TechDocCategory=" + encodeURI(category);
+        data = data + "&Summary=" + encodeURI(summary);
 
 
         //新建批次
         $.ajax({
             async: true,
             type: "POST",
-            url: "/U8Learn/AddSystemNotice",
+            url: "/U8Learn/UploadDocs",
             cache: false,
             timeout: 60 * 60 * 1000,
             dataType: "json",
@@ -113,9 +117,9 @@
             success: function (result) {
 
                 if (result != null && result.Message == "@(U8DevelopComunity.Common.U8StandardMessage.Success)") {//正常返回且成功
-                    alert("编辑成功");
+                    alert("上传成功");
                     //添加成功后刷新批次列表页面
-                    location.href = "/U8System/SystemNoticeList";
+                    location.href = "/U8Learn/Index";
                 }
                 else {
                     if (result != null) {//处理cookie超时

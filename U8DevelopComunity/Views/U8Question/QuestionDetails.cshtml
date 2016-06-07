@@ -16,59 +16,113 @@
     Business.U8Question u8question = new Business.U8Question();
     bool isQuestionAuthor = u8question.isQuestionAuthor(U8DevelopComunity.Common.Config.ConnectionString, Model.ID.ToString(), identity.UserId);
 
+    string userid = u8question.GetUserIdByQuestionId(U8DevelopComunity.Common.Config.ConnectionString, Model.ID.ToString());
+
 }
 
-<h2>QuestionDetails</h2>
-@*<h1>"@ViewBag.Id"</h1>*@
 <!--问题详细信息展示-->
-<ul>
-    <li>@Model.ID</li>
-    <li>@Model.ProcessStatus</li>
-    <li>@Model.Title</li>
-    <li>@Model.Category</li>
-    <li>@Model.Expert</li>
-    <li>@Model.ProductBelong</li>
-    <li>@Model.Provility</li>
-    <li>@Model.ExpectFixTime</li>
-    <li>@Model.SubmitTime</li>
-    <li>@Model.Project</li>
-    <li>@Html.Raw(Model.QuestionContent)</li>
-    <li>@Model.OfferReward</li>
-    <li>@Model.Popularity</li>
-    <li>@Model.InKnowledgeLib</li>
-    <li>@Model.SonCategory</li>
-    <li>@Model.Submiter</li>
-    <li>@Model.UpdateTime</li>
-    <li>@Model.Modifiler</li>
-</ul>
+<style>
+    fieldset {
+        display: block;
+        -webkit-margin-start: 2px;
+        -webkit-padding-start: 0.75em;
+        border: 2px groove threedface;
+        width: auto;
+    }
+
+    legend {
+        display: block;
+        -webkit-padding-start: 2px;
+        border: none;
+        width: auto;
+        color: #999999;
+        font-size: 14px;
+        font-weight: normal;
+    }
+
+    fieldset label {
+        color: #999999;
+        font-size: 14px;
+        font-weight: normal;
+    }
+
+    .myul li {
+        margin-left: -40px;
+    }
+</style>
+<div>
+    <h4 style="margin-top:30px;display:inline-block;">@Model.Title</h4><img src="@Url.Content("~/image/g.gif")" style="margin-left:10px;" />@Model.OfferReward
+    <div>
+        <ul class="myul" style="list-style-type:none;">
+            <li>
+                问题编号：@Model.ID
+            </li>
+            <li>
+                所属产品：@Model.ProductBelong
+            </li>
+            <li>
+                优先级：@Model.Provility
+            </li>
+            <li>
+                期望解决时间:@Model.ExpectFixTime
+            </li>
+            <li>
+                项目:@Model.Project
+            </li>
+        </ul>
+
+        <div style="margin-top:20px;">
+            <fieldset>
+                <legend align=center>问题内容</legend>
+                <p>@Html.Raw(Model.QuestionContent)</p>
+            </fieldset>
+        </div>
+
+        <ul style="list-style-type:none;" class="myul">
+            <li style="float:left;">
+                <label style="color:#999999; font-weight: normal;">提问者：</label><a href="/U8System/PersonalPage?userid=@userid">@Model.Submiter</a>
+            </li>
+            <li style="float:left;margin-left:10px;color:#999999;">
+                人气:@Model.Popularity
+            </li>
+            <li style="float:left;margin-left:10px;color:#999999;">
+                提问时间：@Model.SubmitTime
+            </li>
+        </ul>
+    </div>
+</div>
+
 <!--回答列表-->
-<div id="answerRegion">
+<div id="answerRegion" style="margin-top:30px; clear:both;">
 
 </div>
 
 <!--回答问题区域-->
-<div style="margin-top:50px;">
-    @if (Model.ProcessStatus != "已关闭")
-    {
-        <label for="answerContent">回复内容：</label>
-        <input type="text" id="answerContent" value="" />
-        <br />
-        <input type="button" value="回答问题" id="commitAnswer" />
-    }
-    else
-    {
-        <label style="color:red">问题已经关闭，不能回复！</label>
-    }
-
+<div style="margin-top:30px;">
+    <fieldset>
+        <legend align="center">回答问题</legend>
+        @if (Model.ProcessStatus != "已关闭")
+        {
+            <label for="answerContent">回复内容：</label>
+            <input type="text" id="answerContent" value="" />
+            <br />
+            <input type="button" value="回答问题" id="commitAnswer" />
+        }
+        else
+        {
+            <label style="color:red">问题已经关闭，不能回复！</label>
+        }
+    </fieldset>
 </div>
 
 <!--操作区域-->
-<div style="margin-top:20px;">
-    @if (setKnowledgeAble&& !Model.InKnowledgeLib)
+<div style="margin-top:30px;">
+
+    @if (setKnowledgeAble && !Model.InKnowledgeLib)
     {
         <input type="button" id="tobeKnowledge" value="设为知识库内容" />
     }
-    @if (isQuestionAuthor&&Model.ProcessStatus!="已关闭")
+    @if (isQuestionAuthor && Model.ProcessStatus != "已关闭")
     {
         <input type="button" id="closeQuestion" value="关闭问题" />
     }

@@ -8,9 +8,11 @@ using U8DevelopComunity.Common;
 using U8.Framework.Web.Mvc;
 using U8.Framework.Web;
 using U8.Framework;
+using U8DevelopComunity.Filters;
 
 namespace U8DevelopComunity.Controllers
 {
+    [IdentityAuthorize]
     public class U8QuestionController : Controller
     {
         // GET: U8Question
@@ -270,6 +272,7 @@ namespace U8DevelopComunity.Controllers
         {
             Business.U8Question u8question = new Business.U8Question();
             Entity.U8Question question = u8question.QuestionDetails(Common.Config.ConnectionString,id);
+            question.ProductBelong = "U8" + question.ProductBelong;
 
             //每点击一次，给人气指数加一
             bool incResult = u8question.IncreasePopularity(Common.Config.ConnectionString,id);
@@ -303,8 +306,9 @@ namespace U8DevelopComunity.Controllers
         public ActionResult IniAnswer(string QuestionId)
         {
             var actionResult = default(ContentResult);
+            Common.Identity identity = Identity.User;
             Business.U8Question business = new Business.U8Question();
-            string content = business.GetAnswers(Common.Config.ConnectionString,QuestionId);
+            string content = business.GetAnswers(Common.Config.ConnectionString,QuestionId,identity.UserId);
 
             actionResult = new U8JsonResult()
             {
@@ -364,7 +368,7 @@ namespace U8DevelopComunity.Controllers
             Identity user = Identity.User;
 
             Business.U8Question u8question = new Business.U8Question();
-            bool submitResult = u8question.PushIntoKnowledge(Common.Config.ConnectionString, QuestionId);
+            bool submitResult = u8question.PushIntoKnowledge(Common.Config.ConnectionString, QuestionId,user.UserId);
 
             if (submitResult)
             {

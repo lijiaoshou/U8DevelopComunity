@@ -53,13 +53,13 @@
         </ul>
         <ul class="list-inline pull-right">
             <li>
-                <a class="" href="#" role="button">最热门文档</a>
+                <a class="" href="#" role="button" id="hottestDoc">最热门文档</a>
             </li>
             <li>
                 <span>&nbsp;|&nbsp;</span>
             </li>
             <li>
-                <a class="" href="#" role="button">最新文档</a>
+                <a class="" href="#" role="button" id="latestDoc">最新文档</a>
             </li>
         </ul>
     </div>
@@ -78,18 +78,32 @@
         $('#uploadDocs').click(uploadDocs);
         $('#allDocs').click(allDocs);
         $("#category").append("@Html.Raw(categories)");
-        search();
+        $("#category").change(normalSearch);
+        $("#latestDoc").click(normalSearch);
+        $("#hottestDoc").click(specialSearch);
+        normalSearch();
     })
 
+    function normalSearch()
+    {
+        search(0);
+    }
+
+    function specialSearch()
+    {
+        search(1);
+    }
+
     function uploadDocs() {
-        location.href = "/U8Learn/UploadDocs";
+        location.href = "/U8Learn/UploadDocsIndex";
     }
 
     function allDocs() {
-
+        $("#category option[value='0']").attr("selected", true); 
+        normalSearch();
     }
 
-    function search() {
+    function search(docSort) {
         var data = "";
 
         //增加分页
@@ -100,6 +114,7 @@
         data = data + "currentPage=" + encodeURI(currentPage);
         data = data + "&pageSize=" + encodeURI(pageSize);
         data = data + "&category=" + encodeURI(category);
+        data = data + "&docSort=" + encodeURI(docSort);
 
         //查询
         $.ajax({

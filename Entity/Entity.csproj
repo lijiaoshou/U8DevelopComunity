@@ -60,6 +60,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="U8DocComment.cs" />
+    <Compile Include="U8DocVisitHistory.cs" />
     <Compile Include="U8Answer.cs" />
     <Compile Include="U8NoticeLog.cs" />
     <Compile Include="U8SonCategory.cs" />

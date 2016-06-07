@@ -33,5 +33,10 @@ namespace Business
         {
             return Da.U8System.DeleteNoticeFromDraft(databaseConnectionString,id);
         }
+
+        public bool HasAdminLimit(string databaseConnectionString, string userid)
+        {
+            return Da.U8System.HasAdminLimit(databaseConnectionString, userid);
+        }
     }
 }

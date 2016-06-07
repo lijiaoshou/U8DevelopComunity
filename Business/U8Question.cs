@@ -16,9 +16,9 @@ namespace Business
         }
 
         //将问题设为知识库内容
-        public bool PushIntoKnowledge(string databaseConnectionString, string QuestionId)
+        public bool PushIntoKnowledge(string databaseConnectionString, string QuestionId,string userid)
         {
-            return Da.U8Question.PushIntoKnowledge(databaseConnectionString,QuestionId);
+            return Da.U8Question.PushIntoKnowledge(databaseConnectionString,QuestionId,userid);
         }
 
         //回答问题
@@ -99,9 +99,9 @@ namespace Business
             return Da.U8Question.IncreasePopularity(databaseConnectionString,id);
         }
 
-        public string GetAnswers(string databaseConnectionString, string id)
+        public string GetAnswers(string databaseConnectionString, string id,string userid)
         {
-            return Da.U8Question.GetAnswers(databaseConnectionString,id);
+            return Da.U8Question.GetAnswers(databaseConnectionString,id,userid);
         }
 
         public bool isQuestionAuthor(string databaseConnectionString, string id,string userid)
@@ -117,6 +117,11 @@ namespace Business
         public bool TobeBestAnswer(string databaseConnectionString, string AnswerId)
         {
             return Da.U8Question.TobeBestAnswer(databaseConnectionString,AnswerId);
+        }
+
+        public string GetUserIdByQuestionId(string databaseConnectionString, string userid)
+        {
+            return Da.U8Question.GetUserIdByQuestionId(databaseConnectionString, userid);
         }
     }
 }

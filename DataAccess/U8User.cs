@@ -21,7 +21,7 @@ namespace DataAccess
                                     WHEN '1' THEN '是'
                                     ELSE '' END  AS IsYonyouEmployee
                                     ,usertable.CreateTime,usertable.UpdateTime,usertable.LastLoginTime,usertable.IsDelete,usertable.ExistingScore,usertable.Department,
-                                    usertable.NoticeCount FROM dbo.UserTable usertable INNER JOIN dbo.UserToRoleTable roletable
+                                    usertable.NoticeCount,usertable.HeadPicture FROM dbo.UserTable usertable INNER JOIN dbo.UserToRoleTable roletable
                                     ON usertable.Role = roletable.id WHERE usertable.UserEmail='{0}' AND usertable.Password='{1}' ", userName, password);
             DataTable dt = new DataTable();
             U8Database.Fill(databaseConnectionString, sql, dt, null);
@@ -44,6 +44,7 @@ namespace DataAccess
                 user.ExistingScore = U8Convert.TryToInt32(dt.Rows[0]["ExistingScore"]);
                 user.Department = U8Convert.TryToString(dt.Rows[0]["Department"]);
                 user.NoticeCount = U8Convert.TryToInt32(dt.Rows[0]["NoticeCount"]);
+                user.HeadPicture = U8Convert.TryToString(dt.Rows[0]["HeadPicture"]);
             }
 
             return user;
@@ -74,7 +75,7 @@ namespace DataAccess
                                     WHEN '0' THEN '否'
                                     WHEN '1' THEN '是'
                                     ELSE '' END  AS IsYonyouEmployee
-                                    ,usertable.CreateTime,usertable.UpdateTime,usertable.LastLoginTime,usertable.IsDelete FROM dbo.UserTable usertable INNER JOIN dbo.UserToRoleTable roletable
+                                    ,usertable.CreateTime,usertable.UpdateTime,usertable.LastLoginTime,usertable.IsDelete,usertable.HeadPicture FROM dbo.UserTable usertable INNER JOIN dbo.UserToRoleTable roletable
                                     ON usertable.Role = roletable.id WHERE usertable.UserEmail='{0}' ", userEmail);
             DataTable dt = new DataTable();
             U8Database.Fill(databaseConnectionString, sql, dt, null);
@@ -94,6 +95,7 @@ namespace DataAccess
                 user.UserEmail = U8Convert.TryToString(dt.Rows[0]["UserEmail"]);
                 user.LastLoginTime = U8Convert.TryToDateTime(dt.Rows[0]["LastLoginTime"]);
                 user.IsDelete = U8Convert.TryToString(dt.Rows[0]["IsDelete"]) == "0" ? false : true;
+                user.HeadPicture = U8Convert.TryToString(dt.Rows[0]["HeadPicture"]);
             }
 
             return user;
@@ -137,7 +139,7 @@ namespace DataAccess
                                         INNER JOIN NoticeCategoryTable as noticecate ON noticecate.id=notice.NoticeCategory 
                                         LEFT JOIN UserTable as usersender on notice.sender=usersender.id
                                         LEFT JOIN UserTable as userreceiver on notice.Receiver=userreceiver.id
-                                        where notice.Sender='{0}' or notice.Receiver='{0}' or notice.Receiver='0' order by notice.CreateTime desc", userid);
+                                        where notice.Receiver='{0}' or notice.Receiver='0' order by notice.CreateTime desc", userid); //notice.Sender='{0}' or 
             DataTable dt = new DataTable();
             List<Entity.U8NoticeLog> listNoticeLog = new List<Entity.U8NoticeLog>();
             U8Database.Fill(databaseConnectionString, sql, dt, null);

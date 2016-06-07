@@ -126,6 +126,7 @@
     <Compile Include="Common\CacheNameMgr.cs" />
     <Compile Include="Common\Config.cs" />
     <Compile Include="Common\Identity.cs" />
+    <Compile Include="Common\PermissionHelper.cs" />
     <Compile Include="Common\Security.cs" />
     <Compile Include="Common\U8StandardMessage.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -134,7 +135,9 @@
     <Compile Include="Controllers\U8LearnController.cs" />
     <Compile Include="Controllers\U8QuestionController.cs" />
     <Compile Include="Controllers\U8SystemController.cs" />
+    <Compile Include="Filters\AdminActionFilter.cs" />
     <Compile Include="Filters\CustomExceptionFilter.cs" />
+    <Compile Include="Filters\IdentityAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -184,6 +187,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="image\atv.png" />
     <Content Include="image\blog.png" />
+    <Content Include="image\g.gif" />
     <Content Include="image\icon-Blog.png" />
     <Content Include="image\icon-Group.png" />
     <Content Include="Content\thirdpart\login-blurry-bg.jpg" />
@@ -575,7 +579,8 @@
     <Content Include="Views\U8System\AddSystemNotice.cshtml" />
     <Content Include="Views\U8System\SystemNoticeList.cshtml" />
     <Content Include="Views\U8System\SystemNoticeEdit.cshtml" />
-    <Content Include="Views\U8Learn\UploadDocs.cshtml" />
+    <Content Include="Views\U8Learn\UploadDocsIndex.cshtml" />
+    <Content Include="Views\U8Learn\DocDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
