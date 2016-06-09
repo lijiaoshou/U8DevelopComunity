@@ -10,6 +10,17 @@
     .table th {
         text-align: center;
     }
+    .fixed-table-toolbar{
+        height: 34px;
+        text-align: right;
+        margin: 10px;
+    }
+     .fixed-table-toolbar>div{
+         margin:0;
+     }
+     .fixed-table-toolbar .columns-right{
+         margin-left:5px;
+     }
 </style>
 <script src="~/Scripts/bootstrap-table.min.js"></script>
 <link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
@@ -19,11 +30,11 @@
     <img src="@Url.Content("~/image/atv.png")" alt="知识库" />
     <span>知识库</span>
     <div class="question-nav" style="margin-top:10px;">
-        <a class="btn btn-default" href="/U8Question/Index?questionCategory=1" role="button">我的问题</a>
-        <a class="btn btn-default" href="/U8Question/Index?questionCategory=2" role="button">知识库</a>
-        <a class="btn btn-default" href="/U8Question/Index?questionCategory=3" role="button">需我回答的问题</a>
-        <a class="btn btn-default" href="/U8Question/Index?questionCategory=4" role="button">所有问题</a>
-        <a class="btn btn-default pull-right" href="#" id="askQuestion" role="button" style="background-color:lightblue;margin-left:40px;">+ <span>我要提问</span></a>
+        <a class="btn btn-default" href="/U8Question/Index?questionCategory=1" role="button" style="|float:left;">我的问题</a>
+        <a class="btn btn-default" href="/U8Question/Index?questionCategory=2" role="button" style="|float:left;">知识库</a>
+        <a class="btn btn-default" href="/U8Question/Index?questionCategory=3" role="button" style="|float:left;">需我回答的问题</a>
+        <a class="btn btn-default" href="/U8Question/Index?questionCategory=4" role="button" style="|float:left;">所有问题</a>
+        <a class="btn btn-default pull-right" href="#" id="askQuestion" role="button" style="background-color:lightblue;float:right">+ <span>我要提问</span></a>
     </div>
     <div style="margin-top:20px;">
         <a class="pull-left" href="/U8Question/Index?questionCategory=2&knowledgeCategory=1" role="button">最新知识</a>

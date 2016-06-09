@@ -32,33 +32,33 @@
         font-weight: normal;
     }
 </style>
-
-<!--标题-->
-<p style="margin-top:30px;"><label>标题：</label>@Model.TechDocCategory@Model.DocName</p>
-<!--摘要-->
-<p><label>摘要：</label>@Model.Summary</p>
-<!--文档正文-->
-<fieldset>
-    <legend align="center">文档正文</legend>
-    <p>@Html.Raw(Model.DocPath)</p>
-</fieldset>
-<!--来学习过的人员-->
-@foreach (Entity.U8DocVisitHistory history in listHistory)
-{
-    <div style="float:left;">
-        <img src="@Html.Raw(history.HeadPicture)" style="display:block;"/>
-    </div>
-}
-<!--评论区域-->
-<div style="clear:both;"></div>
-<fieldset>
-    <legend>填写评论</legend>
-    <div>
-        <input type="text" id="commentText"/>
-        <input type="button" id="commitComment" value="确定"/>
-    </div>
-</fieldset>
-
+<div style="margin-top:60px">
+    <!--标题-->
+    <p style="padding-top:20px;"><label>标题：</label>@Model.TechDocCategory@Model.DocName</p>
+    <!--摘要-->
+    <p><label>摘要：</label>@Model.Summary</p>
+    <!--文档正文-->
+    <fieldset>
+        <legend align="center" style="margin-bottom:0;">文档正文</legend>
+        <p>@Html.Raw(Model.DocPath)</p>
+    </fieldset>
+    <!--来学习过的人员-->
+    @foreach (Entity.U8DocVisitHistory history in listHistory)
+    {
+        <div style="float:left;">
+            <img src="@Html.Raw(history.HeadPicture)" style="display:block;" />
+        </div>
+    }
+    <!--评论区域-->
+    <div style="clear:both;"></div>
+    <fieldset style="margin-top:20px;">
+        <legend style="margin-bottom: 0;">填写评论</legend>
+        <div style="height:30px;margin:20px 0;">
+            <input type="text" id="commentText" style="height:30px;line-height:30px;margin-right:5px;" />
+            <input type="button" id="commitComment" value="确定" style="height:30px;" />
+        </div>
+    </fieldset>
+</div>
 <script>
     $(function () {
         $("a").click(incDownloadCount);

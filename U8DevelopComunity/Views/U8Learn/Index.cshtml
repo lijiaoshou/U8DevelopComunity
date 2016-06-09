@@ -27,12 +27,23 @@
     .question-nav {
         margin-top: 20px;
     }
+    .fixed-table-toolbar{
+        height: 34px;
+        text-align: right;
+        margin: 10px;
+    }
+     .fixed-table-toolbar>div{
+         margin:0;
+     }
+     .fixed-table-toolbar .columns-right{
+         margin-left:5px;
+     }
 </style>
 
 <script src="~/Scripts/bootstrap-table.min.js"></script>
 <link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
 <script src="~/Scripts/bootstrap-table-zh-CN.min.js"></script>
-<div class="mycenter">
+<div class="mycenter clearfix">
     <img src="@Url.Content("~/image/blog.png")" alt="知识搜索" />
     <span>知识搜索</span>
     <div class="question-nav">
@@ -42,13 +53,13 @@
         </div>
     </div>
 
-    <div style="margin-top:20px;margin-bottom:50px;width:auto;">
+    <div style="margin-top:20px;width:auto;height:30px;line-height:30px;">
         <ul class="list-inline pull-left">
             <li class="pull-left">
-                <label style="color: #0463A6;">技术文档分类</label>
+                <label style="color: #0463A6;margin:0;">技术文档分类</label>
             </li>
             <li class="pull-left">
-                <select id="category"></select>
+                <select id="category" style="height:30px;"></select>
             </li>
         </ul>
         <ul class="list-inline pull-right">
@@ -99,7 +110,7 @@
     }
 
     function allDocs() {
-        $("#category option[value='0']").attr("selected", true); 
+        $("#category option[value='0']").attr("selected", true);
         normalSearch();
     }
 

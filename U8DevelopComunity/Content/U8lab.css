@@ -1,6 +1,6 @@
 ﻿body {
 }
-
+input{outline:none;border: 1px solid #BBB4B4;}
 .mycenter
     {
     display: table;
@@ -9,3 +9,71 @@
     margin-right: auto;
     margin-top:60px;
     }
+
+.student-each-term a{
+    width:12%;
+    margin:4px 2px 0 0;
+    padding: 6px 0;
+    text-align: center;
+}
+
+
+    .question-table>tbody >tr{
+        height:35px;
+
+    }
+     .question-table>tbody >tr>td{
+         height:35px;
+          line-height:35px;
+         padding:5px 0;
+         margin:0;
+     }
+     .question-table>tbody >tr>td>label{
+         margin-bottom:0;
+     }
+     .question-table>tbody >tr>td>label.question-table-desc{
+        display:block;
+        height:100%;
+        padding:0;
+        margin:0;
+         font-weight: normal;
+        color: #0463A6;
+        text-indent:10px;
+        min-width:80px;
+     }
+     .question-table>tbody >tr>td>input{
+         height:30px;
+         line-height:30px;
+         text-indent:3px;
+
+     }
+     .question-table>tbody >tr>td select{
+         height:30px;
+         line-height:30px;
+     }
+     #editor{
+         margin:10px 0;
+     }
+     .question-table>tbody >tr>td>input[type=button]{
+         height:30px;
+         line-height:30px;
+         text-indent:0;
+         padding: 0 8px;
+     }
+     .fieldset-wrap{
+         margin:10px 0;
+     }
+     .fieldset-input{
+         height:30px;
+         line-height:30px;
+         text-indent:3px;
+     }
+     .fieldset-label{
+         height:30px;
+         line-height:30px;
+         margin-right:5px;
+         margin-bottom:0;
+     }
+     .fieldset-span{
+         margin-right:10px;
+     }

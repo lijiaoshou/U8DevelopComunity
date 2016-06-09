@@ -426,7 +426,7 @@ namespace DataAccess
 
             string sql = string.Format(@"
                                         SELECT question.submiter as submiter,answer.Id,answer.QueistionId,answer.AnswerContent,usertable.RealName as AnswerPeople,answer.AnswerTime,answer.IsBestAnswer FROM dbo.AnswerTable answer
-                                        LEFT JOIN dbo.UserTable usertable ON usertable.id=answer.AnswerPeople 
+                                        LEFT JOIN dbo.UserTable usertable ON usertable.id=answer.AnswerPeople
                                         INNER JOIN QuestionTable question ON question.id=answer.QueistionId WHERE QueistionId='{0}'
                                         AND IsBestAnswer='1'
                                         UNION
@@ -444,20 +444,26 @@ namespace DataAccess
                 {
                     answerRegion = @"<fieldset>
                                         <legend style='color:red;'  align=center>最佳答案</legend>
-                                        <input type='text' class='answer' disabled value='" + U8Convert.TryToString(dt.Rows[0]["AnswerContent"]) + @"'/>
-                                        <br/>
-                                        <label> 回答者:</label><label>" + U8Convert.TryToString(dt.Rows[0]["AnswerPeople"]) + @"</label>
-                                        <label> 回答时间:</label><label>" + U8Convert.TryToDateTime(dt.Rows[0]["AnswerTime"]) + @"</label>
+                                        <div class='fieldset-wrap'>
+                                            <input type='text' class='answer fieldset-input' disabled value='" + U8Convert.TryToString(dt.Rows[0]["AnswerContent"]) + @"'/>
+                                            <div style='height:30px;margin-top:10px;'>
+                                                <span class='fieldset-span'><label class='fieldset-label'> 回答者:</label><label class='fieldset-label'>" + U8Convert.TryToString(dt.Rows[0]["AnswerPeople"]) + @"</label></span>
+                                                <span class='fieldset-span'><label class='fieldset-label'> 回答时间:</label><label class='fieldset-label'>" + U8Convert.TryToDateTime(dt.Rows[0]["AnswerTime"]) + @"</label></span>
+                                            </div>
+                                        </div>
                                     </fieldset> ";
                     strBuilder.Append(answerRegion);
                     for (int i = 1; i < dt.Rows.Count; i++)
                     {
                         answerRegion = @"<fieldset>
                                         <legend  align=center>答案" + (i + 1) + @"</legend>
-                                        <input type='text' class='answer' disabled value='" + U8Convert.TryToString(dt.Rows[i]["AnswerContent"]) + @"'/>
-                                        <br/>
-                                        <label> 回答者:</label><label>" + U8Convert.TryToString(dt.Rows[i]["AnswerPeople"]) + @"</label>
-                                        <label> 回答时间:</label><label>" + U8Convert.TryToDateTime(dt.Rows[i]["AnswerTime"]) + @"</label>
+                                        <div class='fieldset-wrap'>
+                                            <input type='text' class='answer' disabled value='" + U8Convert.TryToString(dt.Rows[i]["AnswerContent"]) + @"'/>
+                                            <div style='height:30px;margin-top:10px;'>
+                                                <span class='fieldset-span'><label class='fieldset-label'> 回答者:</label><label class='fieldset-label'>" + U8Convert.TryToString(dt.Rows[i]["AnswerPeople"]) + @"</label></span>
+                                                <span class='fieldset-span'><label class='fieldset-label'> 回答时间:</label><label class='fieldset-label'>" + U8Convert.TryToDateTime(dt.Rows[i]["AnswerTime"]) + @"</label></span>
+                                            </div>
+                                        </div>
                                     </fieldset> ";
                         strBuilder.Append(answerRegion);
                         // < br />
@@ -475,19 +481,23 @@ namespace DataAccess
 
                         answerRegion = @"<fieldset>
                                         <legend  align=center>答案" + (i + 1) + @"</legend>
-                                        <input type='text' class='answer' disabled value='" + U8Convert.TryToString(dt.Rows[i]["AnswerContent"]) + @"'/>
-                                        <br/>
-                                        <label> 回答者:</label><label>" + U8Convert.TryToString(dt.Rows[i]["AnswerPeople"]) + @"</label>
-                                        <label> 回答时间:</label><label>" + U8Convert.TryToDateTime(dt.Rows[i]["AnswerTime"]) + @"</label>
-                                        <br/>
-                                        <input type='button' class='editAnswer' value='修改答案' answerId='" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"'/>
-                                        <input type='button' class='commitEdit' style='display:none;' value='确认' answerid='" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"' /><input type='button' style='display:none;' class='cancleEdit' value='取消' answerid='" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"' />
-                                        <a href = '#' class='deleteAnswer' id ='deleteAnswer_" + i + @"'answerId=" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"> 删除答案 </a>";
+                                        <div class='fieldset-wrap'>
+                                           <input type='text' class='answer' disabled value='" + U8Convert.TryToString(dt.Rows[i]["AnswerContent"]) + @"'/>
+                                            <div style='height:30px;margin-top:10px;'>
+                                                <span class='fieldset-span'><label class='fieldset-label'> 回答者:</label><label class='fieldset-label'>" + U8Convert.TryToString(dt.Rows[i]["AnswerPeople"]) + @"</label></span>
+                                                <span class='fieldset-span'><label class='fieldset-label'> 回答时间:</label><label class='fieldset-label'>" + U8Convert.TryToDateTime(dt.Rows[i]["AnswerTime"]) + @"</label></span>
+                                            </div>
+                                            <div style='height:30px;margin-top:10px;'>
+                                                <input type='button' class='editAnswer' value='修改答案' answerId='" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"'/>
+                                                <input type='button' class='commitEdit' style='display:none;margin-right:5px;' value='确认' answerid='" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"' /><input type='button' style='display:none;' class='cancleEdit' value='取消' answerid='" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"' />
+                                                <a href = '#' class='deleteAnswer' id ='deleteAnswer_" + i + @"'answerId=" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"> 删除答案 </a>
+
+                                       ";
                         if (isAuthor)
                         {
                             answerRegion += "<input type='button' value='设为最佳答案' class='tobeBestAnswer' answerid='" + U8Convert.TryToString(dt.Rows[i]["Id"]) + @"' />";
                         }
-                        answerRegion += "</fieldset> ";
+                        answerRegion += "</div> </div></fieldset> ";
                         strBuilder.Append(answerRegion);
                     }
                 }

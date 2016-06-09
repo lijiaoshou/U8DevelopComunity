@@ -3,8 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,maximum-scale=1.0, minimum-scale=0.4">
     <title>@ViewBag.Title - U8开发者社区</title>
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -15,20 +16,79 @@
         U8DevelopComunity.Common.Identity identity = U8DevelopComunity.Common.Identity.User;
      }
     <style>
-        .navg-son li a{
-            padding-top:5px;
-            padding-right:3px;
-            padding-bottom:5px;
-            padding-left:3px;
-        }
-        .navg-son {
-            margin-top:10px;
-        }
+        input{outline:none;border: 1px solid #BBB4B4;}
+            .navg-son li a{
+                padding-top:5px;
+                padding-right:3px;
+                padding-bottom:5px;
+                padding-left:3px;
+            }
+            .navg-son {
+                margin-top:10px;
+            }
+            .personal-nav{
+                margin-top:10px;
+                float:left;
+                padding-left: 0;
+                list-style: none;
+            }
+            .personal-nav:before, .personal-nav:after {
+                display: table;
+                content: " ";
+            }
+             .personal-nav  li{
+                 float:left;
+                 position: relative;
+                 display: block;
+             }
+             .personal-nav li  a{
+                 color: #999999;
+                 padding-top: 5px;
+                padding-right: 3px;
+                padding-bottom: 5px;
+                padding-left: 3px;
+                line-height: 20px;
+                position: relative;
+                display: block;
+             }
+             .personal-nav li a .caret{
+                 border-top-color: #999999;
+                border-bottom-color: #999999;
+             }
+             .personal-nav li a:hover .caret{
+                 border-top-color: #fff;
+                border-bottom-color: #fff;
+             }
+             .personal-nav li a:hover{
+                 color:#fff;
+                 text-decoration:none;
+             }
+              .personal-nav li a:link,.personal-nav li a:visited{
+                  text-decoration:none;
+              }
+              .body-content:before,body-content:after{
+                  clear:both;
+
+              }
+              .body-content{
+                  padding-bottom:60px;
+              }
+              .footer{
+                  position:absolute;
+                  bottom:0;
+                  width:100%;
+                  text-align:center;
+              }
+              .dropdown-menu li{
+                  float:none;
+                  display:block;
+                  line-height:30px;
+              }
     </style>
 </head>
-<body>
+<body style="padding:0;height:100%;position:relative;">
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container" style="position:relative;width:100%;">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -82,7 +142,10 @@
                         </a>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav navg-son">
+
+            </div>
+            <div style="position:absolute;top:1px;right:0;" class="personal-info">
+                <ul class="personal-nav">
                     <li>
                         <a href="/U8System/Notification">
                             <span id="noticeCount">通知(0)</span>
@@ -128,8 +191,11 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" style="width:100%;">
         @RenderBody()
+
+    </div>
+    <div class="footer">
         <hr />
         <footer>
             <center><p>&copy; @DateTime.Now.Year - 用友优普有限公司</p></center>
@@ -191,6 +257,15 @@
                 $('#noticeCount').css('color', 'rgb(153, 153, 153)');
             }
         }
+
+        window.onload = window.onresize = function () {
+            if ($('.container').width() <= 970) {
+                $(".personal-info").css('right', '70px');
+            } else {
+                $(".personal-info").css('right', '1px');
+            }
+
+        };
     </script>
 </body>
 </html>

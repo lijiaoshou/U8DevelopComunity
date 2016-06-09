@@ -57,9 +57,9 @@ namespace DataAccess
             string IsYonyouEmployee = userInfo.IsYonyouEmployee ? "1" : "0";
             DateTime now = DateTime.Now;
 
-            string sql = string.Format(@"insert into UserTable(UserEmail,Password,Gender,Phone,Company,Province,City,Role,IsYonyouEmployee,CreateTime,UpdateTime,IsDelete) 
-                                       values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}')", userInfo.UserEmail, userInfo.Password,
-                                       userInfo.Gender, userInfo.Phone, userInfo.Company, userInfo.Province, userInfo.City, "0", IsYonyouEmployee, now, now, "0");
+            string sql = string.Format(@"insert into UserTable(UserEmail,Password,Gender,Phone,Company,Province,City,Role,IsYonyouEmployee,CreateTime,UpdateTime,IsDelete,RealName)
+                                       values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}')", userInfo.UserEmail, userInfo.Password,
+                                       userInfo.Gender, userInfo.Phone, userInfo.Company, userInfo.Province, userInfo.City, "0", IsYonyouEmployee, now, now, "0",userInfo.RealName);
             int i = U8Database.ExecuteNonQuery(databaseConnectionString, sql, null);
 
             return i > 0;
@@ -136,10 +136,10 @@ namespace DataAccess
             string sql = string.Format(@"SELECT notice.id,notice.Sender as Senderid,usersender.realname as Sendername, notice.Receiver as Receiverid,
                                         userreceiver.realname as Receivername,notice.NoticeInfo,notice.CreateTime,noticecate.NoticeName as NoticeCategory,notice.InfoId,notice.IsAskQuestion
                                         FROM NoticeLog as notice
-                                        INNER JOIN NoticeCategoryTable as noticecate ON noticecate.id=notice.NoticeCategory 
+                                        INNER JOIN NoticeCategoryTable as noticecate ON noticecate.id=notice.NoticeCategory
                                         LEFT JOIN UserTable as usersender on notice.sender=usersender.id
                                         LEFT JOIN UserTable as userreceiver on notice.Receiver=userreceiver.id
-                                        where notice.Receiver='{0}' or notice.Receiver='0' order by notice.CreateTime desc", userid); //notice.Sender='{0}' or 
+                                        where notice.Receiver='{0}' or notice.Receiver='0' order by notice.CreateTime desc", userid); //notice.Sender='{0}' or
             DataTable dt = new DataTable();
             List<Entity.U8NoticeLog> listNoticeLog = new List<Entity.U8NoticeLog>();
             U8Database.Fill(databaseConnectionString, sql, dt, null);

@@ -2971,8 +2971,8 @@ body.fourofour {
 @media (max-width: 600px) {
   body.login1 {
     padding: 15px;
-    background-size: auto; }
-    body.login1.signup .login-container {
+    background-size: cover; }
+    body.login1.signup .login-container,body.login1.signup .login-wrapper .register {
       height: auto;
       margin-top: 0; }
     body.login1 .login-container {

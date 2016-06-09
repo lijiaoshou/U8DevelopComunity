@@ -137,6 +137,7 @@ namespace U8DevelopComunity.Controllers
             userInfo.Phone = Request["userPhone"];
             userInfo.Province = Request["userProvince"];
             userInfo.UserEmail = Request["userEmail"];
+            userInfo.RealName = Request["userName"];
             userInfo.IsYonyouEmployee =IsInternalUser(userInfo.UserEmail);
             string confirmPassword = Request["userConfirmPassword"];
 

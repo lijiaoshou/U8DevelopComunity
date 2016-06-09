@@ -191,7 +191,9 @@
     <Content Include="image\icon-Blog.png" />
     <Content Include="image\icon-Group.png" />
     <Content Include="Content\thirdpart\login-blurry-bg.jpg" />
+    <Content Include="image\login2.png" />
     <Content Include="image\logo-login%402x.png" />
+    <Content Include="image\logo.png" />
     <Content Include="image\notice.gif" />
     <Content Include="image\xueyuan.jpg" />
     <Content Include="image\xueyuan2.jpg" />

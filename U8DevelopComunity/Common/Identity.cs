@@ -139,39 +139,38 @@ namespace U8DevelopComunity.Common
                     if (obj != null)
                     {
                         Entity.U8User u8user = obj as Entity.U8User;
-                        if (u8user == null)
+                        if (u8user != null)
                         {
-                            return null;
-                        }
-                        user.City = u8user.City;
-                        user.Company = u8user.Company;
-                        user.CreateTime = u8user.CreateTime;
-                        user.Gender = u8user.Gender;
-                        user.IsDelete = u8user.IsDelete;
-                        user.IsYonyouEmployee = u8user.IsYonyouEmployee;
-                        user.LastLoginTime = u8user.LastLoginTime;
-                        user.Phone = u8user.Password;
-                        user.Province = u8user.Province;
-                        user.RealName = u8user.RealName;
-                        user.Role = u8user.Role;
-                        user.UpdateTime = u8user.UpdateTime;
-                        user.UserEmail = u8user.UserEmail;
-                        user.UserId = u8user.UserId;
-                        user.ExistingScore = u8user.ExistingScore;
-                        user.Department = u8user.Department;
-                        user.NoticeCount = u8user.NoticeCount;
-                        user.HeadPicture = u8user.HeadPicture;
+                            user.City = u8user.City;
+                            user.Company = u8user.Company;
+                            user.CreateTime = u8user.CreateTime;
+                            user.Gender = u8user.Gender;
+                            user.IsDelete = u8user.IsDelete;
+                            user.IsYonyouEmployee = u8user.IsYonyouEmployee;
+                            user.LastLoginTime = u8user.LastLoginTime;
+                            user.Phone = u8user.Password;
+                            user.Province = u8user.Province;
+                            user.RealName = u8user.RealName;
+                            user.Role = u8user.Role;
+                            user.UpdateTime = u8user.UpdateTime;
+                            user.UserEmail = u8user.UserEmail;
+                            user.UserId = u8user.UserId;
+                            user.ExistingScore = u8user.ExistingScore;
+                            user.Department = u8user.Department;
+                            user.NoticeCount = u8user.NoticeCount;
+                            user.HeadPicture = u8user.HeadPicture;
 
-                        return user;
+                            return user;
+                        }
                     }
 
                     string UserEmail = user.UserEmail;
 
                     //通过用户的ID获取用户信息
                     U8User userInfo = new Business.U8User().GetByUserID(Config.ConnectionString, UserEmail);
-   
+
                     //user.Password = U8.Framework.U8Convert.TryToString(HttpContext.Current.Session["userPwd"], "");//记住用户的密码
-                   
+
                     if (userInfo != null)
                     {
                         user.City = userInfo.City;
@@ -193,6 +192,10 @@ namespace U8DevelopComunity.Common
                         user.Department = userInfo.Department;
                         user.NoticeCount = userInfo.NoticeCount;
                         user.HeadPicture = userInfo.HeadPicture;
+                    }
+                    else
+                    {
+                        return null;
                     }
 
                     if (Identity.AutoLogin)

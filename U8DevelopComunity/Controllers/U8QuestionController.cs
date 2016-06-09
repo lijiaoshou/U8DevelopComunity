@@ -26,7 +26,7 @@ namespace U8DevelopComunity.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "U8System");    
+                return RedirectToAction("Index", "U8System");
             }
         }
 
@@ -110,6 +110,10 @@ namespace U8DevelopComunity.Controllers
                 };
             }
 
+            if (question.Category == "10")
+            {
+                question.SonCategory = "77";
+            }
             Business.U8Question u8question = new Business.U8Question();
             bool submitResult = u8question.SubmitQuestion(Common.Config.ConnectionString,question);
 
@@ -135,7 +139,7 @@ namespace U8DevelopComunity.Controllers
         [ValidateInput(false)]
         public ActionResult AddNewAnswer(Models.U8Answer u8answer)
         {
-            string result = ""; 
+            string result = "";
             Identity user = Identity.User;
 
             Entity.U8Answer answer = new U8Answer();
@@ -148,7 +152,7 @@ namespace U8DevelopComunity.Controllers
             question.Submiter = u8answer.Receiver;
             question.QuestionContent = u8answer.NoticeInfo;
             question.ID =U8Convert.TryToInt32(u8answer.InfoId);
-        
+
 
             if (string.IsNullOrEmpty(answer.AnswerContent))
             {

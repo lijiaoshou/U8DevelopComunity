@@ -38,26 +38,29 @@
 <script src="~/Scripts/bootstrap-datetimepicker.zh-CN.js"></script>
 
 <div class="mycenter">
-    <img src="@Url.Content("~/image/atv.png")" alt="上传知识" style="margin-left:20%;" />
-    <span>上传知识</span>
+    <div style="height:30px;line-height:30px">
+        <img src="@Url.Content("~/image/atv.png")" alt="上传知识" />
+        <span style="margin-left:5px;">上传知识</span>
+    </div>
 
-    <table class="mycenter table table-hover table-striped table-responsive" style="width:60%;margin-top:1px;">
+
+    <table class="mycenter table table-hover table-striped table-responsive question-table" style="width:100%;margin-top:1px;">
         <tbody id="myTable">
             <tr>
-                <td><label for="title">标题</label></td>
+                <td><label for="title" class="question-table-desc">标题</label></td>
                 <td><input type="text" name="title" id="title" /></td>
             </tr>
             <tr>
-                <td><label for="summary">摘要</label></td>
+                <td><label for="summary" class="question-table-desc">摘要</label></td>
                 <td><input type="text" name="summary" id="summary"/></td>
             </tr>
             <tr>
-                <td><label for="category">请选择分类</label></td>
+                <td><label for="category" class="question-table-desc">请选择分类</label></td>
                 <td><select id="category"></select></td>
             </tr>
             <tr>
-                <td style="width:12%;"><label for="content">内容</label></td>
-                <td style="height:320px;">
+                <td style="width:12%;"><label for="content" class="question-table-desc">内容</label></td>
+                <td style="height:320px;line-height: 1.428571429;">
                     <script id="editor" type="text/plain">
                     </script>
                 </td>
@@ -66,7 +69,7 @@
                 <td></td>
                 <td>
                     <input class="btn btn-primary" type="button" id="saveDocs" value="保存" />&nbsp;&nbsp;
-                    <input class="btn btn-primary" type="button" id="btnCancle" value="取消" />
+                    <input class="btn btn-default" type="button" id="btnCancle" value="取消" />
                 </td>
             </tr>
         </tbody>

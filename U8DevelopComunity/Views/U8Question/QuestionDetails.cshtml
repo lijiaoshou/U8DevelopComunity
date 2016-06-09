@@ -47,13 +47,21 @@
     }
 
     .myul li {
-        margin-left: -40px;
+       height:30px;
+       line-height:30px;
+    }
+    #answerRegion  legend{
+        margin-bottom:0;
+    }
+    #answerRegion fieldset{
+        margin-bottom:20px;
     }
 </style>
-<div>
-    <h4 style="margin-top:30px;display:inline-block;">@Model.Title</h4><img src="@Url.Content("~/image/g.gif")" style="margin-left:10px;" />@Model.OfferReward
+<link href="~/Content/U8lab.css" rel="stylesheet" />
+<div style="margin-top:60px;">
+    <h4 style="margin-top:20px;display:inline-block;">@Model.Title</h4><img src="@Url.Content("~/image/g.gif")" style="margin-left:10px;" />@Model.OfferReward
     <div>
-        <ul class="myul" style="list-style-type:none;">
+        <ul class="myul" style="list-style-type:none;padding:0;">
             <li>
                 问题编号：@Model.ID
             </li>
@@ -71,14 +79,14 @@
             </li>
         </ul>
 
-        <div style="margin-top:20px;">
+        <div style="margin-top:10px;">
             <fieldset>
-                <legend align=center>问题内容</legend>
+                <legend align=center style="margin-bottom:0;">问题内容</legend>
                 <p>@Html.Raw(Model.QuestionContent)</p>
             </fieldset>
         </div>
 
-        <ul style="list-style-type:none;" class="myul">
+        <ul style="list-style-type:none;padding:0;margin-top:10px;" class="myul clearfix">
             <li style="float:left;">
                 <label style="color:#999999; font-weight: normal;">提问者：</label><a href="/U8System/PersonalPage?userid=@userid">@Model.Submiter</a>
             </li>
@@ -93,20 +101,21 @@
 </div>
 
 <!--回答列表-->
-<div id="answerRegion" style="margin-top:30px; clear:both;">
+<div id="answerRegion" style="clear:both;">
 
 </div>
 
 <!--回答问题区域-->
 <div style="margin-top:30px;">
-    <fieldset>
-        <legend align="center">回答问题</legend>
+    <fieldset style="margin:10px 0;">
+        <legend align="center" style="margin-bottom:0;">回答问题</legend>
         @if (Model.ProcessStatus != "已关闭")
         {
-            <label for="answerContent">回复内容：</label>
-            <input type="text" id="answerContent" value="" />
-            <br />
-            <input type="button" value="回答问题" id="commitAnswer" />
+           <div style="height:30px;line-height:30px;">
+               <label for="answerContent" style="margin:0;height:30px;display:inline-block;line-height:30px;">回复内容：</label>
+               <input type="text" id="answerContent" value="" style="height:30px;line-height:30px;" />
+           </div>
+            <input type="button" value="回答问题" id="commitAnswer" style="margin:10px 0 ;"  />
         }
         else
         {
@@ -213,7 +222,7 @@
         $(this).next().next().css('display', 'inline-block')
         $(".commitEdit").click(commitEdit);
         $(".cancleEdit").click(cancleEdit);
-        $(this).parent().find('input').eq(0).removeAttr('disabled');
+        $(this).parent().parent().find('input').eq(0).removeAttr('disabled');
     }
 
     function commitEdit() {
@@ -222,7 +231,7 @@
         }
 
         var answerid = $(this).attr('answerid');
-        var content = $(this).parent().find('input').eq(0).val();
+        var content = $(this).parent().parent().find('input').eq(0).val();
 
         var data = "";
 
@@ -254,11 +263,12 @@
     }
 
     function cancleEdit() {
-        $(this).parent().find('input').eq(0).attr('disabled', 'disabled');
+        $(this).parent().parent().find('input').eq(0).attr('disabled', 'disabled');
         $(this).css('display', 'none');
         $(this).prev().css('display', 'none');
-        $(this).parent().find('input').eq(1).css('display', 'inline-block');
+        $(this).parent().parent().find('input').eq(1).css('display', 'inline-block');
         $(this).parent().find('a').eq(0).css('display', 'inline-block');
+        IniAnswer();
     }
 
     function IniAnswer() {

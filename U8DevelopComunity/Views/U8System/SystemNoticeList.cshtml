@@ -3,49 +3,51 @@
     ViewBag.Title = "GetSystemNoticeList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div style="margin-top:60px">
+    <h2 style="font-size:20px;">系统通知列表</h2>
 
-<h2>系统通知列表</h2>
+    <link href="~/Content/U8lab.css" rel="stylesheet" />
+    <style>
+        .table td {
+            text-align: center;
+        }
 
-<link href="~/Content/U8lab.css" rel="stylesheet" />
-<style>
-    .table td {
-        text-align: center;
-    }
+        .table th {
+            text-align: center;
+        }
+    </style>
+    <script src="~/Scripts/bootstrap-table.min.js"></script>
+    <link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-table-zh-CN.min.js"></script>
 
-    .table th {
-        text-align: center;
-    }
-</style>
-<script src="~/Scripts/bootstrap-table.min.js"></script>
-<link href="~/Content/bootstrap-table.min.css" rel="stylesheet" />
-<script src="~/Scripts/bootstrap-table-zh-CN.min.js"></script>
+    <div class="mycenter" style="margin-top:10px;">
+        <div style="height:30px;line-height:30px">
+            <img src="@Url.Content("~/image/atv.png")" alt="系统通知列表" />
+            <span style="margin-left:5px">系统通知列表</span>
+        </div>
+        @*<div class="question-nav" style="margin-top:10px;">
+                <a class="btn btn-default" href="/U8Question/Index?questionCategory=1" role="button">我的问题</a>
+                <a class="btn btn-default" href="/U8Question/Index?questionCategory=2" role="button">知识库</a>
+                <a class="btn btn-default" href="/U8Question/Index?questionCategory=3" role="button">需我回答的问题</a>
+                <a class="btn btn-default" href="/U8Question/Index?questionCategory=4" role="button">所有问题</a>
+                <a class="btn btn-default pull-right" href="#" id="askQuestion" role="button" style="background-color:lightblue;margin-left:40px;">+ <span>我要提问</span></a>
+            </div>
+            <div style="margin-top:20px;">
+                <a class="pull-left" href="/U8Question/Index?questionCategory=2&knowledgeCategory=1" role="button">最新知识</a>
+                <span>&nbsp;|&nbsp;</span>
+                <a class="" href="/U8Question/Index?questionCategory=2&knowledgeCategory=2" role="button">最热门知识</a>
+            </div>*@
 
-<div class="mycenter">
-    <img src="@Url.Content("~/image/atv.png")" alt="系统通知列表" />
-    <span>系统通知列表</span>
-    @*<div class="question-nav" style="margin-top:10px;">
-        <a class="btn btn-default" href="/U8Question/Index?questionCategory=1" role="button">我的问题</a>
-        <a class="btn btn-default" href="/U8Question/Index?questionCategory=2" role="button">知识库</a>
-        <a class="btn btn-default" href="/U8Question/Index?questionCategory=3" role="button">需我回答的问题</a>
-        <a class="btn btn-default" href="/U8Question/Index?questionCategory=4" role="button">所有问题</a>
-        <a class="btn btn-default pull-right" href="#" id="askQuestion" role="button" style="background-color:lightblue;margin-left:40px;">+ <span>我要提问</span></a>
+        <table class="sldatatablefix Result_table" id="table-javascript" data-height=""></table>
+        <div style="display:none">
+            <table class="sldatatable">
+                <!--最终加载的数据都存在这个table里-->
+                <tr class="sldatatableheader" style="height: 0px;"></tr>
+            </table>
+        </div>
+        @Html.Partial("~/Views/Common/RenderPaging.cshtml")
     </div>
-    <div style="margin-top:20px;">
-        <a class="pull-left" href="/U8Question/Index?questionCategory=2&knowledgeCategory=1" role="button">最新知识</a>
-        <span>&nbsp;|&nbsp;</span>
-        <a class="" href="/U8Question/Index?questionCategory=2&knowledgeCategory=2" role="button">最热门知识</a>
-    </div>*@
-
-    <table class="sldatatablefix Result_table" id="table-javascript" data-height=""></table>
-    <div style="display:none">
-        <table class="sldatatable">
-            <!--最终加载的数据都存在这个table里-->
-            <tr class="sldatatableheader" style="height: 0px;"></tr>
-        </table>
-    </div>
-    @Html.Partial("~/Views/Common/RenderPaging.cshtml")
-</div>
-<script type="text/javascript">
+    <script type="text/javascript">
     $(function () {
         search();
     })
@@ -133,6 +135,6 @@
             }
         });
     }
-</script>
+    </script>
 
-
+</div>

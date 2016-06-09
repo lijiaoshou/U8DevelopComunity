@@ -63,7 +63,7 @@
         function afterLogin(data) {
             var serverData = data.split(':');
             if (serverData[0] == "ok") {
-                alert("登录成功");
+                //alert("登录成功");
                 window.location.href = "/U8Question/Index";
             } else if (serverData[0] == "no") {
                 alert("登录失败");
@@ -78,7 +78,7 @@
     <!-- Login Screen -->
     <div class="login-wrapper">
         <div class="login-container">
-            <a href="#"><img width="100" height="30" src="~/image/logo-login@2x.png" /></a>
+            <a href="#"><img width="100" height="30" src="~/image/login2.png" /></a>
             @*<form action="/U8System/Login" method="post">*@
             @using (Ajax.BeginForm("Login", "U8System", new { }, new AjaxOptions() { HttpMethod = "post", OnSuccess = "afterLogin" }, new { id = "loginForm" }))
             {
@@ -102,8 +102,8 @@
             }
 
             @*</form>*@
-            <p class="signup">
-                还没有U8开发者账户? <a href="/U8System/Register">立即注册</a>
+            <p class="signup" >
+                还没有U8开发者账户? <a href="/U8System/Register" style="margin-left:5px;">立即注册</a>
             </p>
         </div>
     </div>
